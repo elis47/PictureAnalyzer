@@ -200,8 +200,10 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\GalleriesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\PaintersController.cs" />
     <Compile Include="DAL\PictureAnalyzerContext.cs" />
     <Compile Include="DAL\PictureAnalyzerInitializer.cs" />
     <Compile Include="Global.asax.cs">
@@ -284,6 +286,16 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Painters\Create.cshtml" />
+    <Content Include="Views\Painters\Delete.cshtml" />
+    <Content Include="Views\Painters\Details.cshtml" />
+    <Content Include="Views\Painters\Edit.cshtml" />
+    <Content Include="Views\Painters\Index.cshtml" />
+    <Content Include="Views\Galleries\Create.cshtml" />
+    <Content Include="Views\Galleries\Delete.cshtml" />
+    <Content Include="Views\Galleries\Details.cshtml" />
+    <Content Include="Views\Galleries\Edit.cshtml" />
+    <Content Include="Views\Galleries\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
