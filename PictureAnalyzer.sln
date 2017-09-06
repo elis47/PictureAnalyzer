@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.10
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PictureAnalyzer", "PictureAnalyzer\PictureAnalyzer.csproj", "{14ECD641-9DB7-4EA7-B845-C51EE2E11D13}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PictureAnalyzer.Tests", "PictureAnalyzer.Tests\PictureAnalyzer.Tests.csproj", "{26EE9B62-ABE5-40DB-902C-C2A26C01ACF4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{14ECD641-9DB7-4EA7-B845-C51EE2E11D13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14ECD641-9DB7-4EA7-B845-C51EE2E11D13}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14ECD641-9DB7-4EA7-B845-C51EE2E11D13}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14ECD641-9DB7-4EA7-B845-C51EE2E11D13}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26EE9B62-ABE5-40DB-902C-C2A26C01ACF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26EE9B62-ABE5-40DB-902C-C2A26C01ACF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26EE9B62-ABE5-40DB-902C-C2A26C01ACF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26EE9B62-ABE5-40DB-902C-C2A26C01ACF4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5EC2D356-29B8-4AAB-8F18-2C8C2B068FDC}
+	EndGlobalSection
+EndGlobal
