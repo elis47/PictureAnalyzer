@@ -230,6 +230,21 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Gallery.css" />
+    <Content Include="Content\img\1.jpg" />
+    <Content Include="Content\img\2.jpg" />
+    <Content Include="Content\img\3.jpg" />
+    <Content Include="Content\img\4.jpg" />
+    <Content Include="Content\img\5.jpg" />
+    <Content Include="Content\img\6.jpg" />
+    <Content Include="Content\img\7.jpg" />
+    <Content Include="Content\img\8.jpg" />
+    <Content Include="Content\img\fifth.jpg" />
+    <Content Include="Content\img\first.jpg" />
+    <Content Include="Content\img\fourth.jpg" />
+    <Content Include="Content\img\second.jpg" />
+    <Content Include="Content\img\sixth.jpg" />
+    <Content Include="Content\img\third.jpg" />
     <Content Include="DatabaseDiagram\ClassDiagram.png" />
     <Content Include="DatabaseDiagram\NewClassDiagram.png" />
     <Content Include="favicon.ico" />
