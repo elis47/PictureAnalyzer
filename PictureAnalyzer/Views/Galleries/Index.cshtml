@@ -10,20 +10,32 @@
 </div>
 <h1 class="text-center">Take a look at our galleries...</h1>
 <h3 class="text-center">Or</h3>
-<h1 class="text-center"><i class="glyphicon glyphicon-plus-sign"></i> @Html.ActionLink("Create new gallery", "Create")</h1><br /><br />
+<h1 class="text-center"><i class="glyphicon glyphicon-plus"></i> @Html.ActionLink("Create new gallery", "Create")</h1><br /><br />
 <div class="container">
     <div class="row">
         <div class='list-group gallery'>
-            <div class='col-md-3'>
-                <a class="thumbnail" rel="ligthbox" href="~/Content/img/1.jpg">
-                    <img class="img-responsive" alt="" src="~/Content/img/1.jpg" />
-                    <div class='text-right'>
-                        <small class='text-muted'>Rain by Bartholomeu S.</small>
-                    </div>
-                </a>
-                <div class="text-center">@Html.ActionLink("Add painting to gallery","Create","Galleries")</div>
-            </div>
-            <div class='col-md-3'>
+
+
+            @foreach (var item in Model)
+            {
+
+                <div class='col-md-3'>
+                    <a class="thumbnail" rel="ligthbox" href="~/Content/img/1.jpg">
+                        <img class="img-responsive" alt="" src="~/Content/img/1.jpg" />
+                        <div class='text-right'>
+                            <small class='text-muted'>@Html.DisplayFor(modelItem => item.Name)</small>
+                        </div>
+                    </a>
+                    <div class="text-center">@Html.ActionLink("Add painting to gallery", "Create", "Galleries")</div>
+                </div>
+                        @*@Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.ID })*@
+                  
+            }
+
+
+            @*<div class='col-md-3'>
                 <a class="thumbnail" rel="ligthbox" href="~/Content/img/2.jpg">
                     <img class="img-responsive" alt="" src="~/Content/img/2.jpg" />
                     <div class='text-right'>
@@ -46,7 +58,7 @@
                         <small class='text-muted'>Evening by the lake by Sam T.</small>
                     </div>
                 </a>
-            </div>
+            </div>*@
         </div>
     </div>
 </div>
@@ -63,21 +75,7 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-        </td>
-    </tr>
-}
+
 
 </table>
 
@@ -90,7 +88,7 @@
         margin-top: 45px;
     }
     .glyphicon {
-        font-size: 0.8em;
+        font-size: 0.7em;
         color: #0ce3ac;
     }
 </style>

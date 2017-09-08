@@ -204,6 +204,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PaintersController.cs" />
+    <Compile Include="Controllers\PaintingsController.cs" />
     <Compile Include="DAL\PictureAnalyzerContext.cs" />
     <Compile Include="DAL\PictureAnalyzerInitializer.cs" />
     <Compile Include="Global.asax.cs">
@@ -212,6 +213,10 @@
     <Compile Include="Migrations\201709061236439_Initial.cs" />
     <Compile Include="Migrations\201709061236439_Initial.Designer.cs">
       <DependentUpon>201709061236439_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709081958319_UserLinkAnnotation.cs" />
+    <Compile Include="Migrations\201709081958319_UserLinkAnnotation.Designer.cs">
+      <DependentUpon>201709081958319_UserLinkAnnotation.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -239,6 +244,8 @@
     <Content Include="Content\img\6.jpg" />
     <Content Include="Content\img\7.jpg" />
     <Content Include="Content\img\8.jpg" />
+    <Content Include="Content\img\chroma.jpg" />
+    <Content Include="Content\img\chroma2.jpg" />
     <Content Include="Content\img\fifth.jpg" />
     <Content Include="Content\img\first.jpg" />
     <Content Include="Content\img\fourth.jpg" />
@@ -322,6 +329,11 @@
     <Content Include="Views\Galleries\Details.cshtml" />
     <Content Include="Views\Galleries\Edit.cshtml" />
     <Content Include="Views\Galleries\Index.cshtml" />
+    <Content Include="Views\Paintings\Create.cshtml" />
+    <Content Include="Views\Paintings\Delete.cshtml" />
+    <Content Include="Views\Paintings\Details.cshtml" />
+    <Content Include="Views\Paintings\Edit.cshtml" />
+    <Content Include="Views\Paintings\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -342,6 +354,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201709061236439_Initial.resx">
       <DependentUpon>201709061236439_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709081958319_UserLinkAnnotation.resx">
+      <DependentUpon>201709081958319_UserLinkAnnotation.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

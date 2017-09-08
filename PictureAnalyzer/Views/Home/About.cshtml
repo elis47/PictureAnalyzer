@@ -1,7 +1,7 @@
 ﻿@{
     ViewBag.Title = "About";
 }
-<br/>
+<br />
 <div class="container">
     <div class="row" id="section1">
         <h1 class="text-center">Why this application?</h1>
@@ -13,7 +13,7 @@
                             <i class="glyphicon glyphicon-cog glyphicon-size"></i>
                             <h2 class="color">Complex</h2>
                             <p class="bigger-font">PictureAnalyzer is a tool that helps you understand how a painters' mind works when he creates his masterpieces.</p>
-                            <p class="bigger-font">Click <a href="https://go.microsoft.com/fwlink/?LinkId=301865">here</a> if you want to see more information about the scientific research that helps us make precise profiles!</p>
+                            <p class="bigger-font">Click <a href="#about">here</a> if you want to see more information about the scientific research that helps us make precise profiles!</p>
 
                         </div>
                     </div>
@@ -46,31 +46,67 @@
             <div class="col-sm-10 col-sm-offset-1 text-center">
                 <h1>How it works?</h1><br />
                 <p class="lead">When you first come on our website, you must register in order to use the application properly. You are being given the possibility to get in touch with other users this way and add/comment/like paintings. The application uses a complex algorithm that processes the image and computes several indexes, like the contrast, luminosity and harmony index. After that, the picture passes through another test in order to find out what are the main elements(people, animals etc.) and will retrieve the dominant colors that were used.</p>
+                <p class="lead">While there are many color models — or ways of describing color — all of them involve three dimensions or three parameters.</p>
+            </div>
+            <div class="row">
+                <div class="col-md-4 col-md-offset-2">
+                    <img class="my-pic" src="~/Content/img/chroma.jpg" />
+                </div>
+                <div class="col-md-5">
+                    <p class="big-font">
+                        <ul>
+                            <li class="big-font"><b>Hue</b> : the common distinction between colors positioned around a color wheel.</li>
+                            <li class="big-font"><b>Value</b> : the quality lightness or darkness. That is, black is a dark value or low value. White is a light value or high value.</li>
+                            <li class="big-font"><b>Chroma</b> : the quality of a color's purity, intensity or saturation.</li>
+                        </ul>
+                    </p>
+                </div>
+            </div>
+            <div class="col-sm-10 col-sm-offset-1 text-center">
+                <p class="lead">Using this information we will compute the indexes mentioned above and we will continue the study of the painting using the two-color harmony model that will be extended to all the colors in the painting. The model predicts a numerical harmony score on a harmony scale ranging from harmonious to disharmonious.</p>
+                <p class="lead">The study will continue by computing the saturation level, as shown below: </p>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 col-md-offset-1">
+                    <img class="my-pic" src="~/Content/img/chroma2.jpg" />
+                </div>
+                <div class="col-md-4">
+                   <p class="big-font">We will use the RGB color model, which is an additive color model in which red, green and blue light are added together in various ways to reproduce a broad array of colors. By computing the level of red, green and blue of a painting we retrieve the saturation index, which is indicating us if the painter has used bright, colourfull colors or more grey, pale colors.</p>
+                </div>
+            </div>
+
+            <div class="col-sm-10 col-sm-offset-1 text-center">
+                <p class="lead">All these numbers and indexes are used to retrieve the psychological profile of the painter because colors can be very easily interpretated and we can assign them feelings as well. And, of course, this is not all! We are using the influences and the type of the painting to describe what was the painter thinking or feeling when he designed his masterpiece and what is his perception about the world in general. </p>
+            </div>
+
+            <div class="col-sm-10 col-sm-offset-1 text-center">
+                <p class="big-font"> I hope that this convinced you to try our application, so wait no more and ... </p>
             </div>
         </div>
     </section>
 
     <div class="row">
         <div class="col-sm-8 col-sm-offset-2 text-center">
-            <a href="https://www.google.com" class="btn btn-success">Let's get started!</a>
+            <a href="https://www.google.com" class="btn btn-success">Get started!</a>
         </div>
-    </div>
-
-    <section class="container-fluid">
-        <div class="row">
-            <div class="col-sm-8 col-sm-offset-2 text-center">
-                <h1>Scientific research</h1><br>
-                <p class="lead">More to be added, now i'm bored of writing </p>
-            </div>
-        </div>
-    </section>
+    </div><br/>
 </div>
 
 
 <style>
+    .big-font {
+        font-size:22.5px;
+    }
+    .my-pic {
+        max-width: 100%;
+        max-height: 100%;
+    }
+
     .glyphicon-size {
         font-size: 3.8em;
     }
+
     .row {
         margin-top: 30px;
     }
@@ -92,13 +128,16 @@
         font-size: 23px;
         font-weight: bold;
     }
+
     .btn {
         padding: 10px 75px;
     }
+
     .color {
         color: #009871;
         margin-top: 45px;
     }
+
     body {
         background: linear-gradient(black, #7C77B9,black);
     }

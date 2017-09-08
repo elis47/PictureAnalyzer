@@ -25,15 +25,19 @@ namespace PictureAnalyzer.Models
         public double ConstrastIndex { get; set; }
         [Required]
         public double LuminosityIndex { get; set; }
+        [Required]
+        public string Link { get; set; }
 
-        //public string ApplicationUserID { get; set; }
+        public string UserId { get; set; }
+        [ForeignKey("UserId")]
+        public ApplicationUser User { get; set; }
+        
         public int PainterID { get; set; }
         public int TypeID { get; set; }
         public int InfluenceID { get; set; }
         public int ProfileID { get; set; }
         public int GalleryID { get; set; }
 
-        //public virtual ApplicationUser User { get; set; }
         public virtual Painter Painter { get; set; }
         public virtual Type Type { get; set; }
         public virtual Influence Influence { get; set; }
