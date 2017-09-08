@@ -1,7 +1,105 @@
 ﻿@{
     ViewBag.Title = "About";
 }
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
+<br/>
+<div class="container">
+    <div class="row" id="section1">
+        <h1 class="text-center">Why this application?</h1>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="row">
+                        <div class="col-sm-10 col-sm-offset-2 text-center">
+                            <i class="glyphicon glyphicon-cog glyphicon-size"></i>
+                            <h2 class="color">Complex</h2>
+                            <p class="bigger-font">PictureAnalyzer is a tool that helps you understand how a painters' mind works when he creates his masterpieces.</p>
+                            <p class="bigger-font">Click <a href="https://go.microsoft.com/fwlink/?LinkId=301865">here</a> if you want to see more information about the scientific research that helps us make precise profiles!</p>
 
-<p>Use this area to provide additional information.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4 text-center">
+                    <div class="row">
+                        <div class="col-sm-10 col-sm-offset-1 text-center">
+                            <i class="glyphicon glyphicon-user glyphicon-size"></i>
+                            <h2 class="color">Easy to connect</h2>
+                            <p class="bigger-font">This application not only lets you understand the mind of a painter, but it allows you to get in touch with people like you, having the same artistic preferences. You can connect with them by joining different galleries and posting comments or likes on every painting.</p>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4 text-center">
+                    <div class="row">
+                        <div class="col-sm-10 text-center">
+                            <i class="glyphicon glyphicon-phone glyphicon-size"></i>
+                            <h2 class="color">Adaptable</h2><p class="bigger-font">The application is web responsive, which means that you can use it very easily from your tablet, phone, laptop or any other device that has a screen incorporated.</p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="container-fluid" id="about">
+        <div class="row">
+            <div class="col-sm-10 col-sm-offset-1 text-center">
+                <h1>How it works?</h1><br />
+                <p class="lead">When you first come on our website, you must register in order to use the application properly. You are being given the possibility to get in touch with other users this way and add/comment/like paintings. The application uses a complex algorithm that processes the image and computes several indexes, like the contrast, luminosity and harmony index. After that, the picture passes through another test in order to find out what are the main elements(people, animals etc.) and will retrieve the dominant colors that were used.</p>
+            </div>
+        </div>
+    </section>
+
+    <div class="row">
+        <div class="col-sm-8 col-sm-offset-2 text-center">
+            <a href="https://www.google.com" class="btn btn-success">Let's get started!</a>
+        </div>
+    </div>
+
+    <section class="container-fluid">
+        <div class="row">
+            <div class="col-sm-8 col-sm-offset-2 text-center">
+                <h1>Scientific research</h1><br>
+                <p class="lead">More to be added, now i'm bored of writing </p>
+            </div>
+        </div>
+    </section>
+</div>
+
+
+<style>
+    .glyphicon-size {
+        font-size: 3.8em;
+    }
+    .row {
+        margin-top: 30px;
+    }
+
+    .lead {
+        margin-top: 30px;
+    }
+
+    .bigger-font {
+        font-size: 17px;
+    }
+
+    #h1 {
+        margin-top: 0px;
+        margin-bottom: 10.5px;
+    }
+
+    .bolder-text {
+        font-size: 23px;
+        font-weight: bold;
+    }
+    .btn {
+        padding: 10px 75px;
+    }
+    .color {
+        color: #009871;
+        margin-top: 45px;
+    }
+    body {
+        background: linear-gradient(black, #7C77B9,black);
+    }
+</style>

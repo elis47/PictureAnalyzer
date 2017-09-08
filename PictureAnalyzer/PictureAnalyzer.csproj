@@ -242,6 +242,17 @@
     <Content Include="Content\img\fifth.jpg" />
     <Content Include="Content\img\first.jpg" />
     <Content Include="Content\img\fourth.jpg" />
+    <Content Include="Content\img\gif.gif" />
+    <Content Include="Content\img\gif1.gif" />
+    <Content Include="Content\img\gif2.gif" />
+    <Content Include="Content\img\gif3.gif" />
+    <Content Include="Content\img\gif3gif.gif" />
+    <Content Include="Content\img\gif4.gif" />
+    <Content Include="Content\img\gif5.gif" />
+    <Content Include="Content\img\giphy.gif" />
+    <Content Include="Content\img\giphy1.gif" />
+    <Content Include="Content\img\giphy2.gif" />
+    <Content Include="Content\img\image.jpg" />
     <Content Include="Content\img\second.jpg" />
     <Content Include="Content\img\sixth.jpg" />
     <Content Include="Content\img\third.jpg" />

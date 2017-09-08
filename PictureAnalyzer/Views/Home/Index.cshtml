@@ -2,19 +2,20 @@
     ViewBag.Title = "Home Page";
 }
 
-<header>
+<div class="background-img">
     <div class="jumbotron">
-        <h1 class="text-center">PictureAnalyzer</h1><br />
-        <p class="text-center">A new, complex and fun application, dedicated to all <i>art</i> lovers.</p>
+        <h1 class="text-center text-shadow"><i class="glyphicon glyphicon-picture"></i> PictureAnalyzer</h1>
+        <p class="text-center text-shadow">A new, complex and fun application, dedicated to all art lovers.</p>
     </div>
     <div class="container">
         <div class="row">
+            @*<h3 class="text-center text-shadow">Search for <a href="">paintings</a>, <a href="">painters</a> or <a href="">galleries</a></h3><br />*@
             <div class="col-md-6 col-md-offset-3">
                 <div id="custom-search-input">
                     <div class="input-group col-md-12">
-                        <input type="text" class="form-control" placeholder="Search for paintings..." />
+                        <input type="text" class="form-control" placeholder="Search for paintings, painters or galleries..." />
                         <span class="input-group-btn">
-                            <button class="btn btn-info btn-lg" type="button">
+                            <button class="btn btn-info btn-sm" type="button">
                                 <i class="glyphicon glyphicon-search"></i>
                             </button>
                         </span>
@@ -23,213 +24,37 @@
             </div>
         </div>
     </div>
-
-    <br/><br/>
-    <div class="row">
-        <div class="col-md-4 col-md-offset-3">
-            <a href="#about">Find out more about us!</a>
-        </div>
-        <div class="col-md-5">
-            <a href="https://www.google.com">Upload my own painting</a>
-        </div>
-    </div>
-
-    @*<div class="col-md-12">
-           <form class="navbar-form navbar-left" role="search">
-                <ul class="nav navbar-nav">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Search by <span class="caret"></span></a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="#">Painting</a></li>
-                            <li><a href="#">Painter</a></li>
-                            <li><a href="#">Gallery</a></li>
-                            <li class="divider"></li>
-                            <li><a href="#">Type</a></li>
-                            <li><a href="#">Influences</a></li>
-                        </ul>
-                    </li>
-                </ul>
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Search">
-                </div>
-                <button type="submit" class="btn btn-default">Submit</button>
-            </form>
-        </div>*@
-
-    <hr />
-</header>
-<br />
-
-
-@*<h3>Upload your painting <a href="">here</a> and get a precise psychological profile of the painter or...</h3>
-    <h3>If you're not still convinced, click <a href="">here</a> for more information about this app!  <i class="glyphicon glyphicon-heart"></i></h3>*@
-
-
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
-<script src="//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
-
-<br />
-<h2 class="text-center">A preview of our galleries...</h2>
-<div class="container">
-    <div class="row">
-        <div class='list-group gallery'>
-            <div class='col-sm-4 col-xs-6 col-md-3 col-lg-3'>
-                <a class="thumbnail fancybox" rel="ligthbox" href="~/Content/img/1.jpg">
-                    <img class="img-responsive" alt="" src="~/Content/img/1.jpg" />
-                    <div class='text-right'>
-                        <small class='text-muted'>Rain by Bartholomeu S.</small>
-                    </div>
-                </a>
-            </div>
-            <div class='col-sm-4 col-xs-6 col-md-3 col-lg-3'>
-                <a class="thumbnail fancybox" rel="ligthbox" href="~/Content/img/2.jpg">
-                    <img class="img-responsive" alt="" src="~/Content/img/2.jpg" />
-                    <div class='text-right'>
-                        <small class='text-muted'>Field by Christian P.</small>
-                    </div>
-                </a>
-            </div>
-            <div class='col-sm-4 col-xs-6 col-md-3 col-lg-3'>
-                <a class="thumbnail fancybox" rel="ligthbox" href="~/Content/img/3.jpg">
-                    <img class="img-responsive" alt="" src="~/Content/img/3.jpg" />
-                    <div class='text-right'>
-                        <small class='text-muted'>Lane of crowls by Leonardo da Vinci</small>
-                    </div>
-                </a>
-            </div>
-            <div class='col-sm-4 col-xs-6 col-md-3 col-lg-3'>
-                <a class="thumbnail fancybox" rel="ligthbox" href="~/Content/img/4.jpg">
-                    <img class="img-responsive" alt="" src="~/Content/img/4.jpg" />
-                    <div class='text-right'>
-                        <small class='text-muted'>Evening by the lake by Sam T.</small>
-                    </div>
-                </a>
-            </div>
-            <div class='col-sm-4 col-xs-6 col-md-3 col-lg-3'>
-                <a class="thumbnail fancybox" rel="ligthbox" href="~/Content/img/5.jpg">
-                    <img class="img-responsive" alt="" src="~/Content/img/5.jpg" />
-                    <div class='text-right'>
-                        <small class='text-muted'>Horse by Anya R.</small>
-                    </div>
-                </a>
-            </div>
-            <div class='col-sm-4 col-xs-6 col-md-3 col-lg-3'>
-                <a class="thumbnail fancybox" rel="ligthbox" href="~/Content/img/6.jpg">
-                    <img class="img-responsive" alt="" src="~/Content/img/6.jpg" />
-                    <div class='text-right'>
-                        <small class='text-muted'>Abstract by Terry Simpson</small>
-                    </div>
-                </a>
-            </div>
-            <div class='col-sm-4 col-xs-6 col-md-3 col-lg-3'>
-                <a class="thumbnail fancybox" rel="ligthbox" href="~/Content/img/7.jpg">
-                    <img class="img-responsive" alt="" src="~/Content/img/7.jpg" />
-                    <div class='text-right'>
-                        <small class='text-muted'>Lake of swan by Emily P.</small>
-                    </div>
-                </a>
-            </div>
-            <div class='col-sm-4 col-xs-6 col-md-3 col-lg-3'>
-                <a class="thumbnail fancybox" rel="ligthbox" href="~/Content/img/8.jpg">
-                    <img class="img-responsive" alt="" src="~/Content/img/8.jpg" />
-                    <div class='text-right'>
-                        <small class='text-muted'>Rain by Peter S.</small>
-                    </div>
-                </a>
-            </div>
-        </div>
-    </div>
+    <br />
+    <h4 class="text-center text-shadow font-size">Upload your painting <a href="">here</a> and get a precise psychological profile of the painter or...</h4>
+    <h4 class="text-center text-shadow">If you're still not convinced, click <a href="">here</a> for more information about this app! </h4><br /><br/>
 </div>
 
-<div class="row" id="section1">
-    <h1 class="text-center color">Why this application?</h1>
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-4">
-                <div class="row">
-                    <div class="col-sm-10 col-sm-offset-2 text-center">
-                        <h3>Complex</h3>
-                        <p>PictureAnalyzer is a tool that helps you understand how a painters' mind works when he creates his masterpieces.</p>
-                        <p>Click <a href="https://go.microsoft.com/fwlink/?LinkId=301865">here</a> if you want to see more information about the scientific research that helps us make precise profiles!</p>
-                        <i class="glyphicon glyphicon-cog"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-4 text-center">
-                <div class="row">
-                    <div class="col-sm-10 col-sm-offset-1 text-center">
-                        <h3>Easy to use</h3>
-                        <p>This application not only lets you understand the mind of a painter, but it allows you to get in touch with people like you, having the same artistic preferences. You can connect with them by joining different galleries and posting comments or likes on every painting.</p>
-                        <p>There is no other application like this, so don't waste time and see our <a href="https://go.microsoft.com/fwlink/?LinkId=301865">galleries</a>, <a href="https://go.microsoft.com/fwlink/?LinkId=301865">painters</a> or <a href="https://go.microsoft.com/fwlink/?LinkId=301865">paintings!</a></p>
-                        <i class="glyphicon glyphicon-user"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-4 text-center">
-                <div class="row">
-                    <div class="col-sm-10 text-center">
-                        <h3>Adaptable</h3><p>The application is web responsive, which means that you can use it very easily from your tablet, phone, laptop or any other device that has a screen incorporated.</p>
-                        <i class="glyphicon glyphicon-phone"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row"></div>
-    </div>
-</div>
-
-<br /><br />
-<section class="container-fluid" id="about">
-    <div class="row">
-        <div class="col-sm-10 col-sm-offset-1 text-center">
-            <h1 class="color">How it works?</h1><br>
-            <p class="lead">When you first come on our website, you must register in order to use the application properly. You are being given the possibility to get in touch with other users this way and add/comment/like paintings. The application uses a complex algorithm that processes the image and computes several indexes, like the contrast, luminosity and harmony index. After that, the picture passes through another test in order to find out what are the main elements(people, animals etc.) and will retrieve the dominant colors that were used.</p>
-        </div>
-    </div>
-</section>
-
-
-<section class="container-fluid" id="section3">
-    <div class="row">
-        <div class="col-sm-8 col-sm-offset-2 text-center">
-            <h1 class="color">Other features...</h1><br>
-            <p class="lead">More to be added, now i'm bored of writing </p>
-        </div>
-    </div>
-</section>
-
-
-
-<div class="row">
-    <div class="col-sm-8 col-sm-offset-2 text-center">
-        <a href="https://www.google.com" class="btn btn-success">Let's get started!</a>
-    </div>
-</div>
-
-
-<br /> <br />
 
 <style>
-    .navbar-nav > li > a {
-        line-height: 6px;
+    .glyphicon-picture {
+        font-size: 0.8em;
+    }
+    body {
+        padding-bottom: 0px;
+    }
+    .text-shadow {
+        text-shadow: 0.03em 0 black, 0 0.03em black, -0.03em 0 black, 0 -0.03em black;
     }
 
-    .color {
-        color: #009871;
-        margin-top: 45px;
+    .body-content {
+        background-image: url("../../Content/img/gif1.gif");
+        background-size: cover;
+        width:90%;
     }
 
     .jumbotron {
         background-color: inherit;
+        padding-top: 22px;
+        margin-bottom:245px;
     }
-
-    .btn {
-        padding: 10px 75px;
+    .font-size {
+        font-size: 22px;
     }
-
-
-
-
     #custom-search-input {
         padding: 3px;
         border: solid 1px #E4E4E4;
@@ -237,36 +62,38 @@
         background-color: #fff;
     }
 
-        #custom-search-input input {
-            border: 0;
-            box-shadow: none;
+    #custom-search-input input {
+        border: 0;
+        box-shadow: none;
+    }
+
+        #custom-search-input > div > input {
+            max-width: 370px;
+            margin-top: 6px;
+            font-size: 18px;
         }
 
-        #custom-search-input button {
-            margin: 2px 0 0 0;
-            background: none;
-            box-shadow: none;
+        .btn-info {
+            color: #ffffff;
+            background-color: #00bc8c;
+            border-color: #00bc8c;
+        }
+
+        .btn-info:hover, .btn-info:active, .btn-info:focus, .btn-info:active:focus {
+            color: #ffffff;
+            background-color: #7C77B9;
+            border-color: #7C77B9;
+        }
+        
+        #custom-search-input button:hover {
             border: 0;
-            color: #666666;
-            padding: 0 8px 0 10px;
+            box-shadow: none;
             border-left: solid 1px #ccc;
         }
 
-            #custom-search-input button:hover {
-                border: 0;
-                box-shadow: none;
-                border-left: solid 1px #ccc;
-            }
-
-        #custom-search-input .glyphicon-search {
-            font-size: 23px;
-        }
+     #custom-search-input .glyphicon-search {
+         font-size: 23px;
+         height: 15px;
+     }
 </style>
-<script>
-    $(document).ready(function () {
-        $(".fancybox").fancybox({
-            openEffect: "none",
-            closeEffect: "none"
-        });
-    });
-</script>
+

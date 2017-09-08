@@ -4,11 +4,54 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<br/><br/>
+<div class="col-md-11 col-md-offset-1" style="font-size:larger;">
+    
+</div>
+<h1 class="text-center">Take a look at our galleries...</h1>
+<h3 class="text-center">Or</h3>
+<h1 class="text-center"><i class="glyphicon glyphicon-plus-sign"></i> @Html.ActionLink("Create new gallery", "Create")</h1><br /><br />
+<div class="container">
+    <div class="row">
+        <div class='list-group gallery'>
+            <div class='col-md-3'>
+                <a class="thumbnail" rel="ligthbox" href="~/Content/img/1.jpg">
+                    <img class="img-responsive" alt="" src="~/Content/img/1.jpg" />
+                    <div class='text-right'>
+                        <small class='text-muted'>Rain by Bartholomeu S.</small>
+                    </div>
+                </a>
+                <div class="text-center">@Html.ActionLink("Add painting to gallery","Create","Galleries")</div>
+            </div>
+            <div class='col-md-3'>
+                <a class="thumbnail" rel="ligthbox" href="~/Content/img/2.jpg">
+                    <img class="img-responsive" alt="" src="~/Content/img/2.jpg" />
+                    <div class='text-right'>
+                        <small class='text-muted'>Field by Christian P.</small>
+                    </div>
+                </a>
+            </div>
+            <div class='col-md-3'>
+                <a class="thumbnail" rel="ligthbox" href="~/Content/img/3.jpg">
+                    <img class="img-responsive" alt="" src="~/Content/img/3.jpg" />
+                    <div class='text-right'>
+                        <small class='text-muted'>Lane of crowls by Leonardo da Vinci</small>
+                    </div>
+                </a>
+            </div>
+            <div class='col-md-3'>
+                <a class="thumbnail" rel="ligthbox" href="~/Content/img/4.jpg">
+                    <img class="img-responsive" alt="" src="~/Content/img/4.jpg" />
+                    <div class='text-right'>
+                        <small class='text-muted'>Evening by the lake by Sam T.</small>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+
 <table class="table">
     <tr>
         <th>
@@ -37,3 +80,17 @@
 }
 
 </table>
+
+<style>
+    .text-muted {
+        color: white;
+    }
+    .color {
+        color: #009871;
+        margin-top: 45px;
+    }
+    .glyphicon {
+        font-size: 0.8em;
+        color: #0ce3ac;
+    }
+</style>
