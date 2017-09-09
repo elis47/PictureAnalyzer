@@ -205,20 +205,21 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PaintersController.cs" />
     <Compile Include="Controllers\PaintingsController.cs" />
-    <Compile Include="DAL\PictureAnalyzerContext.cs" />
-    <Compile Include="DAL\PictureAnalyzerInitializer.cs" />
+    <Compile Include="DAL\IdentityDb.cs" />
+    <Compile Include="DAL\IdentityMigrations\201709092145117_InitialCreate.cs" />
+    <Compile Include="DAL\IdentityMigrations\201709092145117_InitialCreate.Designer.cs">
+      <DependentUpon>201709092145117_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\IdentityMigrations\Configuration.cs" />
+    <Compile Include="DAL\PictureAnalyzerDb.cs" />
+    <Compile Include="DAL\PictureAnalyzerMigrations\201709092146067_InitialCreate.cs" />
+    <Compile Include="DAL\PictureAnalyzerMigrations\201709092146067_InitialCreate.Designer.cs">
+      <DependentUpon>201709092146067_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\PictureAnalyzerMigrations\Configuration.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201709061236439_Initial.cs" />
-    <Compile Include="Migrations\201709061236439_Initial.Designer.cs">
-      <DependentUpon>201709061236439_Initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201709081958319_UserLinkAnnotation.cs" />
-    <Compile Include="Migrations\201709081958319_UserLinkAnnotation.Designer.cs">
-      <DependentUpon>201709081958319_UserLinkAnnotation.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Color.cs" />
     <Compile Include="Models\Gallery.cs" />
@@ -352,11 +353,11 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201709061236439_Initial.resx">
-      <DependentUpon>201709061236439_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="DAL\IdentityMigrations\201709092145117_InitialCreate.resx">
+      <DependentUpon>201709092145117_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201709081958319_UserLinkAnnotation.resx">
-      <DependentUpon>201709081958319_UserLinkAnnotation.cs</DependentUpon>
+    <EmbeddedResource Include="DAL\PictureAnalyzerMigrations\201709092146067_InitialCreate.resx">
+      <DependentUpon>201709092146067_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

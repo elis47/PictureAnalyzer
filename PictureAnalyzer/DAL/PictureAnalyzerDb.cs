@@ -9,13 +9,13 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace PictureAnalyzer.DAL
 {
-    public class PictureAnalyzerContext : DbContext
+    public class PictureAnalyzerDb : DbContext
     {
-        public PictureAnalyzerContext() : base("PictureAnalyzerContext")
+        public PictureAnalyzerDb() : base("DefaultConnection")
         {
 
         }
-
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<Painter> Painters { get; set; }
         public DbSet<Painting> Paintings { get; set; }
         public DbSet<Profile> Profiles { get; set; }

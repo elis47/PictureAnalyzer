@@ -1,12 +1,73 @@
-namespace PictureAnalyzer.Migrations
+namespace PictureAnalyzer.DAL.PictureAnalyzerMigrations
 {
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class Initial : DbMigration
+    public partial class InitialCreate : DbMigration
     {
         public override void Up()
         {
+            CreateTable(
+                "dbo.ApplicationUsers",
+                c => new
+                    {
+                        Id = c.String(nullable: false, maxLength: 128),
+                        Email = c.String(),
+                        EmailConfirmed = c.Boolean(nullable: false),
+                        PasswordHash = c.String(),
+                        SecurityStamp = c.String(),
+                        PhoneNumber = c.String(),
+                        PhoneNumberConfirmed = c.Boolean(nullable: false),
+                        TwoFactorEnabled = c.Boolean(nullable: false),
+                        LockoutEndDateUtc = c.DateTime(),
+                        LockoutEnabled = c.Boolean(nullable: false),
+                        AccessFailedCount = c.Int(nullable: false),
+                        UserName = c.String(),
+                    })
+                .PrimaryKey(t => t.Id);
+            
+            CreateTable(
+                "dbo.IdentityUserClaims",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        UserId = c.String(),
+                        ClaimType = c.String(),
+                        ClaimValue = c.String(),
+                        ApplicationUser_Id = c.String(maxLength: 128),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.ApplicationUsers", t => t.ApplicationUser_Id)
+                .Index(t => t.ApplicationUser_Id);
+            
+            CreateTable(
+                "dbo.IdentityUserLogins",
+                c => new
+                    {
+                        UserId = c.String(nullable: false, maxLength: 128),
+                        LoginProvider = c.String(),
+                        ProviderKey = c.String(),
+                        ApplicationUser_Id = c.String(maxLength: 128),
+                    })
+                .PrimaryKey(t => t.UserId)
+                .ForeignKey("dbo.ApplicationUsers", t => t.ApplicationUser_Id)
+                .Index(t => t.ApplicationUser_Id);
+            
+            CreateTable(
+                "dbo.IdentityUserRoles",
+                c => new
+                    {
+                        RoleId = c.String(nullable: false, maxLength: 128),
+                        UserId = c.String(nullable: false, maxLength: 128),
+                        ApplicationUser_Id = c.String(maxLength: 128),
+                        IdentityRole_Id = c.String(maxLength: 128),
+                    })
+                .PrimaryKey(t => new { t.RoleId, t.UserId })
+                .ForeignKey("dbo.ApplicationUsers", t => t.ApplicationUser_Id)
+                .ForeignKey("dbo.IdentityRoles", t => t.IdentityRole_Id)
+                .Index(t => t.ApplicationUser_Id)
+                .Index(t => t.IdentityRole_Id);
+            
             CreateTable(
                 "dbo.Colors",
                 c => new
@@ -30,6 +91,8 @@ namespace PictureAnalyzer.Migrations
                         HarmonyIndex = c.Double(nullable: false),
                         ConstrastIndex = c.Double(nullable: false),
                         LuminosityIndex = c.Double(nullable: false),
+                        Link = c.String(nullable: false),
+                        UserId = c.String(nullable: false, maxLength: 128),
                         PainterID = c.Int(nullable: false),
                         TypeID = c.Int(nullable: false),
                         InfluenceID = c.Int(nullable: false),
@@ -42,7 +105,9 @@ namespace PictureAnalyzer.Migrations
                 .ForeignKey("dbo.Painters", t => t.PainterID, cascadeDelete: true)
                 .ForeignKey("dbo.Profiles", t => t.ProfileID, cascadeDelete: true)
                 .ForeignKey("dbo.Types", t => t.TypeID, cascadeDelete: true)
+                .ForeignKey("dbo.ApplicationUsers", t => t.UserId, cascadeDelete: true)
                 .Index(t => t.Name, unique: true)
+                .Index(t => t.UserId)
                 .Index(t => t.PainterID)
                 .Index(t => t.TypeID)
                 .Index(t => t.InfluenceID)
@@ -81,6 +146,7 @@ namespace PictureAnalyzer.Migrations
                         Name = c.String(nullable: false, maxLength: 100),
                         Description = c.String(maxLength: 600),
                         Country = c.String(nullable: false, maxLength: 100),
+                        Link = c.String(),
                         BirthDate = c.DateTime(precision: 7, storeType: "datetime2"),
                         PassDate = c.DateTime(precision: 7, storeType: "datetime2"),
                     })
@@ -111,6 +177,15 @@ namespace PictureAnalyzer.Migrations
                 .Index(t => t.Name, unique: true);
             
             CreateTable(
+                "dbo.IdentityRoles",
+                c => new
+                    {
+                        Id = c.String(nullable: false, maxLength: 128),
+                        Name = c.String(),
+                    })
+                .PrimaryKey(t => t.Id);
+            
+            CreateTable(
                 "dbo.PaintingColors",
                 c => new
                     {
@@ -127,6 +202,8 @@ namespace PictureAnalyzer.Migrations
         
         public override void Down()
         {
+            DropForeignKey("dbo.IdentityUserRoles", "IdentityRole_Id", "dbo.IdentityRoles");
+            DropForeignKey("dbo.Paintings", "UserId", "dbo.ApplicationUsers");
             DropForeignKey("dbo.Paintings", "TypeID", "dbo.Types");
             DropForeignKey("dbo.Paintings", "ProfileID", "dbo.Profiles");
             DropForeignKey("dbo.Paintings", "PainterID", "dbo.Painters");
@@ -134,6 +211,9 @@ namespace PictureAnalyzer.Migrations
             DropForeignKey("dbo.Paintings", "GalleryID", "dbo.Galleries");
             DropForeignKey("dbo.PaintingColors", "Color_ID", "dbo.Colors");
             DropForeignKey("dbo.PaintingColors", "Painting_ID", "dbo.Paintings");
+            DropForeignKey("dbo.IdentityUserRoles", "ApplicationUser_Id", "dbo.ApplicationUsers");
+            DropForeignKey("dbo.IdentityUserLogins", "ApplicationUser_Id", "dbo.ApplicationUsers");
+            DropForeignKey("dbo.IdentityUserClaims", "ApplicationUser_Id", "dbo.ApplicationUsers");
             DropIndex("dbo.PaintingColors", new[] { "Color_ID" });
             DropIndex("dbo.PaintingColors", new[] { "Painting_ID" });
             DropIndex("dbo.Types", new[] { "Name" });
@@ -146,9 +226,15 @@ namespace PictureAnalyzer.Migrations
             DropIndex("dbo.Paintings", new[] { "InfluenceID" });
             DropIndex("dbo.Paintings", new[] { "TypeID" });
             DropIndex("dbo.Paintings", new[] { "PainterID" });
+            DropIndex("dbo.Paintings", new[] { "UserId" });
             DropIndex("dbo.Paintings", new[] { "Name" });
             DropIndex("dbo.Colors", new[] { "Name" });
+            DropIndex("dbo.IdentityUserRoles", new[] { "IdentityRole_Id" });
+            DropIndex("dbo.IdentityUserRoles", new[] { "ApplicationUser_Id" });
+            DropIndex("dbo.IdentityUserLogins", new[] { "ApplicationUser_Id" });
+            DropIndex("dbo.IdentityUserClaims", new[] { "ApplicationUser_Id" });
             DropTable("dbo.PaintingColors");
+            DropTable("dbo.IdentityRoles");
             DropTable("dbo.Types");
             DropTable("dbo.Profiles");
             DropTable("dbo.Painters");
@@ -156,6 +242,10 @@ namespace PictureAnalyzer.Migrations
             DropTable("dbo.Galleries");
             DropTable("dbo.Paintings");
             DropTable("dbo.Colors");
+            DropTable("dbo.IdentityUserRoles");
+            DropTable("dbo.IdentityUserLogins");
+            DropTable("dbo.IdentityUserClaims");
+            DropTable("dbo.ApplicationUsers");
         }
     }
 }

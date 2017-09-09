@@ -13,7 +13,7 @@ namespace PictureAnalyzer.Controllers
 {
     public class PaintingsController : Controller
     {
-        private PictureAnalyzerContext db = new PictureAnalyzerContext();
+        private PictureAnalyzerDb db = new PictureAnalyzerDb();
 
         // GET: Paintings
         public ActionResult Index()
