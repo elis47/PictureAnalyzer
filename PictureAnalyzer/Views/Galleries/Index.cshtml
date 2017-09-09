@@ -4,9 +4,9 @@
     ViewBag.Title = "Index";
 }
 
-<br/><br/>
+<br /><br />
 <div class="col-md-11 col-md-offset-1" style="font-size:larger;">
-    
+
 </div>
 <h1 class="text-center">Take a look at our galleries...</h1>
 <h3 class="text-center">Or</h3>
@@ -20,72 +20,70 @@
             {
 
                 <div class='col-md-3'>
+                    <div class="text-center">
+                        <h4><i>@Html.DisplayFor(modelItem => item.Name)</i></h4>
+                    </div>
                     <a class="thumbnail" rel="ligthbox" href="~/Content/img/1.jpg">
                         <img class="img-responsive" alt="" src="~/Content/img/1.jpg" />
-                        <div class='text-right'>
-                            <small class='text-muted'>@Html.DisplayFor(modelItem => item.Name)</small>
-                        </div>
                     </a>
-                    <div class="text-center">@Html.ActionLink("Add painting to gallery", "Create", "Galleries")</div>
+                    <div class="dropdown text-center">
+                        <a href="#" class="dropdown-toggle white" data-toggle="dropdown" role="button" aria-expanded="false">Options <span class="caret"></span></a>
+                        <ul class="dropdown-menu text-center" role="menu">
+                            <li>@Html.ActionLink("Add painting", "Create", "Galleries")</li>
+                            <li>@Html.ActionLink("Edit", "Edit", new { id = item.ID })</li>
+                            <li>@Html.ActionLink("Details", "Details", new { id = item.ID })</li>
+                            <li>@Html.ActionLink("Delete", "Delete", new { id = item.ID })</li>
+                        </ul>
+                    </div>
                 </div>
-                        @*@Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                        @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.ID })*@
-                  
             }
-
-
-            @*<div class='col-md-3'>
-                <a class="thumbnail" rel="ligthbox" href="~/Content/img/2.jpg">
-                    <img class="img-responsive" alt="" src="~/Content/img/2.jpg" />
-                    <div class='text-right'>
-                        <small class='text-muted'>Field by Christian P.</small>
-                    </div>
-                </a>
-            </div>
-            <div class='col-md-3'>
-                <a class="thumbnail" rel="ligthbox" href="~/Content/img/3.jpg">
-                    <img class="img-responsive" alt="" src="~/Content/img/3.jpg" />
-                    <div class='text-right'>
-                        <small class='text-muted'>Lane of crowls by Leonardo da Vinci</small>
-                    </div>
-                </a>
-            </div>
-            <div class='col-md-3'>
-                <a class="thumbnail" rel="ligthbox" href="~/Content/img/4.jpg">
-                    <img class="img-responsive" alt="" src="~/Content/img/4.jpg" />
-                    <div class='text-right'>
-                        <small class='text-muted'>Evening by the lake by Sam T.</small>
-                    </div>
-                </a>
-            </div>*@
         </div>
     </div>
 </div>
 
-
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th></th>
-    </tr>
-
-
-
-</table>
-
 <style>
+    .white, .white:hover {
+        color: white;
+    }
+    body {
+        background: linear-gradient(black, #009871,black);
+    }
+    .dropdown {
+        margin: 8px;
+    }
+    .dropdown-menu {
+        float: right;
+        padding: 0px;
+    }
+    .img-responsive {
+        margin: 3px; 
+    }
+        .img-responsive:hover {
+            opacity: 1;
+        }
+    .col-md-3 {
+        border:2px solid black;
+        margin: 37px;
+    }
+        .col-md-3:hover {
+            border: 2px solid #0ce3ac;
+            margin: 37px;
+            box-shadow: 10px 10px 5px black;
+        }
+    .dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
+        background-color: #009871;
+    }
     .text-muted {
         color: white;
     }
+
     .color {
         color: #009871;
         margin-top: 45px;
+    }
+    .thumbnail {
+        margin-bottom:2px;
+        border: 0px;
     }
     .glyphicon {
         font-size: 0.7em;
