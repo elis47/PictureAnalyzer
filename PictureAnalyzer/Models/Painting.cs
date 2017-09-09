@@ -27,7 +27,7 @@ namespace PictureAnalyzer.Models
         public double LuminosityIndex { get; set; }
         [Required]
         public string Link { get; set; }
-
+        [Required]
         public string UserId { get; set; }
         [ForeignKey("UserId")]
         public ApplicationUser User { get; set; }

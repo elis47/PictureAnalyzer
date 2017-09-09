@@ -19,6 +19,7 @@ namespace PictureAnalyzer.Models
         [Required]
         [MaxLength(100)]
         public string Country { get; set; }
+        public string Link { get; set; }
         [DataType(DataType.Date)]
         [Column(TypeName = "DateTime2")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
