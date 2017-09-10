@@ -202,6 +202,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\GalleriesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InfluencesController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PaintersController.cs" />
     <Compile Include="Controllers\PaintingsController.cs" />
@@ -335,6 +336,11 @@
     <Content Include="Views\Paintings\Details.cshtml" />
     <Content Include="Views\Paintings\Edit.cshtml" />
     <Content Include="Views\Paintings\Index.cshtml" />
+    <Content Include="Views\Influences\Create.cshtml" />
+    <Content Include="Views\Influences\Delete.cshtml" />
+    <Content Include="Views\Influences\Details.cshtml" />
+    <Content Include="Views\Influences\Edit.cshtml" />
+    <Content Include="Views\Influences\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
