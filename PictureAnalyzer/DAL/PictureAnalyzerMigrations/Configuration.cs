@@ -41,6 +41,9 @@
                 );
             context.SaveChanges();
 
+            context.Types.AddOrUpdate(
+                new Models.Type { Name="Portrait", Description="No current description", PersonalityTraits="lonelyness"}
+                );
         }
     }
 }

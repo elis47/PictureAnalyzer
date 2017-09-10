@@ -331,16 +331,16 @@
     <Content Include="Views\Galleries\Details.cshtml" />
     <Content Include="Views\Galleries\Edit.cshtml" />
     <Content Include="Views\Galleries\Index.cshtml" />
-    <Content Include="Views\Paintings\Create.cshtml" />
-    <Content Include="Views\Paintings\Delete.cshtml" />
-    <Content Include="Views\Paintings\Details.cshtml" />
-    <Content Include="Views\Paintings\Edit.cshtml" />
-    <Content Include="Views\Paintings\Index.cshtml" />
     <Content Include="Views\Influences\Create.cshtml" />
     <Content Include="Views\Influences\Delete.cshtml" />
     <Content Include="Views\Influences\Details.cshtml" />
     <Content Include="Views\Influences\Edit.cshtml" />
     <Content Include="Views\Influences\Index.cshtml" />
+    <Content Include="Views\Paintings\Create.cshtml" />
+    <Content Include="Views\Paintings\Delete.cshtml" />
+    <Content Include="Views\Paintings\Details.cshtml" />
+    <Content Include="Views\Paintings\Edit.cshtml" />
+    <Content Include="Views\Paintings\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

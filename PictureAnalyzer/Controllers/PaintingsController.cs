@@ -14,11 +14,11 @@ namespace PictureAnalyzer.Controllers
     public class PaintingsController : Controller
     {
         private PictureAnalyzerDb db = new PictureAnalyzerDb();
-
+        private IdentityDb idb = new IdentityDb();
         // GET: Paintings
         public ActionResult Index()
         {
-            var paintings = db.Paintings.Include(p => p.Gallery).Include(p => p.Influence).Include(p => p.Painter).Include(p => p.Profile).Include(p => p.Type);
+            var paintings = db.Paintings.Include(p => p.Gallery).Include(p => p.Influence).Include(p => p.Painter).Include(p => p.Profile).Include(p => p.Type).Include(p => p.User);
             return View(paintings.ToList());
         }
 
@@ -45,6 +45,7 @@ namespace PictureAnalyzer.Controllers
             ViewBag.PainterID = new SelectList(db.Painters, "ID", "Name");
             ViewBag.ProfileID = new SelectList(db.Profiles, "ID", "Name");
             ViewBag.TypeID = new SelectList(db.Types, "ID", "Name");
+            ViewBag.UserId = new SelectList(idb.Users, "Id", "Email");
             return View();
         }
 
@@ -53,7 +54,7 @@ namespace PictureAnalyzer.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Name,Description,CurrentOwner,HarmonyIndex,ConstrastIndex,LuminosityIndex,PainterID,TypeID,InfluenceID,ProfileID,GalleryID")] Painting painting)
+        public ActionResult Create([Bind(Include = "ID,Name,Description,CurrentOwner,HarmonyIndex,ConstrastIndex,LuminosityIndex,Link,UserId,PainterID,TypeID,InfluenceID,ProfileID,GalleryID")] Painting painting)
         {
             if (ModelState.IsValid)
             {
@@ -67,6 +68,7 @@ namespace PictureAnalyzer.Controllers
             ViewBag.PainterID = new SelectList(db.Painters, "ID", "Name", painting.PainterID);
             ViewBag.ProfileID = new SelectList(db.Profiles, "ID", "Name", painting.ProfileID);
             ViewBag.TypeID = new SelectList(db.Types, "ID", "Name", painting.TypeID);
+            ViewBag.UserId = new SelectList(idb.Users, "Id", "Email", painting.UserId);
             return View(painting);
         }
 
@@ -87,6 +89,7 @@ namespace PictureAnalyzer.Controllers
             ViewBag.PainterID = new SelectList(db.Painters, "ID", "Name", painting.PainterID);
             ViewBag.ProfileID = new SelectList(db.Profiles, "ID", "Name", painting.ProfileID);
             ViewBag.TypeID = new SelectList(db.Types, "ID", "Name", painting.TypeID);
+            ViewBag.UserId = new SelectList(db.ApplicationUsers, "Id", "Email", painting.UserId);
             return View(painting);
         }
 
@@ -95,7 +98,7 @@ namespace PictureAnalyzer.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Name,Description,CurrentOwner,HarmonyIndex,ConstrastIndex,LuminosityIndex,PainterID,TypeID,InfluenceID,ProfileID,GalleryID")] Painting painting)
+        public ActionResult Edit([Bind(Include = "ID,Name,Description,CurrentOwner,HarmonyIndex,ConstrastIndex,LuminosityIndex,Link,UserId,PainterID,TypeID,InfluenceID,ProfileID,GalleryID")] Painting painting)
         {
             if (ModelState.IsValid)
             {
@@ -108,6 +111,7 @@ namespace PictureAnalyzer.Controllers
             ViewBag.PainterID = new SelectList(db.Painters, "ID", "Name", painting.PainterID);
             ViewBag.ProfileID = new SelectList(db.Profiles, "ID", "Name", painting.ProfileID);
             ViewBag.TypeID = new SelectList(db.Types, "ID", "Name", painting.TypeID);
+            ViewBag.UserId = new SelectList(db.ApplicationUsers, "Id", "Email", painting.UserId);
             return View(painting);
         }
 
