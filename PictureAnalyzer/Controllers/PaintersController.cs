@@ -22,6 +22,7 @@ namespace PictureAnalyzer.Controllers
             ViewBag.CurrentSort = sortOrder; 
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewBag.CountrySortParm = sortOrder == "Country" ? "country_desc" : "Country";
+            ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
             if (searchString != null)
             {
                 page = 1;
@@ -50,6 +51,12 @@ namespace PictureAnalyzer.Controllers
                     break;
                 case "country_desc":
                     painters = painters.OrderByDescending(p => p.Country);
+                    break;
+                case "Date":
+                    painters = painters.OrderBy(p => p.BirthDate);
+                    break;
+                case "date_desc":
+                    painters = painters.OrderByDescending(p => p.BirthDate);
                     break;
                 default:
                     painters = painters.OrderBy(p => p.Name);
