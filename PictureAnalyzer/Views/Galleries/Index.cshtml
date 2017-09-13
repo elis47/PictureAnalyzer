@@ -1,4 +1,5 @@
-﻿@model IEnumerable<PictureAnalyzer.Models.Gallery>
+﻿@model PagedList.IPagedList<PictureAnalyzer.Models.Gallery>
+@using PagedList.Mvc;
 
 @{
     ViewBag.Title = "Index";
@@ -11,19 +12,51 @@
 <h1 class="text-center">Take a look at our galleries...</h1>
 <h3 class="text-center">Or</h3>
 <h1 class="text-center"><i class="glyphicon glyphicon-plus"></i> @Html.ActionLink("Create new gallery", "Create")</h1><br /><br />
+
 <div class="container">
+
+    @using (Html.BeginForm("Index", "Galleries", FormMethod.Get))
+    {
+        <div class="row">
+
+            <div class="col-md-2 col-md-offset-1 text-center">
+                <p class="filter">@Html.ActionLink("Filter by name", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })</p>
+            </div>
+
+
+            <div class="col-md-6">
+                <div id="custom-search-input">
+                    <div class="input-group col-md-12">
+                        @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new
+                   {
+                       htmlAttributes = new
+                       {
+                           @class = "form-control",
+                           placeholder = "Search for galleries..."
+                       }
+                   })
+                        <span class="input-group-btn">
+                            <button class="btn btn-info btn-sm" type="submit">
+                                <i class="glyphicon glyphicon-search"></i>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    <br />
+
     <div class="row">
         <div class='list-group gallery'>
-
-
             @foreach (var item in Model)
             {
 
-                <div class='col-md-3'>
+                <div class='col-md-3 col-md-3-personalized'>
                     <div class="text-center">
                         <h4><i>@Html.DisplayFor(modelItem => item.Name)</i></h4>
                     </div>
-                    <a class="thumbnail" rel="ligthbox" href="~/Content/img/1.jpg">
+                    <a class="thumbnail" rel="ligthbox" href="~/Content/img/1.jpg" data-toggle="tooltip" data-placement="top" title="@Html.DisplayFor(modelItem => item.Description)">
                         <img class="img-responsive" alt="" src="~/Content/img/1.jpg" />
                     </a>
                     <div class="dropdown text-center">
@@ -41,7 +74,34 @@
     </div>
 </div>
 
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }),
+    new PagedListRenderOptions
+    {
+        DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+        DisplayLinkToLastPage = PagedListDisplayMode.Always,
+        DisplayLinkToPreviousPage = PagedListDisplayMode.Never,
+        DisplayLinkToNextPage = PagedListDisplayMode.Never,
+        DisplayPageCountAndCurrentLocation = false,
+        DisplayEllipsesWhenNotShowingAllPageNumbers = false,
+        MaximumPageNumbersToDisplay = 5
+    })
+
 <style>
+    a {
+        color: white;
+    }
+    .row {
+        margin-top: 50px;
+    }
+    .filter {
+        margin-top: 15px;
+    }
+    .pagination-container {
+        text-align: center;
+    }
     .white, .white:hover {
         color: white;
     }
@@ -61,11 +121,11 @@
         .img-responsive:hover {
             opacity: 1;
         }
-    .col-md-3 {
+    .col-md-3-personalized {
         border:2px solid black;
         margin: 37px;
     }
-        .col-md-3:hover {
+        .col-md-3-personalized:hover {
             border: 2px solid #0ce3ac;
             margin: 37px;
             box-shadow: 10px 10px 5px black;
@@ -88,5 +148,47 @@
     .glyphicon {
         font-size: 0.7em;
         color: #0ce3ac;
+    }
+    #custom-search-input {
+        padding: 3px;
+        border-radius: 6px;
+        background-color: #fff;
+    }
+
+        #custom-search-input input {
+            border: 0;
+            box-shadow: none;
+        }
+
+        #custom-search-input > div > input {
+            max-width: 400px;
+            width: 300px;
+            margin-top: 6px;
+            font-size: 18px;
+            border: 3px solid white;
+        }
+
+    .btn-info {
+        color: #ffffff;
+        background-color: #00bc8c;
+        border-color: #00bc8c;
+    }
+
+        .btn-info:hover, .btn-info:active, .btn-info:focus, .btn-info:active:focus {
+            color: #ffffff;
+            background-color: #7C77B9;
+            border-color: #7C77B9;
+        }
+
+    #custom-search-input button:hover {
+        border: 0;
+        box-shadow: none;
+        border-left: solid 1px #ccc;
+    }
+
+    #custom-search-input .glyphicon-search {
+        font-size: 23px;
+        height: 15px;
+        color: white;
     }
 </style>

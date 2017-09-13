@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using PictureAnalyzer.DAL;
 using PictureAnalyzer.Models;
+using PagedList;
 
 namespace PictureAnalyzer.Controllers
 {
@@ -16,9 +17,41 @@ namespace PictureAnalyzer.Controllers
         private PictureAnalyzerDb db = new PictureAnalyzerDb();
 
         // GET: Galleries
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder, string searchString, string currentFilter, int? page)
         {
-            return View(db.Galleries.ToList());
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
+            var galleries = from g in db.Galleries
+                           select g;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                galleries = galleries.Where(g => g.Name.Contains(searchString)
+                                       || g.Description.Contains(searchString));
+            }
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    galleries = galleries.OrderByDescending(p => p.Name);
+                    break;
+                default:
+                    galleries = galleries.OrderBy(p => p.Name);
+                    break;
+            }
+
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
+            return View(galleries.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: Galleries/Details/5
