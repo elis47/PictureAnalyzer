@@ -1,59 +1,197 @@
-﻿@model IEnumerable<PictureAnalyzer.Models.Painter>
+﻿@model PagedList.IPagedList<PictureAnalyzer.Models.Painter>
+@using PagedList.Mvc;
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Painters";
 }
 
-<h2>Index</h2>
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Country)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Link)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.BirthDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PassDate)
-        </th>
-        <th></th>
-    </tr>
+<br /><br />
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Country)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BirthDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PassDate)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-        </td>
-    </tr>
-}
+<div class="col-md-11 col-md-offset-1" style="font-size:larger;">
 
-</table>
+</div>
+<h1 class="text-center">Take a look at our painters...</h1>
+<h3 class="text-center">Or</h3>
+<h1 class="text-center"><i class="glyphicon glyphicon-plus"></i> @Html.ActionLink("Add new painter", "Create")</h1><br /><br />
+<div class="container">
+
+    @Html.ActionLink("Sort by name", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
+    <br />
+    @Html.ActionLink("Sort by country", "Index", new { sortOrder = ViewBag.CountrySortParm, currentFilter = ViewBag.CurrentFilter })
+
+    @using (Html.BeginForm("Index", "Painters", FormMethod.Get))
+    {
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+                    <div id="custom-search-input">
+                        <div class="input-group col-md-12">
+                            @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new
+                       {
+                           htmlAttributes = new
+                           {
+                               @class = "form-control",
+                               placeholder = "Search for painters..."
+                           }
+                       })
+                            <span class="input-group-btn">
+                                <button class="btn btn-info btn-sm" type="submit">
+                                    <i class="glyphicon glyphicon-search"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    <br />
+    <div class="row">
+        <div class='list-group gallery'>
+
+
+            @foreach (var item in Model)
+            {
+
+                <div class='col-md-3'>
+                    <div class="text-center">
+                        <h4><i>@Html.DisplayFor(modelItem => item.Name)</i></h4>
+                    </div>
+                    <a class="thumbnail" rel="ligthbox" href="~/Content/img/pablo_picasso.jpg" data-toggle="tooltip" data-placement="top" title="@Html.DisplayFor(modelItem => item.Description)">
+                        <img class="img-responsive" alt="" src="~/Content/img/pablo_picasso.jpg" />
+                    </a>
+                    <div class="text-center">
+                        @String.Format("{0,9:d}", item.BirthDate) - @String.Format("{0,9:d}", item.PassDate)
+                    </div>
+                    <div class="text-center">
+                        @Html.DisplayFor(modelItem => item.Country)
+                    </div>
+                    <div class="text-center">
+                        <br />
+                        @Html.ActionLink("View paintings", "Details", new { id = item.ID })
+                    </div><br />
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }),
+    new PagedListRenderOptions
+    {
+        DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+        DisplayLinkToLastPage = PagedListDisplayMode.Always,
+        DisplayLinkToPreviousPage = PagedListDisplayMode.Never,
+        DisplayLinkToNextPage = PagedListDisplayMode.Never,
+        DisplayPageCountAndCurrentLocation = false,
+        DisplayEllipsesWhenNotShowingAllPageNumbers = false,
+        MaximumPageNumbersToDisplay = 5
+    })
+
+<style>
+    .pagination-container {
+        text-align: center;
+    }
+
+    body {
+        background: linear-gradient(black, #009871,black);
+    }
+
+    .dropdown {
+        margin: 8px;
+    }
+
+    .dropdown-menu {
+        float: right;
+        padding: 0px;
+    }
+
+    .img-responsive {
+        margin: 3px;
+    }
+
+        .img-responsive:hover {
+            opacity: 1;
+        }
+
+    .col-md-3 {
+        border: 2px solid black;
+        margin: 37px;
+    }
+
+        .col-md-3:hover {
+            border: 2px solid #0ce3ac;
+            margin: 37px;
+            box-shadow: 10px 10px 5px black;
+        }
+
+    .dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
+        background-color: #009871;
+    }
+
+    .text-muted {
+        color: white;
+    }
+
+    .color {
+        color: #009871;
+        margin-top: 45px;
+    }
+
+    .thumbnail {
+        margin-bottom: 2px;
+        border: 0px;
+    }
+
+    .glyphicon {
+        font-size: 0.7em;
+        color: #0ce3ac;
+    }
+
+    #custom-search-input {
+        padding: 3px;
+        border: solid 1px #E4E4E4;
+        border-radius: 6px;
+        background-color: #fff;
+    }
+
+        #custom-search-input input {
+            border: 0;
+            box-shadow: none;
+        }
+
+        #custom-search-input > div > input {
+            max-width: 400px;
+            width: 300px;
+            margin-top: 6px;
+            font-size: 18px;
+            border: 3px solid white;
+        }
+
+    .btn-info {
+        color: #ffffff;
+        background-color: #00bc8c;
+        border-color: #00bc8c;
+    }
+
+        .btn-info:hover, .btn-info:active, .btn-info:focus, .btn-info:active:focus {
+            color: #ffffff;
+            background-color: #7C77B9;
+            border-color: #7C77B9;
+        }
+
+    #custom-search-input button:hover {
+        border: 0;
+        box-shadow: none;
+        border-left: solid 1px #ccc;
+    }
+
+    #custom-search-input .glyphicon-search {
+        font-size: 23px;
+        height: 15px;
+    }
+</style>

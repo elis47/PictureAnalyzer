@@ -50,6 +50,12 @@
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.5\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -200,6 +206,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ColorsController.cs" />
     <Compile Include="Controllers\GalleriesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InfluencesController.cs" />
@@ -216,6 +223,10 @@
     <Compile Include="DAL\PictureAnalyzerMigrations\201709092146067_InitialCreate.cs" />
     <Compile Include="DAL\PictureAnalyzerMigrations\201709092146067_InitialCreate.Designer.cs">
       <DependentUpon>201709092146067_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\PictureAnalyzerMigrations\201709101927253_DisplayName.cs" />
+    <Compile Include="DAL\PictureAnalyzerMigrations\201709101927253_DisplayName.Designer.cs">
+      <DependentUpon>201709101927253_DisplayName.cs</DependentUpon>
     </Compile>
     <Compile Include="DAL\PictureAnalyzerMigrations\Configuration.cs" />
     <Compile Include="Global.asax.cs">
@@ -248,6 +259,9 @@
     <Content Include="Content\img\8.jpg" />
     <Content Include="Content\img\chroma.jpg" />
     <Content Include="Content\img\chroma2.jpg" />
+    <Content Include="Content\img\claude_monet.jpg" />
+    <Content Include="Content\img\edvard_munch.jpg" />
+    <Content Include="Content\img\escher.jpg" />
     <Content Include="Content\img\fifth.jpg" />
     <Content Include="Content\img\first.jpg" />
     <Content Include="Content\img\fourth.jpg" />
@@ -262,9 +276,16 @@
     <Content Include="Content\img\giphy1.gif" />
     <Content Include="Content\img\giphy2.gif" />
     <Content Include="Content\img\image.jpg" />
+    <Content Include="Content\img\leonardo_da_vinci.jpg" />
+    <Content Include="Content\img\marc_chagall.jpg" />
+    <Content Include="Content\img\michelangelo_buonarotti.jpg" />
+    <Content Include="Content\img\pablo_picasso.jpg" />
+    <Content Include="Content\img\rembrant.jpg" />
+    <Content Include="Content\img\salvador_dali.jpg" />
     <Content Include="Content\img\second.jpg" />
     <Content Include="Content\img\sixth.jpg" />
     <Content Include="Content\img\third.jpg" />
+    <Content Include="Content\PagedList.css" />
     <Content Include="DatabaseDiagram\ClassDiagram.png" />
     <Content Include="DatabaseDiagram\NewClassDiagram.png" />
     <Content Include="favicon.ico" />
@@ -341,6 +362,11 @@
     <Content Include="Views\Paintings\Details.cshtml" />
     <Content Include="Views\Paintings\Edit.cshtml" />
     <Content Include="Views\Paintings\Index.cshtml" />
+    <Content Include="Views\Colors\Create.cshtml" />
+    <Content Include="Views\Colors\Delete.cshtml" />
+    <Content Include="Views\Colors\Details.cshtml" />
+    <Content Include="Views\Colors\Edit.cshtml" />
+    <Content Include="Views\Colors\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -364,6 +390,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DAL\PictureAnalyzerMigrations\201709092146067_InitialCreate.resx">
       <DependentUpon>201709092146067_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DAL\PictureAnalyzerMigrations\201709101927253_DisplayName.resx">
+      <DependentUpon>201709101927253_DisplayName.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

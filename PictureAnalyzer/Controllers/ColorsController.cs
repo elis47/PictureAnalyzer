@@ -8,150 +8,122 @@ using System.Web;
 using System.Web.Mvc;
 using PictureAnalyzer.DAL;
 using PictureAnalyzer.Models;
-using PagedList;
 
 namespace PictureAnalyzer.Controllers
 {
-    public class PaintersController : Controller
+    public class ColorsController : Controller
     {
         private PictureAnalyzerDb db = new PictureAnalyzerDb();
 
-        // GET: Painters
-        public ActionResult Index(string sortOrder, string searchString, string currentFilter, int? page)
+        // GET: Colors
+        public ActionResult Index(string sortOrder)
         {
-            ViewBag.CurrentSort = sortOrder; 
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-            ViewBag.CountrySortParm = sortOrder == "Country" ? "country_desc" : "Country";
-            if (searchString != null)
-            {
-                page = 1;
-            }
-            else
-            {
-                searchString = currentFilter;
-            }
-
-            ViewBag.CurrentFilter = searchString;
-            var painters = from p in db.Painters
-                           select p;
-
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                painters = painters.Where(p => p.Name.Contains(searchString)
-                                       || p.Description.Contains(searchString));
-            }
+            var colors = from s in db.Colors
+                         select s;
             switch (sortOrder)
             {
                 case "name_desc":
-                    painters = painters.OrderByDescending(p => p.Name);
-                    break;
-                case "Country":
-                    painters = painters.OrderBy(p => p.Country);
-                    break;
-                case "country_desc":
-                    painters = painters.OrderByDescending(p => p.Country);
+                    colors = colors.OrderByDescending(s => s.Name);
                     break;
                 default:
-                    painters = painters.OrderBy(p => p.Name);
+                    colors = colors.OrderBy(s => s.Name);
                     break;
             }
-
-            int pageSize = 3;
-            int pageNumber = (page ?? 1);
-            return View(painters.ToPagedList(pageNumber, pageSize));
+            return View(colors.ToList());
         }
 
-        // GET: Painters/Details/5
+        // GET: Colors/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Painter painter = db.Painters.Find(id);
-            if (painter == null)
+            Color color = db.Colors.Find(id);
+            if (color == null)
             {
                 return HttpNotFound();
             }
-            return View(painter);
+            return View(color);
         }
 
-        // GET: Painters/Create
+        // GET: Colors/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Painters/Create
+        // POST: Colors/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Name,Description,Country,BirthDate,PassDate")] Painter painter)
+        public ActionResult Create([Bind(Include = "ID,Name,Description,PersonalityTraits")] Color color)
         {
             if (ModelState.IsValid)
             {
-                db.Painters.Add(painter);
+                db.Colors.Add(color);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(painter);
+            return View(color);
         }
 
-        // GET: Painters/Edit/5
+        // GET: Colors/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Painter painter = db.Painters.Find(id);
-            if (painter == null)
+            Color color = db.Colors.Find(id);
+            if (color == null)
             {
                 return HttpNotFound();
             }
-            return View(painter);
+            return View(color);
         }
 
-        // POST: Painters/Edit/5
+        // POST: Colors/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Name,Description,Country,BirthDate,PassDate")] Painter painter)
+        public ActionResult Edit([Bind(Include = "ID,Name,Description,PersonalityTraits")] Color color)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(painter).State = EntityState.Modified;
+                db.Entry(color).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(painter);
+            return View(color);
         }
 
-        // GET: Painters/Delete/5
+        // GET: Colors/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Painter painter = db.Painters.Find(id);
-            if (painter == null)
+            Color color = db.Colors.Find(id);
+            if (color == null)
             {
                 return HttpNotFound();
             }
-            return View(painter);
+            return View(color);
         }
 
-        // POST: Painters/Delete/5
+        // POST: Colors/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Painter painter = db.Painters.Find(id);
-            db.Painters.Remove(painter);
+            Color color = db.Colors.Find(id);
+            db.Colors.Remove(color);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

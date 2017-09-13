@@ -18,6 +18,7 @@ namespace PictureAnalyzer.Models
         public string Description { get; set; }
         [Required]
         [MaxLength(100)]
+        [Display(Name ="Current owner")]
         public string CurrentOwner { get; set; }
         [Required]
         public double HarmonyIndex { get; set; }
@@ -28,14 +29,20 @@ namespace PictureAnalyzer.Models
         [Required]
         public string Link { get; set; }
         [Required]
+        [Display(Name = "Username")]
         public string UserId { get; set; }
         [ForeignKey("UserId")]
         public ApplicationUser User { get; set; }
-        
+
+        [Display(Name = "Painter")]
         public int PainterID { get; set; }
+        [Display(Name = "Type")]
         public int TypeID { get; set; }
+        [Display(Name = "Influence")]
         public int InfluenceID { get; set; }
+        [Display(Name = "Profile")]
         public int ProfileID { get; set; }
+        [Display(Name = "Gallery")]
         public int GalleryID { get; set; }
 
         public virtual Painter Painter { get; set; }
