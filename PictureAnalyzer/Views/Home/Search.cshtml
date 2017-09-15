@@ -1,0 +1,95 @@
+﻿@model PagedList.IPagedList<PictureAnalyzer.Models.Painter>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Search results";
+}
+<br/>
+<h1 class="text-center">A list of our <i class="color">painters</i> and <i class="color">galleries</i> matching your search...</h1>
+<div class="container">
+    <div class="row">
+        <div class='list-group gallery'>
+
+
+            @foreach (var item in Model)
+            {
+
+                <div class='col-md-3 col-md-3-personalized'>
+                    <div class="text-center">
+                        <h4><i>@Html.DisplayFor(modelItem => item.Name)</i></h4>
+                    </div>
+                    <a class="thumbnail" rel="ligthbox" href="~/Content/img/pablo_picasso.jpg" data-toggle="tooltip" data-placement="top" title="@Html.DisplayFor(modelItem => item.Description)">
+                        <img class="img-responsive" alt="" src="~/Content/img/pablo_picasso.jpg" />
+                    </a>
+                    <div class="text-center">
+                        @String.Format("{0,9:d}", item.BirthDate) - @String.Format("{0,9:d}", item.PassDate)
+                    </div>
+                    <div class="text-center">
+                        @Html.DisplayFor(modelItem => item.Country)
+                    </div>
+                    <div class="text-center">
+                        <br />
+                        <p>@Html.ActionLink("Details", "Painters", new { id = item.ID })</p>
+                        <a asp-controller="Painters" asp-action="Details" asp-attribute="item.ID">blae</a>
+                        @*@Html.ActionLink("View paintings", "", "", new { id = item.ID })*@
+                    </div><br />
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Search",
+    new { SearchString = ViewBag.CurrentFilter, page }),
+    new PagedListRenderOptions
+    {
+        DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+        DisplayLinkToLastPage = PagedListDisplayMode.Always,
+        DisplayLinkToPreviousPage = PagedListDisplayMode.Never,
+        DisplayLinkToNextPage = PagedListDisplayMode.Never,
+        DisplayPageCountAndCurrentLocation = false,
+        DisplayEllipsesWhenNotShowingAllPageNumbers = false,
+        MaximumPageNumbersToDisplay = 5
+    })
+<style>
+    .color {
+        color: #009871;
+    }
+    .row {
+        margin-top: 50px;
+    }
+
+    .pagination-container {
+        text-align: center;
+    }
+
+    body {
+        background: linear-gradient(black, #009871,black);
+    }
+
+    .img-responsive {
+        margin: 3px;
+    }
+
+        .img-responsive:hover {
+            opacity: 1;
+        }
+
+    .col-md-3-personalized {
+        border: 2px solid black;
+        margin: 37px;
+    }
+
+        .col-md-3-personalized:hover {
+            border: 2px solid #0ce3ac;
+            margin: 37px;
+            box-shadow: 10px 10px 5px black;
+        }
+
+    .thumbnail {
+        margin-bottom: 2px;
+        border: 0px;
+    }
+</style>

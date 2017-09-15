@@ -1,4 +1,6 @@
-﻿@{
+﻿@using PagedList.Mvc;
+
+@{
     ViewBag.Title = "Home Page";
 }
 
@@ -7,35 +9,42 @@
         <h1 class="text-center text-shadow"><i class="glyphicon glyphicon-picture"></i> PictureAnalyzer</h1>
         <p class="text-center text-shadow">A new, complex and fun application, dedicated to all art lovers.</p>
     </div>
+
     <div class="container">
         <div class="row">
             <div class="col-md-6 col-md-offset-3">
                 <div id="custom-search-input">
+                    @using (Html.BeginForm("Index", "Home"))
+                    {
                     <div class="input-group col-md-12">
-                        <input type="text" class="form-control" placeholder="Search for paintings, painters or galleries..." />
+                        <input type="text" name="searchString" class="form-control" placeholder="Search for painters or galleries..." />
+                        
                         <span class="input-group-btn">
-                            <button class="btn btn-info btn-sm" type="button">
+                            <button class="btn btn-info btn-sm" type="submit">
                                 <i class="glyphicon glyphicon-search"></i>
                             </button>
                         </span>
                     </div>
+                     }
                 </div>
             </div>
         </div>
     </div>
     <br />
     <h4 class="text-center text-shadow font-size">Upload your painting <a href="">here</a> and get a precise psychological profile of the painter or...</h4>
-    <h4 class="text-center text-shadow">If you're still not convinced, click @Html.ActionLink("here","About","Home") for more information about this app! </h4><br /><br/>
+    <h4 class="text-center text-shadow">If you're still not convinced, click @Html.ActionLink("here", "About", "Home") for more information about this app! </h4><br /><br />
 </div>
 
 
-<style>
+<style>    
     .glyphicon-picture {
         font-size: 0.8em;
     }
+
     body {
         padding-bottom: 0px;
     }
+
     .text-shadow {
         text-shadow: 0.03em 0 black, 0 0.03em black, -0.03em 0 black, 0 -0.03em black;
     }
@@ -43,17 +52,19 @@
     .body-content {
         background-image: url("../../Content/img/gif1.gif");
         background-size: cover;
-        width:90%;
+        width: 90%;
     }
 
     .jumbotron {
         background-color: inherit;
         padding-top: 22px;
-        margin-bottom:330px;
+        margin-bottom: 330px;
     }
+
     .font-size {
         font-size: 22px;
     }
+
     #custom-search-input {
         padding: 3px;
         border: solid 1px #E4E4E4;
@@ -61,10 +72,10 @@
         background-color: #fff;
     }
 
-    #custom-search-input input {
-        border: 0;
-        box-shadow: none;
-    }
+        #custom-search-input input {
+            border: 0;
+            box-shadow: none;
+        }
 
         #custom-search-input > div > input {
             max-width: 370px;
@@ -72,27 +83,28 @@
             font-size: 18px;
         }
 
-        .btn-info {
-            color: #ffffff;
-            background-color: #00bc8c;
-            border-color: #00bc8c;
-        }
+    .btn-info {
+        color: #ffffff;
+        background-color: #00bc8c;
+        border-color: #00bc8c;
+    }
 
         .btn-info:hover, .btn-info:active, .btn-info:focus, .btn-info:active:focus {
             color: #ffffff;
             background-color: #7C77B9;
             border-color: #7C77B9;
         }
-        
-        #custom-search-input button:hover {
-            border: 0;
-            box-shadow: none;
-            border-left: solid 1px #ccc;
-        }
 
-     #custom-search-input .glyphicon-search {
-         font-size: 23px;
-         height: 15px;
-     }
+    #custom-search-input button:hover {
+        border: 0;
+        box-shadow: none;
+        border-left: solid 1px #ccc;
+    }
+
+    #custom-search-input .glyphicon-search {
+        font-size: 23px;
+        height: 15px;
+    }
+    
 </style>
 
