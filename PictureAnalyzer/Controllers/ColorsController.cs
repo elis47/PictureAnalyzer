@@ -6,14 +6,13 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using PictureAnalyzer.DAL;
 using PictureAnalyzer.Models;
 
 namespace PictureAnalyzer.Controllers
 {
     public class ColorsController : Controller
     {
-        private PictureAnalyzerDb db = new PictureAnalyzerDb();
+        private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Colors
         public ActionResult Index(string sortOrder)

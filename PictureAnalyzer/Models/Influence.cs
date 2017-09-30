@@ -9,6 +9,11 @@ namespace PictureAnalyzer.Models
 {
     public class Influence
     {
+        public Influence()
+        {
+            Paintings = new List<Painting>();
+        }
+
         public int ID { get; set; }
         [Required]
         [MaxLength(100)]

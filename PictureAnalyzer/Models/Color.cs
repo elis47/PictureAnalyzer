@@ -9,6 +9,11 @@ namespace PictureAnalyzer.Models
 {
     public class Color
     {
+        public Color()
+        {
+            Paintings = new HashSet<Painting>();
+        }
+
         public int ID { get; set; }
         [Required]
         [MaxLength(50)]

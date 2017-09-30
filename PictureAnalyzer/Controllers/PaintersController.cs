@@ -6,7 +6,6 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using PictureAnalyzer.DAL;
 using PictureAnalyzer.Models;
 using PagedList;
 
@@ -14,7 +13,7 @@ namespace PictureAnalyzer.Controllers
 {
     public class PaintersController : Controller
     {
-        private PictureAnalyzerDb db = new PictureAnalyzerDb();
+        private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Painters
         public ActionResult Index(string sortOrder, string searchString, string currentFilter, int? page)

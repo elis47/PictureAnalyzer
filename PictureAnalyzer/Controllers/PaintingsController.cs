@@ -6,19 +6,19 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using PictureAnalyzer.DAL;
 using PictureAnalyzer.Models;
+using Microsoft.AspNet.Identity;
 
 namespace PictureAnalyzer.Controllers
 {
     public class PaintingsController : Controller
     {
-        private PictureAnalyzerDb db = new PictureAnalyzerDb();
-        private IdentityDb idb = new IdentityDb();
+        private ApplicationDbContext db = new ApplicationDbContext();
+
         // GET: Paintings
         public ActionResult Index()
         {
-            var paintings = db.Paintings.Include(p => p.Gallery).Include(p => p.Influence).Include(p => p.Painter).Include(p => p.Profile).Include(p => p.Type).Include(p => p.User);
+            var paintings = db.Paintings.Include(p => p.ApplicationUser).Include(p => p.Gallery).Include(p => p.Influence).Include(p => p.Painter).Include(p => p.Profile).Include(p => p.Type);
             return View(paintings.ToList());
         }
 
@@ -40,12 +40,12 @@ namespace PictureAnalyzer.Controllers
         // GET: Paintings/Create
         public ActionResult Create()
         {
+            ViewBag.ApplicationUserId = new SelectList(db.Users, "Id", "Email");
             ViewBag.GalleryID = new SelectList(db.Galleries, "ID", "Name");
             ViewBag.InfluenceID = new SelectList(db.Influences, "ID", "Name");
             ViewBag.PainterID = new SelectList(db.Painters, "ID", "Name");
             ViewBag.ProfileID = new SelectList(db.Profiles, "ID", "Name");
             ViewBag.TypeID = new SelectList(db.Types, "ID", "Name");
-            ViewBag.UserId = new SelectList(idb.Users, "Id", "Email");
             return View();
         }
 
@@ -54,21 +54,25 @@ namespace PictureAnalyzer.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Name,Description,CurrentOwner,HarmonyIndex,ConstrastIndex,LuminosityIndex,Link,UserId,PainterID,TypeID,InfluenceID,ProfileID,GalleryID")] Painting painting)
+        public ActionResult Create([Bind(Include = "ID,Name,Description,CurrentOwner,HarmonyIndex,ConstrastIndex,LuminosityIndex,Link,ApplicationUserId,PainterID,TypeID,InfluenceID,ProfileID,GalleryID")] Painting painting)
         {
             if (ModelState.IsValid)
             {
+                var currentUserId = User.Identity.GetUserId();
+                painting.ApplicationUserId = currentUserId;
+                var currentUser = db.Users.FirstOrDefault(u => u.Id == currentUserId);
+                painting.ApplicationUser = currentUser;
                 db.Paintings.Add(painting);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
+            ViewBag.ApplicationUserId = new SelectList(db.Users, "Id", "Email", painting.ApplicationUserId);
             ViewBag.GalleryID = new SelectList(db.Galleries, "ID", "Name", painting.GalleryID);
             ViewBag.InfluenceID = new SelectList(db.Influences, "ID", "Name", painting.InfluenceID);
             ViewBag.PainterID = new SelectList(db.Painters, "ID", "Name", painting.PainterID);
             ViewBag.ProfileID = new SelectList(db.Profiles, "ID", "Name", painting.ProfileID);
             ViewBag.TypeID = new SelectList(db.Types, "ID", "Name", painting.TypeID);
-            ViewBag.UserId = new SelectList(idb.Users, "Id", "Email", painting.UserId);
             return View(painting);
         }
 
@@ -84,12 +88,12 @@ namespace PictureAnalyzer.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.ApplicationUserId = new SelectList(db.Users, "Id", "Email", painting.ApplicationUserId);
             ViewBag.GalleryID = new SelectList(db.Galleries, "ID", "Name", painting.GalleryID);
             ViewBag.InfluenceID = new SelectList(db.Influences, "ID", "Name", painting.InfluenceID);
             ViewBag.PainterID = new SelectList(db.Painters, "ID", "Name", painting.PainterID);
             ViewBag.ProfileID = new SelectList(db.Profiles, "ID", "Name", painting.ProfileID);
             ViewBag.TypeID = new SelectList(db.Types, "ID", "Name", painting.TypeID);
-            ViewBag.UserId = new SelectList(db.ApplicationUsers, "Id", "Email", painting.UserId);
             return View(painting);
         }
 
@@ -98,7 +102,7 @@ namespace PictureAnalyzer.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Name,Description,CurrentOwner,HarmonyIndex,ConstrastIndex,LuminosityIndex,Link,UserId,PainterID,TypeID,InfluenceID,ProfileID,GalleryID")] Painting painting)
+        public ActionResult Edit([Bind(Include = "ID,Name,Description,CurrentOwner,HarmonyIndex,ConstrastIndex,LuminosityIndex,Link,ApplicationUserId,PainterID,TypeID,InfluenceID,ProfileID,GalleryID")] Painting painting)
         {
             if (ModelState.IsValid)
             {
@@ -106,12 +110,12 @@ namespace PictureAnalyzer.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.ApplicationUserId = new SelectList(db.Users, "Id", "Email", painting.ApplicationUserId);
             ViewBag.GalleryID = new SelectList(db.Galleries, "ID", "Name", painting.GalleryID);
             ViewBag.InfluenceID = new SelectList(db.Influences, "ID", "Name", painting.InfluenceID);
             ViewBag.PainterID = new SelectList(db.Painters, "ID", "Name", painting.PainterID);
             ViewBag.ProfileID = new SelectList(db.Profiles, "ID", "Name", painting.ProfileID);
             ViewBag.TypeID = new SelectList(db.Types, "ID", "Name", painting.TypeID);
-            ViewBag.UserId = new SelectList(db.ApplicationUsers, "Id", "Email", painting.UserId);
             return View(painting);
         }
 

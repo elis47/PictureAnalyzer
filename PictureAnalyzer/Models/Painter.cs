@@ -9,6 +9,11 @@ namespace PictureAnalyzer.Models
 {
     public class Painter
     {
+        public Painter()
+        {
+            Paintings = new List<Painting>();
+        }
+
         public int ID { get; set; }
         [Required]
         [MaxLength(100)]

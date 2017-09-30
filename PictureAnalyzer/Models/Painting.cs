@@ -1,14 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Web;
 
 namespace PictureAnalyzer.Models
 {
     public class Painting
     {
+        public Painting()
+        {
+            Colors = new HashSet<Color>();
+        }
+
         public int ID { get; set; }
         [Required]
         [StringLength(100, ErrorMessage = "The name can not be longer than 100 characters.")]
@@ -28,23 +30,26 @@ namespace PictureAnalyzer.Models
         public double LuminosityIndex { get; set; }
         [Required]
         public string Link { get; set; }
-        [Required]
-        [Display(Name = "Username")]
-        public string UserId { get; set; }
-        [ForeignKey("UserId")]
-        public ApplicationUser User { get; set; }
+
+        [Display(Name="User")]
+        public string ApplicationUserId { get; set; }
 
         [Display(Name = "Painter")]
         public int PainterID { get; set; }
+
         [Display(Name = "Type")]
         public int TypeID { get; set; }
+
         [Display(Name = "Influence")]
         public int InfluenceID { get; set; }
+
         [Display(Name = "Profile")]
         public int ProfileID { get; set; }
+
         [Display(Name = "Gallery")]
         public int GalleryID { get; set; }
 
+        public virtual ApplicationUser ApplicationUser { get; set; }
         public virtual Painter Painter { get; set; }
         public virtual Type Type { get; set; }
         public virtual Influence Influence { get; set; }
