@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Web;
 
 namespace PictureAnalyzer.Models
 {
@@ -22,14 +23,20 @@ namespace PictureAnalyzer.Models
         [MaxLength(100)]
         [Display(Name ="Current owner")]
         public string CurrentOwner { get; set; }
+
         [Required]
         public double HarmonyIndex { get; set; }
+
         [Required]
         public double ConstrastIndex { get; set; }
+
         [Required]
         public double LuminosityIndex { get; set; }
+
         [Required]
         public string Link { get; set; }
+
+        //public HttpPostedFileBase ImageFile { get; set; }
 
         [Display(Name="User")]
         public string ApplicationUserId { get; set; }
@@ -56,5 +63,6 @@ namespace PictureAnalyzer.Models
         public virtual Profile Profile { get; set; }
         public virtual Gallery Gallery { get; set; }
         public virtual ICollection<Color> Colors { get; set; }
+
     }
 }

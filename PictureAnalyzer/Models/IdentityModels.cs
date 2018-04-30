@@ -30,8 +30,8 @@ namespace PictureAnalyzer.Models
         {
 
         }
+        
 
-        //public virtual DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public virtual DbSet<Painting> Paintings { get; set; }
         public virtual DbSet<Color> Colors { get; set; }
         public virtual DbSet<Gallery> Galleries { get; set; }

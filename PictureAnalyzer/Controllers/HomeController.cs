@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using PagedList;
 using PictureAnalyzer.Models;
+using System.IO;
 
 namespace PictureAnalyzer.Controllers
 {

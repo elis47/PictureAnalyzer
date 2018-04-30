@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using PictureAnalyzer.Models;
 using Microsoft.AspNet.Identity;
+using System.IO;
 
 namespace PictureAnalyzer.Controllers
 {
@@ -54,14 +55,32 @@ namespace PictureAnalyzer.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Name,Description,CurrentOwner,HarmonyIndex,ConstrastIndex,LuminosityIndex,Link,ApplicationUserId,PainterID,TypeID,InfluenceID,ProfileID,GalleryID")] Painting painting)
+        public ActionResult Create([Bind(Include = "ID,Name,Description,CurrentOwner,HarmonyIndex,ConstrastIndex,LuminosityIndex,Link,ApplicationUserId,PainterID,TypeID,InfluenceID,ProfileID,GalleryID")] Painting painting, HttpPostedFileBase file)
         {
             if (ModelState.IsValid)
             {
                 var currentUserId = User.Identity.GetUserId();
                 painting.ApplicationUserId = currentUserId;
+
                 var currentUser = db.Users.FirstOrDefault(u => u.Id == currentUserId);
                 painting.ApplicationUser = currentUser;
+
+                var path = "";
+                if (file != null)
+                {
+                    if (file.ContentLength > 0)
+                    {
+                        if (Path.GetExtension(file.FileName) == ".jpg" || Path.GetExtension(file.FileName) == ".jpeg"
+                            || Path.GetExtension(file.FileName) == ".png")
+                        {
+                            path = Path.Combine(Server.MapPath("~/Content/img"), file.FileName);
+                            file.SaveAs(path);
+
+                            painting.Link = path;
+                        }
+                    }
+                }
+
                 db.Paintings.Add(painting);
                 db.SaveChanges();
                 return RedirectToAction("Index");

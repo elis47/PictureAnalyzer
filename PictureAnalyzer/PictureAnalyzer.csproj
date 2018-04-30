@@ -274,7 +274,6 @@
     <Content Include="Content\img\second.jpg" />
     <Content Include="Content\img\sixth.jpg" />
     <Content Include="Content\img\third.jpg" />
-    <Content Include="Content\PagedList.css" />
     <Content Include="DatabaseDiagram\ClassDiagram.png" />
     <Content Include="DatabaseDiagram\NewClassDiagram.png" />
     <Content Include="favicon.ico" />
