@@ -13,7 +13,7 @@ namespace PictureAnalyzer.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201709302249414_Initial"; }
+            get { return "201804301940397_Initial"; }
         }
         
         string IMigrationMetadata.Source

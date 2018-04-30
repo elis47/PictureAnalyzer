@@ -17,26 +17,26 @@ namespace PictureAnalyzer.Models
         [StringLength(100, ErrorMessage = "The name can not be longer than 100 characters.")]
         [Index(IsUnique = true)]
         public string Name { get; set; }
+
         [StringLength(600, ErrorMessage = "The description can not be longer than 600 characters.")]
         public string Description { get; set; }
-        [Required]
+
         [MaxLength(100)]
         [Display(Name ="Current owner")]
         public string CurrentOwner { get; set; }
 
-        [Required]
         public double HarmonyIndex { get; set; }
 
-        [Required]
         public double ConstrastIndex { get; set; }
 
-        [Required]
         public double LuminosityIndex { get; set; }
 
         [Required]
         public string Link { get; set; }
 
-        //public HttpPostedFileBase ImageFile { get; set; }
+        [Required]
+        [NotMapped]
+        public HttpPostedFileBase File { get; set; }
 
         [Display(Name="User")]
         public string ApplicationUserId { get; set; }
@@ -45,16 +45,16 @@ namespace PictureAnalyzer.Models
         public int PainterID { get; set; }
 
         [Display(Name = "Type")]
-        public int TypeID { get; set; }
+        public int? TypeID { get; set; }
 
         [Display(Name = "Influence")]
-        public int InfluenceID { get; set; }
+        public int? InfluenceID { get; set; }
 
         [Display(Name = "Profile")]
-        public int ProfileID { get; set; }
+        public int? ProfileID { get; set; }
 
         [Display(Name = "Gallery")]
-        public int GalleryID { get; set; }
+        public int? GalleryID { get; set; }
 
         public virtual ApplicationUser ApplicationUser { get; set; }
         public virtual Painter Painter { get; set; }

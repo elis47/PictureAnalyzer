@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Web;
 
 namespace PictureAnalyzer.Models
 {
@@ -15,21 +13,27 @@ namespace PictureAnalyzer.Models
         }
 
         public int ID { get; set; }
+
         [Required]
         [MaxLength(100)]
         [Index(IsUnique = true)]
         public string Name { get; set; }
+
         [MaxLength(600)]
         public string Description { get; set; }
+
         [Required]
         [MaxLength(100)]
         public string Country { get; set; }
+
         public string Link { get; set; }
+
         [DataType(DataType.Date)]
         [Column(TypeName = "DateTime2")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Display(Name ="Date of birth")]
         public DateTime? BirthDate { get; set; }
+
         [DataType(DataType.Date)]
         [Column(TypeName = "DateTime2")]
         [Display(Name ="Date of decease")]

@@ -4,10 +4,10 @@
     ViewBag.Title = "Create";
 }
 
-<h2>Create</h2>
+<h2>Add</h2>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" })) 
 {
     @Html.AntiForgeryToken()
     
@@ -39,47 +39,14 @@
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.HarmonyIndex, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.HarmonyIndex, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.HarmonyIndex, "", new { @class = "text-danger" })
-            </div>
+        <div>
+            @Html.LabelFor(x => x.File)
+            @Html.TextBoxFor(x => x.File, new { type = "file" })
+            @Html.ValidationMessageFor(x => x.File)
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.ConstrastIndex, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ConstrastIndex, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ConstrastIndex, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.LuminosityIndex, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.LuminosityIndex, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.LuminosityIndex, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Link, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <input type="file" name="file" value="Browse" />
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ApplicationUserId, "ApplicationUserId", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("ApplicationUserId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.ApplicationUserId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.PainterID, "PainterID", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.PainterID, "Painter", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("PainterID", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.PainterID, "", new { @class = "text-danger" })
@@ -87,7 +54,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.TypeID, "TypeID", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.TypeID, "Type", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("TypeID", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.TypeID, "", new { @class = "text-danger" })
@@ -95,7 +62,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.InfluenceID, "InfluenceID", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.InfluenceID, "Influence", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("InfluenceID", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.InfluenceID, "", new { @class = "text-danger" })
@@ -103,15 +70,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.ProfileID, "ProfileID", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("ProfileID", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.ProfileID, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.GalleryID, "GalleryID", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.GalleryID, "Gallery", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("GalleryID", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.GalleryID, "", new { @class = "text-danger" })

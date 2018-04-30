@@ -26,25 +26,25 @@ namespace PictureAnalyzer.Migrations
                         ID = c.Int(nullable: false, identity: true),
                         Name = c.String(nullable: false, maxLength: 100),
                         Description = c.String(maxLength: 600),
-                        CurrentOwner = c.String(nullable: false, maxLength: 100),
+                        CurrentOwner = c.String(maxLength: 100),
                         HarmonyIndex = c.Double(nullable: false),
                         ConstrastIndex = c.Double(nullable: false),
                         LuminosityIndex = c.Double(nullable: false),
                         Link = c.String(nullable: false),
                         ApplicationUserId = c.String(nullable: false, maxLength: 128),
                         PainterID = c.Int(nullable: false),
-                        TypeID = c.Int(nullable: false),
-                        InfluenceID = c.Int(nullable: false),
-                        ProfileID = c.Int(nullable: false),
-                        GalleryID = c.Int(nullable: false),
+                        TypeID = c.Int(nullable: true),
+                        InfluenceID = c.Int(nullable: true),
+                        ProfileID = c.Int(nullable: true),
+                        GalleryID = c.Int(nullable: true),
                     })
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.AspNetUsers", t => t.ApplicationUserId, cascadeDelete: true)
-                .ForeignKey("dbo.Galleries", t => t.GalleryID, cascadeDelete: true)
-                .ForeignKey("dbo.Influences", t => t.InfluenceID, cascadeDelete: true)
+                //.ForeignKey("dbo.Galleries", t => t.GalleryID, cascadeDelete: true)
+                //.ForeignKey("dbo.Influences", t => t.InfluenceID, cascadeDelete: true)
                 .ForeignKey("dbo.Painters", t => t.PainterID, cascadeDelete: true)
-                .ForeignKey("dbo.Profiles", t => t.ProfileID, cascadeDelete: true)
-                .ForeignKey("dbo.Types", t => t.TypeID, cascadeDelete: true)
+                //.ForeignKey("dbo.Profiles", t => t.ProfileID, cascadeDelete: true)
+                //.ForeignKey("dbo.Types", t => t.TypeID, cascadeDelete: true)
                 .Index(t => t.Name, unique: true)
                 .Index(t => t.ApplicationUserId)
                 .Index(t => t.PainterID)
@@ -201,11 +201,11 @@ namespace PictureAnalyzer.Migrations
         public override void Down()
         {
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
-            DropForeignKey("dbo.Paintings", "TypeID", "dbo.Types");
-            DropForeignKey("dbo.Paintings", "ProfileID", "dbo.Profiles");
+            //DropForeignKey("dbo.Paintings", "TypeID", "dbo.Types");
+            //DropForeignKey("dbo.Paintings", "ProfileID", "dbo.Profiles");
             DropForeignKey("dbo.Paintings", "PainterID", "dbo.Painters");
-            DropForeignKey("dbo.Paintings", "InfluenceID", "dbo.Influences");
-            DropForeignKey("dbo.Paintings", "GalleryID", "dbo.Galleries");
+            //DropForeignKey("dbo.Paintings", "InfluenceID", "dbo.Influences");
+            //DropForeignKey("dbo.Paintings", "GalleryID", "dbo.Galleries");
             DropForeignKey("dbo.PaintingColors", "Color_ID", "dbo.Colors");
             DropForeignKey("dbo.PaintingColors", "Painting_ID", "dbo.Paintings");
             DropForeignKey("dbo.Paintings", "ApplicationUserId", "dbo.AspNetUsers");
@@ -225,10 +225,10 @@ namespace PictureAnalyzer.Migrations
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
-            DropIndex("dbo.Paintings", new[] { "GalleryID" });
-            DropIndex("dbo.Paintings", new[] { "ProfileID" });
-            DropIndex("dbo.Paintings", new[] { "InfluenceID" });
-            DropIndex("dbo.Paintings", new[] { "TypeID" });
+            //DropIndex("dbo.Paintings", new[] { "GalleryID" });
+            //DropIndex("dbo.Paintings", new[] { "ProfileID" });
+            //DropIndex("dbo.Paintings", new[] { "InfluenceID" });
+            //DropIndex("dbo.Paintings", new[] { "TypeID" });
             DropIndex("dbo.Paintings", new[] { "PainterID" });
             DropIndex("dbo.Paintings", new[] { "ApplicationUserId" });
             DropIndex("dbo.Paintings", new[] { "Name" });

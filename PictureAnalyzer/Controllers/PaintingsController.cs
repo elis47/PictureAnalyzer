@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using PictureAnalyzer.Models;
 using Microsoft.AspNet.Identity;
 using System.IO;
+using Newtonsoft.Json;
 
 namespace PictureAnalyzer.Controllers
 {
@@ -51,40 +52,38 @@ namespace PictureAnalyzer.Controllers
         }
 
         // POST: Paintings/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Name,Description,CurrentOwner,HarmonyIndex,ConstrastIndex,LuminosityIndex,Link,ApplicationUserId,PainterID,TypeID,InfluenceID,ProfileID,GalleryID")] Painting painting, HttpPostedFileBase file)
+        public ActionResult Create(Painting painting, HttpPostedFileBase file)
         {
-            if (ModelState.IsValid)
-            {
-                var currentUserId = User.Identity.GetUserId();
-                painting.ApplicationUserId = currentUserId;
+            var currentUserId = User.Identity.GetUserId();
+            painting.ApplicationUserId = currentUserId;
 
-                var currentUser = db.Users.FirstOrDefault(u => u.Id == currentUserId);
-                painting.ApplicationUser = currentUser;
+            var currentUser = db.Users.FirstOrDefault(u => u.Id == currentUserId);
+            painting.ApplicationUser = currentUser;
 
-                var path = "";
-                if (file != null)
+            byte[] uploadedFile = new byte[painting.File.InputStream.Length];
+            painting.File.InputStream.Read(uploadedFile, 0, uploadedFile.Length);
+
+            if (file != null)
+            { 
+                if (file.ContentLength > 0)
                 {
-                    if (file.ContentLength > 0)
-                    {
-                        if (Path.GetExtension(file.FileName) == ".jpg" || Path.GetExtension(file.FileName) == ".jpeg"
-                            || Path.GetExtension(file.FileName) == ".png")
-                        {
-                            path = Path.Combine(Server.MapPath("~/Content/img"), file.FileName);
-                            file.SaveAs(path);
+                    string relativePath = "~/Images/" + Path.GetFileName(file.FileName);
+                    string physicalPath = Server.MapPath(relativePath);
+                    file.SaveAs(physicalPath);
 
-                            painting.Link = path;
-                        }
-                    }
+                    painting.Link = physicalPath;
                 }
-
-                db.Paintings.Add(painting);
-                db.SaveChanges();
-                return RedirectToAction("Index");
             }
+
+            if (painting.Description == null)
+                painting.Description = "No available description";
+            if (painting.CurrentOwner == null)
+                painting.CurrentOwner = "N/A";
+
+            db.Paintings.Add(painting);
+            db.SaveChanges();
 
             ViewBag.ApplicationUserId = new SelectList(db.Users, "Id", "Email", painting.ApplicationUserId);
             ViewBag.GalleryID = new SelectList(db.Galleries, "ID", "Name", painting.GalleryID);
@@ -92,6 +91,7 @@ namespace PictureAnalyzer.Controllers
             ViewBag.PainterID = new SelectList(db.Painters, "ID", "Name", painting.PainterID);
             ViewBag.ProfileID = new SelectList(db.Profiles, "ID", "Name", painting.ProfileID);
             ViewBag.TypeID = new SelectList(db.Types, "ID", "Name", painting.TypeID);
+
             return View(painting);
         }
 
