@@ -10,7 +10,7 @@ namespace EmguCV
     {
         static void Main(string[] args)
         {
-            ImageProcessing i = new ImageProcessing(@"C:\Users\Elisa\Desktop");
+            ImageProcessing i = new ImageProcessing(@"C:\Users\Elisa\Desktop\elisa5.jpg");
         }
     }
 }

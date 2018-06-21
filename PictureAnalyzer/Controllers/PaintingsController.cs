@@ -21,8 +21,15 @@ namespace PictureAnalyzer.Controllers
         // GET: Paintings
         public ActionResult Index()
         {
-            var paintings = db.Paintings.Include(p => p.ApplicationUser).Include(p => p.Gallery).Include(p => p.Influence).Include(p => p.Painter).Include(p => p.Profile).Include(p => p.Type);
-            return View(paintings.ToList());
+            var paintings = db.Paintings.ToList();
+                                    //.Include(p => p.ApplicationUser)
+                                    //.Include(p => p.Gallery)
+                                    //.Include(p => p.Influence)
+                                    //.Include(p => p.Painter)
+                                    //.Include(p => p.Profile)
+                                    //.Include(p => p.Type)
+                                    //.ToList();
+            return View(paintings);
         }
 
         // GET: Paintings/Details/5
@@ -70,8 +77,9 @@ namespace PictureAnalyzer.Controllers
             { 
                 if (file.ContentLength > 0)
                 {
-                    string relativePath = "~/Images/" + Path.GetFileName(file.FileName);
-                    string physicalPath = Server.MapPath(relativePath);
+                    //string relativePath = "~/Images/" + Path.GetFileName(file.FileName);
+                    //string physicalPath = Server.MapPath(relativePath);
+                    string physicalPath = HttpContext.Request.PhysicalApplicationPath + "/Content/img/" + file.FileName;
                     file.SaveAs(physicalPath);
 
                     painting.Link = physicalPath;
@@ -87,6 +95,8 @@ namespace PictureAnalyzer.Controllers
                 painting.Description = "No available description";
             if (painting.CurrentOwner == null)
                 painting.CurrentOwner = "N/A";
+
+            painting.ApplicationUserId = User.Identity.GetUserId();
 
             db.Paintings.Add(painting);
             db.SaveChanges();

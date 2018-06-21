@@ -68,7 +68,7 @@
             @Html.DisplayFor(modelItem => item.CurrentOwner)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Link)
+            <img src="@Url.Content(item.Link)" alt="" />
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |

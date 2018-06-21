@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PictureAnalyzer", "PictureA
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PictureAnalyzer.Tests", "PictureAnalyzer.Tests\PictureAnalyzer.Tests.csproj", "{26EE9B62-ABE5-40DB-902C-C2A26C01ACF4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmguCV", "EmguCV\EmguCV.csproj", "{B44D0FA6-84D2-429F-B00D-6743BAD479EE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{26EE9B62-ABE5-40DB-902C-C2A26C01ACF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{26EE9B62-ABE5-40DB-902C-C2A26C01ACF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{26EE9B62-ABE5-40DB-902C-C2A26C01ACF4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B44D0FA6-84D2-429F-B00D-6743BAD479EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B44D0FA6-84D2-429F-B00D-6743BAD479EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B44D0FA6-84D2-429F-B00D-6743BAD479EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B44D0FA6-84D2-429F-B00D-6743BAD479EE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
