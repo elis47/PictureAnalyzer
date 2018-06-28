@@ -26,6 +26,10 @@ namespace PictureAnalyzer.Models
         [MaxLength(600)]
         public string PersonalityTraits { get; set; }
 
+        [Required]
+        [MaxLength(600)]
+        public string Keywords { get; set; }
+
         public virtual ICollection<Painting> Paintings { get; set; }
     }
 }

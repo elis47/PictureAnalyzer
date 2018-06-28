@@ -233,7 +233,10 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Gallery.css" />
     <Content Include="Content\img\1.jpg" />
+    <Content Include="Content\img\1215-WM-KORI-14-copy.jpg" />
+    <Content Include="Content\img\13932740_1265840136795782_513044993304112507_n.jpg" />
     <Content Include="Content\img\2.jpg" />
+    <Content Include="Content\img\22448157_1689129997800125_6807870343835680064_n.jpg" />
     <Content Include="Content\img\3.jpg" />
     <Content Include="Content\img\4.jpg" />
     <Content Include="Content\img\5.jpg" />
@@ -243,6 +246,7 @@
     <Content Include="Content\img\chroma.jpg" />
     <Content Include="Content\img\chroma2.jpg" />
     <Content Include="Content\img\claude_monet.jpg" />
+    <Content Include="Content\img\descărcare.png" />
     <Content Include="Content\img\edvard_munch.jpg" />
     <Content Include="Content\img\escher.jpg" />
     <Content Include="Content\img\fifth.jpg" />
@@ -259,6 +263,9 @@
     <Content Include="Content\img\giphy1.gif" />
     <Content Include="Content\img\giphy2.gif" />
     <Content Include="Content\img\image.jpg" />
+    <Content Include="Content\img\images.jpg" />
+    <Content Include="Content\img\last-supper.png" />
+    <Content Include="Content\img\Leonardo-Da-Vinci-Mona-Lisa.jpg" />
     <Content Include="Content\img\leonardo_da_vinci.jpg" />
     <Content Include="Content\img\marc_chagall.jpg" />
     <Content Include="Content\img\michelangelo_buonarotti.jpg" />
@@ -268,12 +275,13 @@
     <Content Include="Content\img\second.jpg" />
     <Content Include="Content\img\sixth.jpg" />
     <Content Include="Content\img\third.jpg" />
+    <Content Include="Content\img\vincent_van_gogh.jpg" />
     <Content Include="DatabaseDiagram\ClassDiagram.png" />
     <Content Include="DatabaseDiagram\NewClassDiagram.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Content\Site.css" />
+    <Content Include="Content\site.css" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

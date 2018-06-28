@@ -22,6 +22,10 @@ namespace PictureAnalyzer.Models
         [MaxLength(800)]
         public string Description { get; set; }
 
+        [Required]
+        [MaxLength(800)]
+        public string Keywords { get; set; }
+
         public virtual ICollection<Painting> Paintings { get; set; }
     }
 }

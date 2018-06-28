@@ -1,81 +1,313 @@
-﻿@model IEnumerable<PictureAnalyzer.Models.Painting>
+﻿@model PagedList.IPagedList<PictureAnalyzer.Models.Painting>
+@using PagedList.Mvc;
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Paintings";
 }
 
-<h2>Index</h2>
+<br /><br />
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Gallery)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Influence)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Painter)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Profile)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Type)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CurrentOwner)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Link)
-        </th>
-        <th></th>
-    </tr>
+<div class="col-md-11 col-md-offset-1" style="font-size:larger;">
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Gallery.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Influence.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Painter.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Profile.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Type.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CurrentOwner)
-        </td>
-        <td>
-            <img src="@Url.Content(item.Link)" alt="" />
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-        </td>
-    </tr>
-}
+</div>
+<h1 class="text-center">Enjoy looking at our paintings...</h1>
+<h3 class="text-center">Or</h3>
+<h1 class="text-center"><i class="glyphicon glyphicon-plus"></i> @Html.ActionLink("Add new painting", "Create")</h1><br /><br />
 
-</table>
+<div class="container">
+
+    @using (Html.BeginForm("Index", "Paintings", FormMethod.Get))
+    {
+        <div class="row">
+
+            <div class="col-md-3 col-md-offset-1 dropdown text-center">
+                <a href="#" class="dropdown-toggle white" data-toggle="dropdown" role="button" aria-expanded="false">Filter by <span class="caret"></span></a>
+                <ul class="dropdown-menu text-center" role="menu">
+                    <li>@Html.ActionLink("Name", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })</li>
+                    <li>@Html.ActionLink("Description", "Index", new { sortOrder = ViewBag.DescriptionSortParm, currentFilter = ViewBag.CurrentFilter })</li>
+                    <li>@Html.ActionLink("Profile", "Index", new { sortOrder = ViewBag.ProfileSortParm, currentFilter = ViewBag.CurrentFilter })</li>
+                    <li>@Html.ActionLink("Painter", "Index", new { sortOrder = ViewBag.PainterSortParm, currentFilter = ViewBag.CurrentFilter })</li>
+                    <li>@Html.ActionLink("Influence", "Index", new { sortOrder = ViewBag.InfluenceSortParm, currentFilter = ViewBag.CurrentFilter })</li>
+                </ul>
+            </div>
+
+            <div class="col-md-5">
+                <div id="custom-search-input">
+                    <div class="input-group col-md-12">
+                        @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new
+                   {
+                       htmlAttributes = new
+                       {
+                           @class = "form-control",
+                           placeholder = "Search for paintings..."
+                       }
+                   })
+                        <span class="input-group-btn">
+                            <button class="btn btn-info btn-sm" type="submit">
+                                <i class="glyphicon glyphicon-search"></i>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    <br />
+    <div class="row">
+        <div class='list-group gallery'>
+
+
+            @foreach (var item in Model)
+            {
+
+                <div class='col-md-3 col-md-3-personalized'>
+
+                    <div class="text-center">
+                        <h3><b>@Html.DisplayFor(modelItem => item.Name)</b></h3>
+                    </div>
+
+                    <a class="thumbnail" rel="ligthbox" href=@Html.DisplayFor(modelItem => item.Link) data-toggle="tooltip" data-placement="top">
+                        <img class="img-responsive" alt="" src=@Html.DisplayFor(modelItem => item.Link) />
+                    </a>
+
+                    <div class="text-center">
+                        <h4><i>@Html.DisplayFor(modelItem => item.Painter.Name)</i></h4>
+                    </div>
+
+                    <div class="text-center">
+                        (@String.Format("{0,9:d}", item.Painter.BirthDate) - @String.Format("{0,9:d}", item.Painter.PassDate))
+                    </div>
+
+                    <div class="text-center">
+                        <br />
+                        @Html.ActionLink("Details", "Details", new { id = item.ID }) | @Html.ActionLink("Edit", "Edit", new { id = item.ID })
+                    </div>
+
+                    <br />
+
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }),
+    new PagedListRenderOptions
+    {
+        DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+        DisplayLinkToLastPage = PagedListDisplayMode.Always,
+        DisplayLinkToPreviousPage = PagedListDisplayMode.Never,
+        DisplayLinkToNextPage = PagedListDisplayMode.Never,
+        DisplayPageCountAndCurrentLocation = false,
+        DisplayEllipsesWhenNotShowingAllPageNumbers = false,
+        MaximumPageNumbersToDisplay = 5
+    })
+
+<style>
+    a {
+        color: white;
+    }
+
+    .row {
+        margin-top: 50px;
+    }
+
+    .pagination-container {
+        text-align: center;
+    }
+
+    body {
+        background: linear-gradient(black, #009871,black);
+    }
+
+    .dropdown {
+        margin: 15px;
+    }
+
+    .dropdown-menu {
+        float: right;
+        padding: 0px;
+    }
+
+    .img-responsive {
+        margin: 3px;
+    }
+
+        .img-responsive:hover {
+            opacity: 1;
+        }
+
+    .col-md-3-personalized {
+        border: 2px solid black;
+        margin: 37px;
+    }
+
+        .col-md-3-personalized:hover {
+            border: 2px solid #0ce3ac;
+            margin: 37px;
+            box-shadow: 10px 10px 5px black;
+        }
+
+    .dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
+        background-color: #009871;
+    }
+
+    .text-muted {
+        color: white;
+    }
+
+    .color {
+        color: #009871;
+        margin-top: 45px;
+    }
+
+    .thumbnail {
+        margin-bottom: 2px;
+        border: 0px;
+    }
+
+    .glyphicon {
+        font-size: 0.7em;
+        color: #0ce3ac;
+    }
+
+    #custom-search-input {
+        padding: 3px;
+        border-radius: 6px;
+        background-color: #fff;
+    }
+
+        #custom-search-input input {
+            border: 0;
+            box-shadow: none;
+        }
+
+        #custom-search-input > div > input {
+            max-width: 400px;
+            width: 300px;
+            margin-top: 6px;
+            font-size: 18px;
+            border: 3px solid white;
+        }
+
+    .btn-info {
+        color: #ffffff;
+        background-color: #00bc8c;
+        border-color: #00bc8c;
+    }
+
+        .btn-info:hover, .btn-info:active, .btn-info:focus, .btn-info:active:focus {
+            color: #ffffff;
+            background-color: #7C77B9;
+            border-color: #7C77B9;
+        }
+
+    #custom-search-input button:hover {
+        border: 0;
+        box-shadow: none;
+        border-left: solid 1px #ccc;
+    }
+
+    #custom-search-input .glyphicon-search {
+        font-size: 23px;
+        height: 15px;
+        color: white;
+    }
+
+    .white {
+        color: white;
+    }
+</style>
+
+
+
+
+
+
+
+
+
+@*@model IEnumerable<PictureAnalyzer.Models.Painting>
+
+    @{
+        ViewBag.Title = "Index";
+    }
+
+    <h2>Index</h2>
+
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Gallery)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Influence)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Painter)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Profile)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Type)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CurrentOwner)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Link)
+            </th>
+            <th></th>
+        </tr>
+
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Gallery.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Influence.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Painter.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Profile.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Type.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CurrentOwner)
+            </td>
+            <td>
+                <img src="@Url.Content(item.Link)" alt="" />
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+                @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+            </td>
+        </tr>
+    }
+
+    </table>*@

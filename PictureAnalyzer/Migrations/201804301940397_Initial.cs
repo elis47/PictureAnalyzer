@@ -15,7 +15,8 @@ namespace PictureAnalyzer.Migrations
                         Name = c.String(nullable: false, maxLength: 50),
                         Description = c.String(nullable: false, maxLength: 600),
                         PersonalityTraits = c.String(nullable: false, maxLength: 600),
-                    })
+                        Keywords = c.String(nullable: true, maxLength: 600)
+                })
                 .PrimaryKey(t => t.ID)
                 .Index(t => t.Name, unique: true);
             
@@ -149,14 +150,15 @@ namespace PictureAnalyzer.Migrations
                     })
                 .PrimaryKey(t => t.ID)
                 .Index(t => t.Name, unique: true);
-            
+
             CreateTable(
                 "dbo.Profiles",
                 c => new
-                    {
-                        ID = c.Int(nullable: false, identity: true),
-                        Name = c.String(nullable: false, maxLength: 100),
-                        Description = c.String(nullable: false, maxLength: 800),
+                {
+                    ID = c.Int(nullable: false, identity: true),
+                    Name = c.String(nullable: false, maxLength: 100),
+                    Description = c.String(nullable: false, maxLength: 800),
+                    Keywords = c.String(nullable: true, maxLength:800)
                     })
                 .PrimaryKey(t => t.ID)
                 .Index(t => t.Name, unique: true);

@@ -11,6 +11,7 @@ using Microsoft.AspNet.Identity;
 using System.IO;
 using Newtonsoft.Json;
 using EmguCV;
+using PagedList;
 
 namespace PictureAnalyzer.Controllers
 {
@@ -19,18 +20,74 @@ namespace PictureAnalyzer.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Paintings
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder, string searchString, string currentFilter, int? page)
         {
-            var paintings = db.Paintings.ToList();
-                                    //.Include(p => p.ApplicationUser)
-                                    //.Include(p => p.Gallery)
-                                    //.Include(p => p.Influence)
-                                    //.Include(p => p.Painter)
-                                    //.Include(p => p.Profile)
-                                    //.Include(p => p.Type)
-                                    //.ToList();
-            return View(paintings);
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.DescriptionSortParm = sortOrder == "Description" ? "description_desc" : "Description";
+            ViewBag.ProfileSortParm = sortOrder == "Profile" ? "profile_desc" : "Profile";
+            ViewBag.InfluenceSortParm = sortOrder == "Influence" ? "influence_desc" : "Influence";
+            ViewBag.PainterSortParm = sortOrder == "Painter" ? "painter_desc" : "Painter";
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
+
+            var paintings = from p in db.Paintings
+                            select p;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                paintings = paintings.Where(p => p.Name.Contains(searchString)
+                                       || p.Description.Contains(searchString));
+            }
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    paintings = paintings.OrderByDescending(p => p.Name);
+                    break;
+                case "Description":
+                    paintings = paintings.OrderBy(p => p.Description);
+                    break;
+                case "description_desc":
+                    paintings = paintings.OrderByDescending(p => p.Description);
+                    break;
+                case "Profile":
+                    paintings = paintings.OrderBy(p => p.Profile);
+                    break;
+                case "profile_desc":
+                    paintings = paintings.OrderByDescending(p => p.Profile);
+                    break;
+                case "Influence":
+                    paintings = paintings.OrderBy(p => p.Influence);
+                    break;
+                case "influence_desc":
+                    paintings = paintings.OrderByDescending(p => p.Influence);
+                    break;
+                case "Painter":
+                    paintings = paintings.OrderBy(p => p.Painter);
+                    break;
+                case "painter_desc":
+                    paintings = paintings.OrderByDescending(p => p.Painter);
+                    break;
+                default:
+                    paintings = paintings.OrderBy(p => p.Name);
+                    break;
+            }
+
+            int pageSize = 9;
+            int pageNumber = (page ?? 1);
+
+            return View(paintings.ToPagedList(pageNumber, pageSize));
         }
+
 
         // GET: Paintings/Details/5
         public ActionResult Details(int? id)
@@ -77,12 +134,12 @@ namespace PictureAnalyzer.Controllers
             { 
                 if (file.ContentLength > 0)
                 {
-                    //string relativePath = "~/Images/" + Path.GetFileName(file.FileName);
-                    //string physicalPath = Server.MapPath(relativePath);
-                    string physicalPath = HttpContext.Request.PhysicalApplicationPath + "/Content/img/" + file.FileName;
-                    file.SaveAs(physicalPath);
+                    string pic = Path.GetFileName(file.FileName);
+                    string physicalPath = Path.Combine(
+                                           Server.MapPath("~/Images/"), pic);
 
-                    painting.Link = physicalPath;
+                    file.SaveAs(physicalPath);
+                    painting.Link = "/Images/" + file.FileName;
 
                     /* Image processing part */
 

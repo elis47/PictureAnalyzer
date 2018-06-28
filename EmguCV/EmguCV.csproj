@@ -61,6 +61,7 @@
   <ItemGroup>
     <Compile Include="ColorSpaces.cs" />
     <Compile Include="ImageProcessing.cs" />
+    <Compile Include="Pixel.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
