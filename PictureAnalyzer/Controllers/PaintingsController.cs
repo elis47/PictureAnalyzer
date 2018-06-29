@@ -88,7 +88,6 @@ namespace PictureAnalyzer.Controllers
             return View(paintings.ToPagedList(pageNumber, pageSize));
         }
 
-
         // GET: Paintings/Details/5
         public ActionResult Details(int? id)
         {
@@ -143,7 +142,10 @@ namespace PictureAnalyzer.Controllers
 
                     /* Image processing part */
 
-                    ImageProcessing i = new ImageProcessing(physicalPath);
+                    ImageProcessing i = new ImageProcessing();
+
+                    Dictionary<Pixel, int> colorDistribution = i.GetColorDistribution(physicalPath);
+                    double harmonicMeanAll = i.GetHarmonicMeanForAllColors(physicalPath);
 
                 }
             }

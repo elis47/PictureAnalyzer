@@ -10,8 +10,6 @@
 <div class="col-md-11 col-md-offset-1" style="font-size:larger;">
 
 </div>
-<h1 class="text-center">Take a look at our painters...</h1>
-<h3 class="text-center">Or</h3>
 <h1 class="text-center"><i class="glyphicon glyphicon-plus"></i> @Html.ActionLink("Add new painter", "Create")</h1><br /><br />
 
 <div class="container">
@@ -63,8 +61,8 @@
                     <div class="text-center">
                         <h4><i>@Html.DisplayFor(modelItem => item.Name)</i></h4>
                     </div>
-                    <a class="thumbnail" rel="ligthbox" href="~/Content/img/pablo_picasso.jpg" data-toggle="tooltip" data-placement="top" title="@Html.DisplayFor(modelItem => item.Description)">
-                        <img class="img-responsive" alt="" src="~/Content/img/pablo_picasso.jpg" />
+                    <a class="thumbnail" rel="ligthbox" href=@Html.DisplayFor(modelItem => item.Link) data-toggle="tooltip" data-placement="top" title="@Html.DisplayFor(modelItem => item.Description)">
+                        <img class="img-responsive" alt="" src=@Html.DisplayFor(modelItem => item.Link) />
                     </a>
                     <div class="text-center">
                         @String.Format("{0,9:d}", item.BirthDate) - @String.Format("{0,9:d}", item.PassDate)

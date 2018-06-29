@@ -35,7 +35,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <PlatformTarget>x64</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -286,10 +286,20 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\22448157_1689129997800125_6807870343835680064_n.jpg" />
+    <Content Include="Images\claude_monet.jpg" />
+    <Content Include="Images\edvard_munch.jpg" />
     <Content Include="Images\elisa.jpg" />
     <Content Include="Images\elisa5.jpg" />
+    <Content Include="Images\escher.jpg" />
     <Content Include="Images\HopetounFalls.jpg" />
     <Content Include="Images\HopetounFalls2.jpg" />
+    <Content Include="Images\leonardo_da_vinci.jpg" />
+    <Content Include="Images\marc_chagall.jpg" />
+    <Content Include="Images\michelangelo_buonarotti.jpg" />
+    <Content Include="Images\pablo_picasso.jpg" />
+    <Content Include="Images\rembrant.jpg" />
+    <Content Include="Images\salvador_dali.jpg" />
+    <Content Include="Images\vincent_van_gogh.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />

@@ -12,10 +12,13 @@ namespace EmguCV
         public Dictionary<Pixel, double> hueDictionary = new Dictionary<Pixel, double>();
         public int numberOfColors = 5;
 
-        public ImageProcessing(string filename)
+        public ImageProcessing()
         {
             PopulateCielabIndices();
+        }
 
+        public double GetHarmonicMeanForAllColors(string filename)
+        {
             var colorDistribution = GetColorDistribution(filename);
             var distinctPixels = GetDistinctPixels(colorDistribution);
 
@@ -70,6 +73,7 @@ namespace EmguCV
 
             #endregion Compare 2 by 2 colors and get the harmonic index
 
+            return finalHarmonicMean;
         }
 
         public Dictionary<Pixel, int> GetColorDistribution(string filename)

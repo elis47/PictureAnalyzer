@@ -15,24 +15,30 @@
             {
 
                 <div class='col-md-3 col-md-3-personalized'>
+
                     <div class="text-center">
                         <h4><i>@Html.DisplayFor(modelItem => item.Name)</i></h4>
                     </div>
+
                     <a class="thumbnail" rel="ligthbox" href="~/Content/img/pablo_picasso.jpg" data-toggle="tooltip" data-placement="top" title="@Html.DisplayFor(modelItem => item.Description)">
                         <img class="img-responsive" alt="" src="~/Content/img/pablo_picasso.jpg" />
                     </a>
+
                     <div class="text-center">
                         @String.Format("{0,9:d}", item.BirthDate) - @String.Format("{0,9:d}", item.PassDate)
                     </div>
+
                     <div class="text-center">
                         @Html.DisplayFor(modelItem => item.Country)
                     </div>
+
                     <div class="text-center">
                         <br />
-                        <p>@Html.ActionLink("Details", "Painters", new { id = item.ID })</p>
+                        <p>@Html.ActionLink("Details","Details", "Painters", new { id = item.ID }, null)</p>
                         <a asp-controller="Painters" asp-action="Details" asp-attribute="item.ID">blae</a>
-                        @*@Html.ActionLink("View paintings", "", "", new { id = item.ID })*@
-                    </div><br />
+                    </div>
+
+                    <br />
                 </div>
             }
         </div>
