@@ -1,0 +1,60 @@
+﻿
+@{
+    ViewBag.Title = "Profile result";
+}
+
+<style>
+    #myChart {
+        width:100px;
+        height:100px;
+    }
+</style>
+<script src="~/Scripts/Chart.min.js"></script>
+
+<h2>Profile result</h2>
+
+<canvas id="myChart"></canvas>
+<h3>Type A : @ViewBag.TypeA</h3>
+<h3>Type B : @ViewBag.TypeB</h3>
+<h3>Type C : @ViewBag.TypeC</h3>
+<h3>Type D : @ViewBag.TypeD</h3>
+
+
+<script>
+    var ctx = document.getElementById("myChart");
+    var myChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: ["Type A", "Type B", "Type C", "Type D"],
+            datasets: [{
+                label: '% of matches',
+                data: [@ViewBag.TypeA, @ViewBag.TypeB, @ViewBag.TypeC, @ViewBag.TypeD],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                ],
+                borderColor: [
+                    'rgba(255,99,132,1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+</script>
+
+
+

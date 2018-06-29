@@ -19,6 +19,9 @@ namespace PictureAnalyzer.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
+        private double typeA;
+
+
         // GET: Paintings
         public ActionResult Index(string sortOrder, string searchString, string currentFilter, int? page)
         {
@@ -115,6 +118,12 @@ namespace PictureAnalyzer.Controllers
             return View();
         }
 
+        // GET: Paintings/ProfileResult
+        public ActionResult ProfileResult()
+        {
+            return View();
+        }
+
         // POST: Paintings/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -134,24 +143,90 @@ namespace PictureAnalyzer.Controllers
                 if (file.ContentLength > 0)
                 {
                     string pic = Path.GetFileName(file.FileName);
-                    string physicalPath = Path.Combine(
-                                           Server.MapPath("~/Images/"), pic);
+                    string physicalPath = Path.Combine(Server.MapPath("~/Images/"), pic);
 
                     file.SaveAs(physicalPath);
                     painting.Link = "/Images/" + file.FileName;
 
                     /* Image processing part */
 
-                    ImageProcessing i = new ImageProcessing();
+                    ImageProcessing i = new ImageProcessing(physicalPath);
 
                     Dictionary<Pixel, int> colorDistribution = i.GetColorDistribution(physicalPath);
-                    double harmonicMeanAll = i.GetHarmonicMeanForAllColors(physicalPath);
+
+                    double harmonicMeanAll = i.GetHarmonicMeanForAllColors();
+                    double harmonicMeanDominant = i.GetHarmonicMeanForDominantColors();
+                    double harmonicMinorityMean = i.GetHarmonicMeanForMinorityColors();
+
+                    double finalHarmonicMean = (harmonicMeanAll + harmonicMeanDominant + harmonicMinorityMean)/ 3;
+
+                    var colors = db.Colors;
+                    List<string> colorsKeywords = new List<string>();
+
+                    foreach (var color in colorDistribution)
+                    {
+                        var searchedColor = colors.Where(c => c.Name == color.Key.Color).FirstOrDefault();
+                        if (searchedColor != null)
+                        {
+                            foreach (var keyword in searchedColor.Keywords.Split(','))
+                            {
+                                colorsKeywords.Add(keyword);
+                            }
+                        }
+                    }
+                    colorsKeywords.Distinct();
+
+                    string[] typeA_Keywords = db.Profiles.Where(p => p.Name.Contains("Type A Personality")).FirstOrDefault().Keywords.Split(',');
+                    string[] typeB_Keywords = db.Profiles.Where(p => p.Name.Contains("Type B Personality")).FirstOrDefault().Keywords.Split(',');
+                    string[] typeC_Keywords = db.Profiles.Where(p => p.Name.Contains("Type C Personality")).FirstOrDefault().Keywords.Split(',');
+                    string[] typeD_Keywords = db.Profiles.Where(p => p.Name.Contains("Type D Personality")).FirstOrDefault().Keywords.Split(',');
+
+                    int typeA_MatchNumber = 0;
+                    int typeB_MatchNumber = 0;
+                    int typeC_MatchNumber = 0;
+                    int typeD_MatchNumber = 0;
+
+                    foreach (var keyword in colorsKeywords)
+                    {
+                        foreach (var typeAkeyword in typeA_Keywords)
+                        {
+                            if (String.Equals(typeAkeyword, keyword))
+                                typeA_MatchNumber++;
+                        }
+                        foreach (var typeBkeyword in typeB_Keywords)
+                        {
+                            if (String.Equals(typeBkeyword, keyword))
+                                typeB_MatchNumber++;
+                        }
+                        foreach (var typeCkeyword in typeC_Keywords)
+                        {
+                            if (String.Equals(typeCkeyword, keyword))
+                                typeC_MatchNumber++;
+                        }
+                        foreach (var typeDkeyword in typeD_Keywords)
+                        {
+                            if (String.Equals(typeDkeyword, keyword))
+                                typeD_MatchNumber++;
+                        }
+                    }
+
+                    int totalMatches = typeA_MatchNumber + typeB_MatchNumber + typeC_MatchNumber + typeD_MatchNumber;
+
+                    double typeA_Percentage = (double)typeA_MatchNumber / totalMatches;
+                    double typeB_Percentage = (double)typeB_MatchNumber / totalMatches;
+                    double typeC_Percentage = (double)typeC_MatchNumber / totalMatches;
+                    double typeD_Percentage = (double)typeD_MatchNumber / totalMatches;
+
+                    ViewBag.TypeA = Convert.ToDouble(String.Format("{0:0.00}", typeA_Percentage)) * 100;
+                    ViewBag.TypeB = Convert.ToDouble(String.Format("{0:0.00}", typeB_Percentage)) * 100;
+                    ViewBag.TypeC = Convert.ToDouble(String.Format("{0:0.00}", typeC_Percentage)) * 100;
+                    ViewBag.TypeD = Convert.ToDouble(String.Format("{0:0.00}", typeD_Percentage)) * 100;
 
                 }
             }
 
             if (painting.Description == null)
-                painting.Description = "No available description";
+                painting.Description = "No description available";
             if (painting.CurrentOwner == null)
                 painting.CurrentOwner = "N/A";
 
@@ -167,7 +242,7 @@ namespace PictureAnalyzer.Controllers
             ViewBag.ProfileID = new SelectList(db.Profiles, "ID", "Name", painting.ProfileID);
             ViewBag.TypeID = new SelectList(db.Types, "ID", "Name", painting.TypeID);
 
-            return View(painting);
+            return View("ProfileResult");
         }
 
         // GET: Paintings/Edit/5

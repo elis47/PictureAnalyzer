@@ -8,29 +8,33 @@ namespace EmguCV
 {
     public class ImageProcessing
     {
-        public List<Pixel> cielabIndices = new List<Pixel>();
         public Dictionary<Pixel, double> hueDictionary = new Dictionary<Pixel, double>();
-        public int numberOfColors = 5;
+        public Dictionary<Pixel, int> colorDistribution = new Dictionary<Pixel, int>();
+        public List<Pixel> cielabIndices = new List<Pixel>();
+        public List<Pixel> distinctPixels = new List<Pixel>();
+        public List<Pixel> currentPixels = new List<Pixel>();
+        public const int numberOfColors = 5;
+        public const int maxDominantPixelsDifference = 20000;
 
-        public ImageProcessing()
+        public ImageProcessing(string filename)
         {
             PopulateCielabIndices();
-        }
 
-        public double GetHarmonicMeanForAllColors(string filename)
-        {
-            var colorDistribution = GetColorDistribution(filename);
-            var distinctPixels = GetDistinctPixels(colorDistribution);
+            colorDistribution = GetColorDistribution(filename);
+            distinctPixels = GetDistinctPixels(colorDistribution);
 
             colorDistribution = GetSortedDictionary(colorDistribution);
             colorDistribution = GetTopRecords(colorDistribution);
+        }
 
-            var currentPixels = GetPixels(colorDistribution, distinctPixels);
+        public double GetHarmonicMeanForAllColors()
+        {
+            currentPixels = GetPixels(colorDistribution, distinctPixels);
 
             #region Compare 2 by 2 colors and get the harmonic index
 
             Dictionary<List<Pixel>, double> harmonicDistribution = new Dictionary<List<Pixel>, double>();
-            double finalHarmonicMean = 1;
+            double finalHarmonicMean = 1.39;
 
             if (currentPixels.Count > 1)
                 finalHarmonicMean = 0;
@@ -72,6 +76,150 @@ namespace EmguCV
                 finalHarmonicMean /= harmonicDistribution.Count;
 
             #endregion Compare 2 by 2 colors and get the harmonic index
+
+            return finalHarmonicMean;
+        }
+
+        public double GetHarmonicMeanForDominantColors()
+        {
+            currentPixels = GetPixels(colorDistribution, distinctPixels);
+
+            #region Compare 2 by 2 dominant colors and get the harmonic index
+
+            Dictionary<List<Pixel>, double> harmonicDistribution = new Dictionary<List<Pixel>, double>();
+            double finalHarmonicMean = 1.39;
+
+            if (currentPixels.Count > 1)
+            {
+                #region Separate dominant colors only 
+                for (int i = currentPixels.Count - 1; i > 0; i--)
+                {
+                    if (colorDistribution[currentPixels[i]] - colorDistribution[currentPixels[i - 1]] > maxDominantPixelsDifference)
+                    {
+                        currentPixels.RemoveAt(i - 1);
+                    }
+                }
+                #endregion Separate dominant colors only
+            }
+
+            if (currentPixels.Count > 1)
+            {
+                finalHarmonicMean = 0;
+
+                for (int i = 0; i < Math.Min(numberOfColors, currentPixels.Count); i++)
+                {
+                    for (int j = i + 1; j < Math.Min(numberOfColors, currentPixels.Count); j++)
+                    {
+                        var deltaHab = currentPixels[i].Hue - currentPixels[j].Hue;
+                        var deltaCab = currentPixels[i].Chroma - currentPixels[j].Chroma;
+                        var deltaC = Math.Pow((Math.Pow(deltaHab, 2) + Math.Pow(deltaCab / 1.46, 2)), 0.5);
+
+                        var Hc = 0.04 + 0.53 * Math.Tanh(0.8 - 0.045 * deltaC);
+
+                        var Lsum = currentPixels[i].L + currentPixels[j].L;
+                        var HLsum = 0.28 + 0.54 * Math.Tanh(-3.88 + 0.029 * Lsum);
+                        var deltaL = Math.Abs(currentPixels[i].L - currentPixels[j].L);
+                        var HdeltaL = 0.14 + 0.15 * Math.Tanh(-2 + 0.2 * deltaL);
+
+                        var Hl = HLsum + HdeltaL;
+
+                        var delta_hab = currentPixels[i].HueAngle + currentPixels[j].HueAngle;
+                        var EC = 0.5 + 0.5 * Math.Tanh(-2 + 0.5 * deltaC);
+                        var HS = -0.08 - 0.14 * Math.Sin(delta_hab + 50) - 0.07 * Math.Sin(2 * delta_hab + 90);
+                        var EY1 = (0.22 * currentPixels[i].L - 12.8) / 10 * Math.Exp((90 - delta_hab) / 10 - Math.Exp((90 - delta_hab) / 10));
+                        var EY2 = (0.22 * currentPixels[j].L - 12.8) / 10 * Math.Exp((90 - delta_hab) / 10 - Math.Exp((90 - delta_hab) / 10));
+
+                        var Hh = EC * (HS + EY1) + EC * (HS + EY2);
+
+                        var harmonyIndex = Hc + Hl + Hc;
+
+                        finalHarmonicMean += harmonyIndex;
+
+                        harmonicDistribution.Add(new List<Pixel>() { currentPixels[i], currentPixels[j] }, harmonyIndex);
+                    }
+                }
+
+                if (harmonicDistribution.Count > 0)
+                    finalHarmonicMean /= harmonicDistribution.Count;
+            }
+            else
+            {
+                finalHarmonicMean = 1.39;
+            }
+
+            #endregion Compare 2 by 2 colors and get the harmonic index
+
+            return finalHarmonicMean;
+        }
+
+        public double GetHarmonicMeanForMinorityColors()
+        {
+            currentPixels = GetPixels(colorDistribution, distinctPixels);
+
+            #region Compare 2 by 2 minority colors and get the harmonic index
+
+            Dictionary<List<Pixel>, double> harmonicDistribution = new Dictionary<List<Pixel>, double>();
+            double finalHarmonicMean = 1.39;
+
+            if (currentPixels.Count > 1)
+            {
+                #region Separate minority colors only 
+                for (int i = 0; i < currentPixels.Count - 2; i++)
+                {
+                    if (colorDistribution[currentPixels[i + 1]] - colorDistribution[currentPixels[i]] > maxDominantPixelsDifference)
+                    {
+                        currentPixels.RemoveAt(i + 1);
+                    }
+                }
+                #endregion Separate minority colors only
+            }
+
+            if (currentPixels.Count > 1)
+            {
+                finalHarmonicMean = 0;
+
+                for (int i = 0; i < Math.Min(numberOfColors, currentPixels.Count); i++)
+                {
+                    for (int j = i + 1; j < Math.Min(numberOfColors, currentPixels.Count); j++)
+                    {
+                        var deltaHab = currentPixels[i].Hue - currentPixels[j].Hue;
+                        var deltaCab = currentPixels[i].Chroma - currentPixels[j].Chroma;
+                        var deltaC = Math.Pow((Math.Pow(deltaHab, 2) + Math.Pow(deltaCab / 1.46, 2)), 0.5);
+
+                        var Hc = 0.04 + 0.53 * Math.Tanh(0.8 - 0.045 * deltaC);
+
+                        var Lsum = currentPixels[i].L + currentPixels[j].L;
+                        var HLsum = 0.28 + 0.54 * Math.Tanh(-3.88 + 0.029 * Lsum);
+                        var deltaL = Math.Abs(currentPixels[i].L - currentPixels[j].L);
+                        var HdeltaL = 0.14 + 0.15 * Math.Tanh(-2 + 0.2 * deltaL);
+
+                        var Hl = HLsum + HdeltaL;
+
+                        var delta_hab = currentPixels[i].HueAngle + currentPixels[j].HueAngle;
+                        var EC = 0.5 + 0.5 * Math.Tanh(-2 + 0.5 * deltaC);
+                        var HS = -0.08 - 0.14 * Math.Sin(delta_hab + 50) - 0.07 * Math.Sin(2 * delta_hab + 90);
+                        var EY1 = (0.22 * currentPixels[i].L - 12.8) / 10 * Math.Exp((90 - delta_hab) / 10 - Math.Exp((90 - delta_hab) / 10));
+                        var EY2 = (0.22 * currentPixels[j].L - 12.8) / 10 * Math.Exp((90 - delta_hab) / 10 - Math.Exp((90 - delta_hab) / 10));
+
+                        var Hh = EC * (HS + EY1) + EC * (HS + EY2);
+
+                        var harmonyIndex = Hc + Hl + Hc;
+
+                        finalHarmonicMean += harmonyIndex;
+
+                        harmonicDistribution.Add(new List<Pixel>() { currentPixels[i], currentPixels[j] }, harmonyIndex);
+                    }
+                }
+
+                if (harmonicDistribution.Count > 0)
+                    finalHarmonicMean /= harmonicDistribution.Count;
+            }
+            else
+            {
+                finalHarmonicMean = 1.39;
+            }
+
+            #endregion Compare 2 by 2 minority colors and get the harmonic index
 
             return finalHarmonicMean;
         }

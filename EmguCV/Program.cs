@@ -10,7 +10,7 @@ namespace EmguCV
     {
         static void Main(string[] args)
         {
-            ImageProcessing i = new ImageProcessing();
+            ImageProcessing i = new ImageProcessing("");
         }
     }
 }
