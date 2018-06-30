@@ -23,7 +23,6 @@
                 <ul class="dropdown-menu text-center" role="menu">
                     <li>@Html.ActionLink("Name", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })</li>
                     <li>@Html.ActionLink("Description", "Index", new { sortOrder = ViewBag.DescriptionSortParm, currentFilter = ViewBag.CurrentFilter })</li>
-                    <li>@Html.ActionLink("Profile", "Index", new { sortOrder = ViewBag.ProfileSortParm, currentFilter = ViewBag.CurrentFilter })</li>
                     <li>@Html.ActionLink("Painter", "Index", new { sortOrder = ViewBag.PainterSortParm, currentFilter = ViewBag.CurrentFilter })</li>
                     <li>@Html.ActionLink("Influence", "Index", new { sortOrder = ViewBag.InfluenceSortParm, currentFilter = ViewBag.CurrentFilter })</li>
                 </ul>
@@ -78,7 +77,7 @@
 
                     <div class="text-center">
                         <br />
-                        @Html.ActionLink("Details", "Details", new { id = item.ID }) | @Html.ActionLink("Edit", "Edit", new { id = item.ID })
+                        @Html.ActionLink("Details", "Details", new { id = item.ID }) | @Html.ActionLink("Edit", "Edit", new { id = item.ID }) | @Html.ActionLink("Delete", "Delete", new { id = item.ID })
                     </div>
 
                     <br />

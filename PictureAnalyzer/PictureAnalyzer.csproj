@@ -210,9 +210,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201804301940397_Initial.cs" />
-    <Compile Include="Migrations\201804301940397_Initial.Designer.cs">
-      <DependentUpon>201804301940397_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201806292123277_Initial.cs" />
+    <Compile Include="Migrations\201806292123277_Initial.Designer.cs">
+      <DependentUpon>201806292123277_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -346,15 +346,15 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201804301940397_Initial.resx">
-      <DependentUpon>201804301940397_Initial.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\EmguCV\EmguCV.csproj">
       <Project>{b44d0fa6-84d2-429f-b00d-6743bad479ee}</Project>
       <Name>EmguCV</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201806292123277_Initial.resx">
+      <DependentUpon>201806292123277_Initial.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -19,16 +19,12 @@ namespace PictureAnalyzer.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        private double typeA;
-
-
         // GET: Paintings
         public ActionResult Index(string sortOrder, string searchString, string currentFilter, int? page)
         {
             ViewBag.CurrentSort = sortOrder;
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewBag.DescriptionSortParm = sortOrder == "Description" ? "description_desc" : "Description";
-            ViewBag.ProfileSortParm = sortOrder == "Profile" ? "profile_desc" : "Profile";
             ViewBag.InfluenceSortParm = sortOrder == "Influence" ? "influence_desc" : "Influence";
             ViewBag.PainterSortParm = sortOrder == "Painter" ? "painter_desc" : "Painter";
 
@@ -61,12 +57,6 @@ namespace PictureAnalyzer.Controllers
                     break;
                 case "description_desc":
                     paintings = paintings.OrderByDescending(p => p.Description);
-                    break;
-                case "Profile":
-                    paintings = paintings.OrderBy(p => p.Profile);
-                    break;
-                case "profile_desc":
-                    paintings = paintings.OrderByDescending(p => p.Profile);
                     break;
                 case "Influence":
                     paintings = paintings.OrderBy(p => p.Influence);
@@ -113,7 +103,6 @@ namespace PictureAnalyzer.Controllers
             ViewBag.GalleryID = new SelectList(db.Galleries, "ID", "Name");
             ViewBag.InfluenceID = new SelectList(db.Influences, "ID", "Name");
             ViewBag.PainterID = new SelectList(db.Painters, "ID", "Name");
-            ViewBag.ProfileID = new SelectList(db.Profiles, "ID", "Name");
             ViewBag.TypeID = new SelectList(db.Types, "ID", "Name");
             return View();
         }
@@ -139,7 +128,7 @@ namespace PictureAnalyzer.Controllers
             painting.File.InputStream.Read(uploadedFile, 0, uploadedFile.Length);
 
             if (file != null)
-            { 
+            {
                 if (file.ContentLength > 0)
                 {
                     string pic = Path.GetFileName(file.FileName);
@@ -153,15 +142,18 @@ namespace PictureAnalyzer.Controllers
                     ImageProcessing i = new ImageProcessing(physicalPath);
 
                     Dictionary<Pixel, int> colorDistribution = i.GetColorDistribution(physicalPath);
+                    colorDistribution = i.GetSortedDictionary(colorDistribution);
+                    colorDistribution = i.GetTopRecords(colorDistribution);
 
                     double harmonicMeanAll = i.GetHarmonicMeanForAllColors();
                     double harmonicMeanDominant = i.GetHarmonicMeanForDominantColors();
                     double harmonicMinorityMean = i.GetHarmonicMeanForMinorityColors();
 
-                    double finalHarmonicMean = (harmonicMeanAll + harmonicMeanDominant + harmonicMinorityMean)/ 3;
+                    double finalHarmonicMean = (harmonicMeanAll + harmonicMeanDominant + harmonicMinorityMean) / 3;
 
-                    var colors = db.Colors;
                     List<string> colorsKeywords = new List<string>();
+                    var colors = db.Colors;
+                    var ourProfile = "";
 
                     foreach (var color in colorDistribution)
                     {
@@ -172,8 +164,25 @@ namespace PictureAnalyzer.Controllers
                             {
                                 colorsKeywords.Add(keyword);
                             }
+                            painting.Colors.Add(searchedColor);
                         }
                     }
+
+                    if (colorDistribution.Count > 2)
+                    {
+                        var key1 = colorDistribution.Keys.Last();
+                        colorDistribution.Remove(key1);
+                        var key2 = colorDistribution.Keys.Last();
+
+                        var description1 = colors.Where(c => c.Name == key1.Color).First().PersonalityTraits;
+                        var description2 = colors.Where(c => c.Name == key2.Color).First().PersonalityTraits;
+
+                        if (description1 != description2)
+                            ourProfile = description1 + description2;
+                        else
+                            ourProfile = description1;
+                    }
+
                     colorsKeywords.Distinct();
 
                     string[] typeA_Keywords = db.Profiles.Where(p => p.Name.Contains("Type A Personality")).FirstOrDefault().Keywords.Split(',');
@@ -217,11 +226,31 @@ namespace PictureAnalyzer.Controllers
                     double typeC_Percentage = (double)typeC_MatchNumber / totalMatches;
                     double typeD_Percentage = (double)typeD_MatchNumber / totalMatches;
 
-                    ViewBag.TypeA = Convert.ToDouble(String.Format("{0:0.00}", typeA_Percentage)) * 100;
-                    ViewBag.TypeB = Convert.ToDouble(String.Format("{0:0.00}", typeB_Percentage)) * 100;
-                    ViewBag.TypeC = Convert.ToDouble(String.Format("{0:0.00}", typeC_Percentage)) * 100;
-                    ViewBag.TypeD = Convert.ToDouble(String.Format("{0:0.00}", typeD_Percentage)) * 100;
+                    painting.TypeAPercentage = Convert.ToDouble(String.Format("{0:0.00}", typeA_Percentage)) * 100;
+                    painting.TypeBPercentage = Convert.ToDouble(String.Format("{0:0.00}", typeB_Percentage)) * 100;
+                    painting.TypeCPercentage = Convert.ToDouble(String.Format("{0:0.00}", typeC_Percentage)) * 100;
+                    painting.TypeDPercentage = Convert.ToDouble(String.Format("{0:0.00}", typeD_Percentage)) * 100;
 
+                    ViewBag.TypeAPercentage = Convert.ToDouble(String.Format("{0:0.00}", typeA_Percentage)) * 100;
+                    ViewBag.TypeBPercentage = Convert.ToDouble(String.Format("{0:0.00}", typeB_Percentage)) * 100;
+                    ViewBag.TypeCPercentage = Convert.ToDouble(String.Format("{0:0.00}", typeC_Percentage)) * 100;
+                    ViewBag.TypeDPercentage = Convert.ToDouble(String.Format("{0:0.00}", typeD_Percentage)) * 100;
+
+                    var profiles = db.Profiles.ToList();
+                    painting.Profiles = profiles;
+
+                    ViewBag.TypeADescription = profiles.ElementAt(0).Description;
+                    ViewBag.TypeBDescription = profiles.ElementAt(1).Description;
+                    ViewBag.TypeCDescription = profiles.ElementAt(2).Description;
+                    ViewBag.TypeDDescription = profiles.ElementAt(3).Description;
+
+                    double interval = 1.24 + 1.39;
+
+                    ViewBag.AllHarmonyIndex = Convert.ToDouble(String.Format("{0:0.00}", (1.24 + harmonicMeanAll) / interval)) * 100;
+                    ViewBag.DominantHarmonyIndex = Convert.ToDouble(String.Format("{0:0.00}", (1.24 + harmonicMeanDominant) / interval)) * 100;
+                    ViewBag.MinorHarmonyIndex = Convert.ToDouble(String.Format("{0:0.00}", (1.24 + harmonicMinorityMean) / interval)) * 100;
+
+                    ViewBag.OurProfile = ourProfile;
                 }
             }
 
@@ -235,14 +264,7 @@ namespace PictureAnalyzer.Controllers
             db.Paintings.Add(painting);
             db.SaveChanges();
 
-            ViewBag.ApplicationUserId = new SelectList(db.Users, "Id", "Email", painting.ApplicationUserId);
-            ViewBag.GalleryID = new SelectList(db.Galleries, "ID", "Name", painting.GalleryID);
-            ViewBag.InfluenceID = new SelectList(db.Influences, "ID", "Name", painting.InfluenceID);
-            ViewBag.PainterID = new SelectList(db.Painters, "ID", "Name", painting.PainterID);
-            ViewBag.ProfileID = new SelectList(db.Profiles, "ID", "Name", painting.ProfileID);
-            ViewBag.TypeID = new SelectList(db.Types, "ID", "Name", painting.TypeID);
-
-            return View("ProfileResult");
+            return View("ProfileResult", painting);
         }
 
         // GET: Paintings/Edit/5
@@ -261,7 +283,6 @@ namespace PictureAnalyzer.Controllers
             ViewBag.GalleryID = new SelectList(db.Galleries, "ID", "Name", painting.GalleryID);
             ViewBag.InfluenceID = new SelectList(db.Influences, "ID", "Name", painting.InfluenceID);
             ViewBag.PainterID = new SelectList(db.Painters, "ID", "Name", painting.PainterID);
-            ViewBag.ProfileID = new SelectList(db.Profiles, "ID", "Name", painting.ProfileID);
             ViewBag.TypeID = new SelectList(db.Types, "ID", "Name", painting.TypeID);
             return View(painting);
         }
@@ -271,7 +292,7 @@ namespace PictureAnalyzer.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Name,Description,CurrentOwner,HarmonyIndex,ConstrastIndex,LuminosityIndex,Link,ApplicationUserId,PainterID,TypeID,InfluenceID,ProfileID,GalleryID")] Painting painting)
+        public ActionResult Edit([Bind(Include = "ID,Name,Description,CurrentOwner,HarmonyIndex,ConstrastIndex,LuminosityIndex,Link,ApplicationUserId,PainterID,TypeID,InfluenceID,GalleryID")] Painting painting)
         {
             if (ModelState.IsValid)
             {
@@ -283,7 +304,6 @@ namespace PictureAnalyzer.Controllers
             ViewBag.GalleryID = new SelectList(db.Galleries, "ID", "Name", painting.GalleryID);
             ViewBag.InfluenceID = new SelectList(db.Influences, "ID", "Name", painting.InfluenceID);
             ViewBag.PainterID = new SelectList(db.Painters, "ID", "Name", painting.PainterID);
-            ViewBag.ProfileID = new SelectList(db.Profiles, "ID", "Name", painting.ProfileID);
             ViewBag.TypeID = new SelectList(db.Types, "ID", "Name", painting.TypeID);
             return View(painting);
         }

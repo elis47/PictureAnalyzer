@@ -3,14 +3,14 @@ namespace PictureAnalyzer.Migrations
     using System;
     using System.Data.Entity.Migrations;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<PictureAnalyzer.Models.ApplicationDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<Models.ApplicationDbContext>
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
         }
 
-        protected override void Seed(PictureAnalyzer.Models.ApplicationDbContext context)
+        protected override void Seed(Models.ApplicationDbContext context)
         {
             context.Profiles.AddOrUpdate(
                 p => p.Name,
@@ -68,7 +68,7 @@ namespace PictureAnalyzer.Migrations
                 {
                     Name = "Green",
                     Description = "The color green relates to balance and harmony. From a color psychology perspective, it is the great balancer of the heart and the emotions, creating equilibrium between the head and the heart. From a meaning of colors perspective, green is also the color of growth, the color of spring, of renewal and rebirth. It renews and restores depleted energy. It is the sanctuary away from the stresses of modern living, restoring us back to a sense of well being. This is why there is so much of this relaxing color on the earth, and why we need to keep it that way.",
-                    PersonalityTraits = "They are a practical, down-to-earth persons with a love of nature. They are stable and well balanced or are striving for balance - in seeking this balance, they can at times become unsettled and anxious. Having a personality color green means they are kind, generous and compassionate - good to have around during a crisis as they remain calm and take control of the situation until it is resolved. They  are caring and nurturing to others - however they must be careful not to neglect their own needs while giving to others. They are intelligent  love to learn, quickly understanding new concepts.",
+                    PersonalityTraits = "They are a practical, down-to-earth persons with a love of nature. They are stable and well balanced or are striving for balance - in seeking this balance, they can at times become unsettled and anxious. They are kind, generous and compassionate - good to have around during a crisis as they remain calm and take control of the situation until it is resolved. They  are caring and nurturing to others - however they must be careful not to neglect their own needs while giving to others. They are intelligent  love to learn, quickly understanding new concepts.",
                     Keywords = "practical,nature,stable,balanced,unsettled,anxiety,kind,generous,compassionate,calm,solve problems,caring,intelligent,learn,understand"
                 },
                 new Models.Color
@@ -80,7 +80,7 @@ namespace PictureAnalyzer.Migrations
                 },
                 new Models.Color
                 {
-                    Name = "Violet",
+                    Name = "Purple",
                     Description = "The color violet is the color of intuition and perception and is helpful in opening the third eye. It promotes deep concentration during times of introspection and meditation, helping you achieve deeper levels of consciousness. It relies on intuition rather than gut feeling. Powerful and dignified, violet conveys integrity and deep sincerity.",
                     PersonalityTraits = "They are honest, compassionate and understanding. Integrity is extremely important to them. They need structure in their life - organization is important to them and they can be quite inflexible when it comes to order in their life. They love rituals and traditions and look to the past when planning for the future. They are conscientious and reliable - a good person to have around in a crisis.",
                     Keywords = "honest,compassionate,understand,integrity,structure,inflexible,order,rituals,traditional,conscientious,reliable"
@@ -124,7 +124,7 @@ namespace PictureAnalyzer.Migrations
                 {
                     Name = "Black",
                     Description = "The color black relates to the hidden, the secretive and the unknown, and as a result it creates an air of mystery. It keeps things bottled up inside, hidden from the world. In color psychology this color gives protection from external emotional stress. It creates a barrier between itself and the outside world, providing comfort while protecting its emotions and feelings, and hiding its vulnerabilities, insecurities and lack of self confidence. Black is the absorption of all color and the absence of light. Black hides, while white brings to light. What black covers, white uncovers.",
-                    PersonalityTraits = "Prestige and power are important to them. They are independent, strong-willed and determined and like to be in control of themselves and situations. As a lover of black they may be conservative and conventional - black is restricting and contained. With black as their personality color, they may be too serious for their own good. They may appear intimidating to even their closest colleagues and friends, with an authoritarian, demanding and dictatorial attitude.",
+                    PersonalityTraits = "Prestige and power are important to them. They are independent, strong-willed and determined and like to be in control of themselves and situations. As a lover of black they may be conservative and conventional - black is restricting and contained. They may be too serious for their own good. They may appear intimidating to even their closest colleagues and friends, with an authoritarian, demanding and dictatorial attitude.",
                     Keywords = "prestige,power,independent,determined,control,conservative,conventional,traditional,serious,intimidating,authoritarian,demanding,dictatorial"
                 }
             );
@@ -138,10 +138,17 @@ namespace PictureAnalyzer.Migrations
             context.Influences.AddOrUpdate(
                 new Models.Influence { Name = "Expressionism", Description = "-", BeginYear = null, EndYear = null },
                 new Models.Influence { Name = "Cubism ", Description = "-", BeginYear = null, EndYear = null },
-                new Models.Influence { Name = "Modernism", Description = "-", BeginYear = null, EndYear = null },
-                new Models.Influence { Name = "Dadaism", Description = "-", BeginYear = null, EndYear = null },
-                new Models.Influence { Name = "Abstract", Description = "-", BeginYear = null, EndYear = null },
-                new Models.Influence { Name = " ", Description = "-", BeginYear = null, EndYear = null }
+                new Models.Influence { Name = "Modernism", Description = "-", BeginYear = null, EndYear = null }
+            );
+            context.SaveChanges();
+
+            context.Galleries.AddOrUpdate(
+                new Models.Gallery { Name = "All kind", Description = "Paintings belonging to all painters, influences and psychological profiles will be found here!" },
+                new Models.Gallery { Name = "Picasso Lovers ", Description = "This gallery is dedicated to our beloved Pablo Picasso! Add as many paintings as possible to help our Picasso community grow!" },
+                new Models.Gallery { Name = "Leonardo da Vinci Lovers", Description = "This gallery is dedicated to Leonardo da Vinci, so don't forget to contribute with as many as more paintings as possbile!" },
+                new Models.Gallery { Name = "Nature", Description = "This gallery contains paintings that are most related to nature themes. Enjoy!" },
+                new Models.Gallery { Name = "Portraits", Description = "This gallery contains portraits paintings from all the painters around. Enjoy!" },
+                new Models.Gallery { Name = "Abstract", Description = "This gallery contains abstract paintings, usually from the cubism era, but not only! Enjoy!" }
             );
             context.SaveChanges();
 

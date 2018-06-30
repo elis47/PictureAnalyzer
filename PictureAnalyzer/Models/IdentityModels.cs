@@ -30,7 +30,7 @@ namespace PictureAnalyzer.Models
         {
 
         }
-        
+
 
         public virtual DbSet<Painting> Paintings { get; set; }
         public virtual DbSet<Color> Colors { get; set; }
@@ -49,9 +49,6 @@ namespace PictureAnalyzer.Models
                 .HasRequired(g => g.Gallery)
                 .WithMany(p => p.Paintings);
             modelBuilder.Entity<Painting>()
-                .HasRequired(p => p.Profile)
-                .WithMany(g => g.Paintings);
-            modelBuilder.Entity<Painting>()
                 .HasRequired(t => t.Type)
                 .WithMany(p => p.Paintings);
             modelBuilder.Entity<Painting>()
@@ -67,6 +64,9 @@ namespace PictureAnalyzer.Models
             //Many-to-many
             modelBuilder.Entity<Painting>()
                 .HasMany(c => c.Colors)
+                .WithMany(p => p.Paintings);
+            modelBuilder.Entity<Painting>()
+                .HasMany(c => c.Profiles)
                 .WithMany(p => p.Paintings);
         }
 

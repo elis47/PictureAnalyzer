@@ -3,62 +3,11 @@
 @{
     ViewBag.Title = "Delete";
 }
-
-<h2>Delete</h2>
-
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>Painting</h4>
-    <hr />
+<br />
+<h3>Are you sure you want to delete this painting?</h3>
+<br />
+<div class="text-left">
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.ApplicationUser.Email)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ApplicationUser.Email)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Gallery.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Gallery.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Influence.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Influence.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Painter.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Painter.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Profile.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Profile.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Type.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Type.Name)
-        </dd>
-
         <dt>
             @Html.DisplayNameFor(model => model.Name)
         </dt>
@@ -84,35 +33,27 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.HarmonyIndex)
+            Painter
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.HarmonyIndex)
+            @Html.DisplayFor(model => model.Painter.Name)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.ConstrastIndex)
+            Gallery
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.ConstrastIndex)
+            @Html.DisplayFor(model => model.Gallery.Name)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.LuminosityIndex)
+            Influence
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.LuminosityIndex)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Link)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Link)
+            @Html.DisplayFor(model => model.Influence.Name)
         </dd>
 
     </dl>
@@ -121,8 +62,7 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            @Html.ActionLink("Go back to List", "Index") | <input type="submit" value="Delete" class="btn btn-default" />
         </div>
     }
 </div>

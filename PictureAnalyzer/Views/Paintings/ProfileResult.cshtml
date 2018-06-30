@@ -1,45 +1,247 @@
-﻿
+﻿@model PictureAnalyzer.Models.Painting
+
 @{
     ViewBag.Title = "Profile result";
 }
 
 <style>
-    #myChart {
-        width:100px;
-        height:100px;
+    #profileChart {
+        width: 700px !important;
+        height: 350px !important;
+    }
+    #allMean, #dominantMean, #minorityMean {
+        width: 400px !important;
+        height: 200px !important;
+    }
+    .pad {
+        padding: 20px;
+    }
+    .turquiose {
+        color: #00bc8c;
+    }
+    .bold {
+        font-weight:bold;
+        font-size: 20px;
     }
 </style>
 <script src="~/Scripts/Chart.min.js"></script>
 
-<h2>Profile result</h2>
+<br />
+<h2 class="text-center">Profile result</h2>
+<br />
 
-<canvas id="myChart"></canvas>
-<h3>Type A : @ViewBag.TypeA</h3>
-<h3>Type B : @ViewBag.TypeB</h3>
-<h3>Type C : @ViewBag.TypeC</h3>
-<h3>Type D : @ViewBag.TypeD</h3>
+<div class="text-center col-md-8 col-md-offset-2 pad">
+    <canvas id="profileChart"></canvas> 
+</div>
 
+<br />
+
+<div class="col-md-10 col-md-offset-1 pad">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title turquiose bold">Psychologic profile proposed by us</h3>
+        </div>
+        <div class="panel-body">
+            @ViewBag.OurProfile
+        </div>
+    </div>
+</div>
+
+<br />
+
+<div class="row pad">
+    <div class="col-md-4">
+        <canvas id="allMean"></canvas>
+    </div>
+    <br />
+    <div class="col-md-4">
+        <canvas id="dominantMean"></canvas>
+    </div>
+    <br />
+    <div class="col-md-4">
+        <canvas id="minorityMean"></canvas>
+    </div>
+</div>
+
+
+<div class="row pad">
+    <div class="col-md-3">        
+        @if (@ViewBag.TypeAPercentage < 20)
+        {
+            <div class="panel panel-danger">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Type A Personality</h3>
+                </div>
+                <div class="panel-body">
+                    @ViewBag.TypeADescription
+                </div>
+            </div>
+        }
+        @if (@ViewBag.TypeAPercentage < 30 && @ViewBag.TypeAPercentage > 20)
+        {
+            <div class="panel panel-warning">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Type A Personality</h3>
+                </div>
+                <div class="panel-body">
+                    @ViewBag.TypeADescription
+                </div>
+            </div>
+        }
+        @if (@ViewBag.TypeAPercentage > 30)
+        {
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Type A Personality</h3>
+                </div>
+                <div class="panel-body">
+                    @ViewBag.TypeADescription
+                </div>
+            </div>
+        }
+
+    </div>
+
+    <div class="col-md-3">
+        @if (@ViewBag.TypeBPercentage < 20)
+        {
+            <div class="panel panel-danger">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Type B Personality</h3>
+                </div>
+                <div class="panel-body">
+                    @ViewBag.TypeBDescription
+                </div>
+            </div>
+        }
+        @if (@ViewBag.TypeBPercentage < 30 && @ViewBag.TypeBPercentage > 20)
+        {
+            <div class="panel panel-warning">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Type B Personality</h3>
+                </div>
+                <div class="panel-body">
+                    @ViewBag.TypeBDescription
+                </div>
+            </div>
+        }
+        @if (@ViewBag.TypeBPercentage > 30)
+        {
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Type B Personality</h3>
+                </div>
+                <div class="panel-body">
+                    @ViewBag.TypeBDescription
+                </div>
+            </div>
+        }
+    </div>
+
+    <div class="col-md-3">
+        @if (@ViewBag.TypeCPercentage < 20)
+        {
+            <div class="panel panel-danger">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Type C Personality</h3>
+                </div>
+                <div class="panel-body">
+                    @ViewBag.TypeCDescription
+                </div>
+            </div>
+        }
+        @if (@ViewBag.TypeCPercentage < 30 && @ViewBag.TypeCPercentage > 20)
+        {
+            <div class="panel panel-warning">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Type C Personality</h3>
+                </div>
+                <div class="panel-body">
+                    @ViewBag.TypeCDescription
+                </div>
+            </div>
+        }
+        @if (@ViewBag.TypeCPercentage > 30)
+        {
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Type C Personality</h3>
+                </div>
+                <div class="panel-body">
+                    @ViewBag.TypeCDescription
+                </div>
+            </div>
+        }
+    </div>
+
+    <div class="col-md-3">
+        @if (@ViewBag.TypeDPercentage < 20)
+        {
+            <div class="panel panel-danger">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Type D Personality</h3>
+                </div>
+                <div class="panel-body">
+                    @ViewBag.TypeDDescription
+                </div>
+            </div>
+        }
+        @if (@ViewBag.TypeDPercentage < 30 && @ViewBag.TypeDPercentage > 20)
+        {
+            <div class="panel panel-warning">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Type D Personality</h3>
+                </div>
+                <div class="panel-body">
+                    @ViewBag.TypeDDescription
+                </div>
+            </div>
+        }
+        @if (@ViewBag.TypeDPercentage > 30)
+        {
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Type D Personality</h3>
+                </div>
+                <div class="panel-body">
+                    @ViewBag.TypeDDescription
+                </div>
+            </div>
+        }
+    </div>
+</div>
 
 <script>
-    var ctx = document.getElementById("myChart");
-    var myChart = new Chart(ctx, {
+    var ctx = document.getElementById("profileChart");
+    var profileChart = new Chart(ctx, {
         type: 'doughnut',
         data: {
-            labels: ["Type A", "Type B", "Type C", "Type D"],
+            labels: [
+                "Type A personality",
+                "Type B personality",
+                "Type C personality",
+                "Type D personality"
+            ],
+            tooltips: [],
             datasets: [{
-                label: '% of matches',
-                data: [@ViewBag.TypeA, @ViewBag.TypeB, @ViewBag.TypeC, @ViewBag.TypeD],
+                label: '% matches',
+                data: [
+                    @ViewBag.TypeAPercentage,
+                    @ViewBag.TypeBPercentage,
+                    @ViewBag.TypeCPercentage,
+                    @ViewBag.TypeDPercentage
+                ],
                 backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(255,99,132, 0.7)',
+                    'rgba(103, 68, 201, 0.7)',
+                    'rgba(0, 188, 140, 0.7)', 
+                    'rgba(255, 206, 86, 0.7)'
                 ],
                 borderColor: [
                     'rgba(255,99,132,1)',
                     'rgba(54, 162, 235, 1)',
                     'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
+                    'rgba(75, 192, 192, 1)'
                 ],
                 borderWidth: 1
             }]
@@ -51,6 +253,123 @@
                         beginAtZero: true
                     }
                 }]
+            },
+            labels: {
+                fontColor: 'white'
+            }
+        }
+    });
+
+    var ctxAll = document.getElementById("allMean");
+    var profileChartAll = new Chart(ctxAll, {
+        type: 'pie',
+        data: {
+            labels: [
+                "Harmonic mean for all colors",
+                "Disharmonic mean for all colors"
+            ],
+            tooltips: [],
+            datasets: [{
+                label: '% matches',
+                data: [
+                        @ViewBag.AllHarmonyIndex,
+                        100 - @ViewBag.AllHarmonyIndex
+                ],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.7)'
+                ],
+                borderColor: [
+                    'rgba(255,99,132,1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            },
+            labels: {
+                fontColor: 'white'
+            }
+        }
+    });
+
+    var ctxDominant = document.getElementById("dominantMean");
+    var profileChartDominant = new Chart(ctxDominant, {
+        type: 'pie',
+        data: {
+            labels: [
+                "Harmonic mean for dominant colors",
+                "Disharmonic mean for dominant colors",
+            ],
+            tooltips: [],
+            datasets: [{
+                label: '% matches',
+                data: [
+                        @ViewBag.DominantHarmonyIndex,
+                        100- @ViewBag.DominantHarmonyIndex
+                ],
+                backgroundColor: [
+                    'rgba(54, 162, 235, 0.7)'
+                ],
+                borderColor: [
+                    'rgba(255,99,132,1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            },
+            labels: {
+                fontColor: 'white'
+            }
+        }
+    });
+
+    var ctxMinority = document.getElementById("minorityMean");
+    var profileChartDominant = new Chart(ctxMinority, {
+        type: 'pie',
+        data: {
+            labels: [
+                "Harmonic mean for minority colors",
+                "Disharmonic mean for minority colors"
+            ],
+            tooltips: [],
+            datasets: [{
+                label: '% matches',
+                data: [
+                        @ViewBag.MinorHarmonyIndex,
+                        100 - @ViewBag.MinorHarmonyIndex
+                ],
+                backgroundColor: [
+                    'rgba(255, 206, 86, 0.7)'
+                ],
+                borderColor: [
+                    'rgba(255,99,132,1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            },
+            labels: {
+                fontColor: 'white'
             }
         }
     });

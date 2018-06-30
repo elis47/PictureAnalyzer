@@ -10,6 +10,7 @@ namespace PictureAnalyzer.Models
         public Painting()
         {
             Colors = new HashSet<Color>();
+            Profiles = new HashSet<Profile>();
         }
 
         public int ID { get; set; }
@@ -50,19 +51,29 @@ namespace PictureAnalyzer.Models
         [Display(Name = "Influence")]
         public int? InfluenceID { get; set; }
 
-        [Display(Name = "Profile")]
-        public int? ProfileID { get; set; }
-
         [Display(Name = "Gallery")]
         public int? GalleryID { get; set; }
+
+        [Display(Name = "Type A percentage ")]
+        public double? TypeAPercentage { get; set; }
+
+        [Display(Name = "Type B percentage")]
+        public double? TypeBPercentage { get; set; }
+
+        [Display(Name = "Type C percentage")]
+        public double? TypeCPercentage { get; set; }
+
+        [Display(Name = "Type D percentage")]
+        public double? TypeDPercentage { get; set; }
+
 
         public virtual ApplicationUser ApplicationUser { get; set; }
         public virtual Painter Painter { get; set; }
         public virtual Type Type { get; set; }
         public virtual Influence Influence { get; set; }
-        public virtual Profile Profile { get; set; }
         public virtual Gallery Gallery { get; set; }
         public virtual ICollection<Color> Colors { get; set; }
+        public virtual ICollection<Profile> Profiles { get; set; }
 
     }
 }
