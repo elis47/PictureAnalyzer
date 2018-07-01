@@ -50,7 +50,7 @@ namespace PictureAnalyzer.Controllers
 
             int pageSize = 3;
             int pageNumber = (page ?? 1);
-            return View(galleries.ToPagedList(pageNumber, pageSize));
+            return View(galleries.Include(g => g.Paintings).ToPagedList(pageNumber, pageSize));
         }
 
         // GET: Galleries/Details/5
@@ -155,6 +155,17 @@ namespace PictureAnalyzer.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        // GET: Galleries/ViewPaintings/5
+        public ActionResult ViewPaintings(int id, int? page)
+        {
+            var paintings = db.Paintings.Where(p => p.GalleryID == id).OrderBy(p => p.ID);
+
+            int pageSize = 9;
+            int pageNumber = (page ?? 1);
+
+            return View(paintings.ToPagedList(pageNumber, pageSize));
         }
     }
 }

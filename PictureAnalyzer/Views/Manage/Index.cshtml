@@ -1,13 +1,11 @@
 ﻿@using Microsoft.AspNet.Identity
-@model PictureAnalyzer.Models.IndexViewModel
-@*@model PictureAnalyzer.Models.ApplicationUser*@
-@{
-    ViewBag.Title = "Manage";
-}
+@model PagedList.IPagedList<PictureAnalyzer.Models.Painting>
+@using PagedList.Mvc;
 
-<h2>@ViewBag.Title your profile</h2>
+<h2>My account</h2>
 
 <p class="text-success">@ViewBag.StatusMessage</p>
+
 <div>
     <h4>Change your account settings</h4>
     <hr />
@@ -16,17 +14,71 @@
         <dd>@User.Identity.GetUserName()</dd>
         <dt>Password:</dt>
         <dd>
-            [
-            @if (Model.HasPassword)
-            {
-                @Html.ActionLink("Change your password", "ChangePassword")
-            }
-            else
-            {
-                @Html.ActionLink("Create", "SetPassword")
-            }
-            ]
+            @Html.ActionLink("Change your password", "ChangePassword")
         </dd>
-        <dt>My paintings:</dt>  
     </dl>
 </div>
+
+
+<h3>Your paintings</h3>
+
+<div class="row">
+    <div class='list-group gallery'>
+
+
+        @foreach (var item in Model)
+            {
+
+            <div class='col-md-3 col-md-3-personalized'>
+
+                <div class="text-center">
+                    <h3><b>@Html.DisplayFor(modelItem => item.Name)</b></h3>
+                </div>
+
+                <a class="thumbnail" rel="ligthbox" href=@Html.DisplayFor(modelItem => item.Link) data-toggle="tooltip" data-placement="top">
+                    <img class="img-responsive" alt="" src=@Html.DisplayFor(modelItem => item.Link) />
+                </a>
+
+                <div class="text-center">
+                    <h4><i>@Html.DisplayFor(modelItem => item.Painter.Name)</i></h4>
+                </div>
+
+                <div class="text-center">
+                    (@String.Format("{0,9:d}", item.Painter.BirthDate) - @String.Format("{0,9:d}", item.Painter.PassDate))
+                </div>
+
+                <div class="text-center">
+                    <br />
+                    @Html.ActionLink("Details", "Details", "Paintings", new { id = item.ID }, null) | 
+                    @Html.ActionLink("Edit", "EditMyPainting", "Paintings", new { id = item.ID }, null) | 
+                    @Html.ActionLink("Delete", "DeleteMyPainting", "Paintings", new { id = item.ID }, null)
+                </div>
+
+                <br />
+
+            </div>
+        }
+    </div>
+</div>
+
+
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }),
+    new PagedListRenderOptions
+    {
+        DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+        DisplayLinkToLastPage = PagedListDisplayMode.Always,
+        DisplayLinkToPreviousPage = PagedListDisplayMode.Never,
+        DisplayLinkToNextPage = PagedListDisplayMode.Never,
+        DisplayPageCountAndCurrentLocation = false,
+        DisplayEllipsesWhenNotShowingAllPageNumbers = false,
+        MaximumPageNumbersToDisplay = 5
+    })
+
+<style>
+    .img-responsive {
+        max-height: 247px;
+    }
+</style>

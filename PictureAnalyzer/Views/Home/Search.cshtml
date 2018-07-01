@@ -1,11 +1,9 @@
-﻿@model PagedList.IPagedList<PictureAnalyzer.Models.Painter>
+﻿@model PagedList.IPagedList<PictureAnalyzer.Models.Painting>
 @using PagedList.Mvc;
 
-@{
-    ViewBag.Title = "Search results";
-}
-<br/>
-<h1 class="text-center">A list of our <i class="color">painters</i> and <i class="color">galleries</i> matching your search...</h1>
+
+<br />
+<h1 class="text-center">A list of our <i class="color">paintings</i> and <i class="color">painters</i> matching your search...</h1>
 <div class="container">
     <div class="row">
         <div class='list-group gallery'>
@@ -20,22 +18,13 @@
                         <h4><i>@Html.DisplayFor(modelItem => item.Name)</i></h4>
                     </div>
 
-                    <a class="thumbnail" rel="ligthbox" href="~/Content/img/pablo_picasso.jpg" data-toggle="tooltip" data-placement="top" title="@Html.DisplayFor(modelItem => item.Description)">
-                        <img class="img-responsive" alt="" src="~/Content/img/pablo_picasso.jpg" />
+                    <a class="thumbnail" rel="ligthbox" href=@Html.DisplayFor(p => item.Link) data-toggle="tooltip" data-placement="top" title="@Html.DisplayFor(modelItem => item.Description)">
+                        <img class="img-responsive" alt="" src=@Html.DisplayFor(p => item.Link) />
                     </a>
 
+                    <br />
                     <div class="text-center">
-                        @String.Format("{0,9:d}", item.BirthDate) - @String.Format("{0,9:d}", item.PassDate)
-                    </div>
-
-                    <div class="text-center">
-                        @Html.DisplayFor(modelItem => item.Country)
-                    </div>
-
-                    <div class="text-center">
-                        <br />
-                        <p>@Html.ActionLink("Details","Details", "Painters", new { id = item.ID }, null)</p>
-                        <a asp-controller="Painters" asp-action="Details" asp-attribute="item.ID">blae</a>
+                        @Html.ActionLink("Details", "Details", "Paintings", new { id = item.ID }, null)
                     </div>
 
                     <br />
@@ -63,6 +52,7 @@ Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.Page
     .color {
         color: #009871;
     }
+
     .row {
         margin-top: 50px;
     }

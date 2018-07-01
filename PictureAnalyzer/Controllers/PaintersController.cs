@@ -121,11 +121,9 @@ namespace PictureAnalyzer.Controllers
         }
 
         // POST: Painters/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Name,Description,Country,BirthDate,PassDate")] Painter painter)
+        public ActionResult Edit([Bind(Include = "ID,Name,Description,Country,Link,BirthDate,PassDate")] Painter painter)
         {
             if (ModelState.IsValid)
             {
@@ -169,6 +167,17 @@ namespace PictureAnalyzer.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        // GET: Painters/ViewPaintings/5
+        public ActionResult ViewPaintings(int id,int? page)
+        {
+            var paintings = db.Paintings.Where(p => p.PainterID == id).OrderBy(p => p.ID);
+
+            int pageSize = 9;
+            int pageNumber = (page ?? 1);
+
+            return View(paintings.ToPagedList(pageNumber, pageSize));
         }
     }
 }

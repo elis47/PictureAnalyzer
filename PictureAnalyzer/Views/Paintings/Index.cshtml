@@ -218,94 +218,12 @@ Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.Page
     .white {
         color: white;
     }
+
+    .thumbnail > img, .thumbnail a > img {
+        height: 160px !important;
+    }
+
+    .col-md-3-personalized {
+        height: 365px;
+    }
 </style>
-
-
-
-
-
-
-
-
-
-@*@model IEnumerable<PictureAnalyzer.Models.Painting>
-
-    @{
-        ViewBag.Title = "Index";
-    }
-
-    <h2>Index</h2>
-
-    <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Gallery)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Influence)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Painter)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Profile)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Type)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CurrentOwner)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Link)
-            </th>
-            <th></th>
-        </tr>
-
-    @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Gallery.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Influence.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Painter.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Profile.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Type.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CurrentOwner)
-            </td>
-            <td>
-                <img src="@Url.Content(item.Link)" alt="" />
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-                @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-                @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-            </td>
-        </tr>
-    }
-
-    </table>*@

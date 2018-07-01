@@ -5,10 +5,10 @@
 }
 
 
-@using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" })) 
+@using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -36,10 +36,11 @@
             </div>
         </div>
 
-        <div>
-            @Html.LabelFor(x => x.File)
-            @Html.TextBoxFor(x => x.File, new { type = "file" })
-            @Html.ValidationMessageFor(x => x.File)
+        <div class="form-group">
+            @Html.LabelFor(x => x.File, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(x => x.File, htmlAttributes: new { type = "file",  @class = "form-control" })
+            </div>
         </div>
 
         <div class="form-group">

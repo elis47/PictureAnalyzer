@@ -27,18 +27,23 @@ namespace PictureAnalyzer.Controllers
         {
             ViewBag.CurrentFilter = SearchString;
 
-            var galleries = from g in db.Galleries
-                            select g;
-            var painters = from p in db.Painters
-                           select p;
+            var result = db.Paintings.Where(p => p.Name.Contains(SearchString)
+                                       || p.Description.Contains(SearchString)).ToList();
 
-            painters = painters.Where(p => p.Name.Contains(SearchString)
-                                       || p.Description.Contains(SearchString));
+            var paintersIds = db.Painters.Where(p => p.Name.Contains(SearchString)).Select(p => p.ID).ToList();
+
+            foreach (var painterId in paintersIds)
+            {
+                var painting = db.Paintings.Where(p => p.PainterID == painterId).FirstOrDefault();
+                if (painting != null)
+                    result.Add(painting);
+            }
+
             int pageSize = 3;
             int pageNumber = (page ?? 1);
-            painters = painters.OrderBy(p => p.Name);
+            result.OrderBy(p => p.Name);
 
-            return View(painters.ToPagedList(pageNumber, pageSize));
+            return View(result.ToPagedList(pageNumber, pageSize));
         }
 
         public ActionResult About()

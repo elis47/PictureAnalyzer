@@ -1,66 +1,76 @@
 ﻿@model PictureAnalyzer.Models.Painting
 
-@{
-    ViewBag.Title = "Details";
-}
+<br />
+<br />
 
-<h2>Details</h2>
+<div class="panel panel-success">
+    <div class="panel-heading">
+        <h1 class="panel-title"><b>@Html.DisplayFor(model => model.Name)</b></h1>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-2 col-md-offset-1">
+                <a class="thumbnail" rel="ligthbox" href=@Html.DisplayFor(model => model.Link) data-toggle="tooltip" data-placement="top">
+                    <img class="img-responsive" alt="" src=@Html.DisplayFor(model => model.Link) />
+                </a>
+            </div>
+            <div class="col-md-8">
+                <dl class="dl-horizontal">
 
-<div>
-    <hr />
-    <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Description)
+                    </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Description)
+                    </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.CurrentOwner)
+                    </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.CurrentOwner)
+                    </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
+                    <dt>
+                        Painter
+                    </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.CurrentOwner)
-        </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Painter.Name)
+                    </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.CurrentOwner)
-        </dd>
+                    <dt>
+                        Influence
+                    </dt>
 
-        <dt>
-            Painter
-        </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Influence.Name)
+                    </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Painter.Name)
-        </dd>
+                    <dt>
+                        Gallery
+                    </dt>
 
-        <dt>
-            Influence
-        </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Gallery.Name)
+                    </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Influence.Name)
-        </dd>
-
-        <dt>
-            Gallery
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Gallery.Name)
-        </dd>
-
-    </dl>
+                </dl>
+            </div>
+        </div>
+    </div>
 </div>
+
+
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
+
+<style>
+    .panel-title {
+        font-size:25px;
+    }
+</style>

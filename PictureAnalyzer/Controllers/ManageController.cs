@@ -7,6 +7,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using PictureAnalyzer.Models;
+using PagedList;
 
 namespace PictureAnalyzer.Controllers
 {
@@ -15,9 +16,11 @@ namespace PictureAnalyzer.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private ApplicationDbContext db;
 
         public ManageController()
         {
+            db = new ApplicationDbContext();
         }
 
         public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
@@ -52,7 +55,7 @@ namespace PictureAnalyzer.Controllers
 
         //
         // GET: /Manage/Index
-        public async Task<ActionResult> Index(ManageMessageId? message)
+        public async Task<ActionResult> Index(ManageMessageId? message, int? page)
         {
             ViewBag.StatusMessage =
                 message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
@@ -64,15 +67,12 @@ namespace PictureAnalyzer.Controllers
                 : "";
 
             var userId = User.Identity.GetUserId();
-            var model = new IndexViewModel
-            {
-                HasPassword = HasPassword(),
-                PhoneNumber = await UserManager.GetPhoneNumberAsync(userId),
-                TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),
-                Logins = await UserManager.GetLoginsAsync(userId),
-                BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
-            };
-            return View(model);
+            var paintings = db.Paintings.Where(p => p.ApplicationUserId == userId).OrderBy(p => p.ID);
+
+            int pageSize = 9;
+            int pageNumber = (page ?? 1);
+
+            return View(paintings.ToPagedList(pageNumber, pageSize));
         }
 
         //

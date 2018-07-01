@@ -1,0 +1,68 @@
+﻿@model PictureAnalyzer.Models.Painting
+
+@{
+    ViewBag.Title = "Delete";
+}
+<br />
+<h3>Are you sure you want to delete this painting?</h3>
+<br />
+<div class="text-left">
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CurrentOwner)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CurrentOwner)
+        </dd>
+
+        <dt>
+            Painter
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Painter.Name)
+        </dd>
+
+        <dt>
+            Gallery
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Gallery.Name)
+        </dd>
+
+        <dt>
+            Influence
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Influence.Name)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            @Html.ActionLink("Go back to List", "Index") | <input type="submit" value="Delete" class="btn btn-default" />
+        </div>
+    }
+</div>

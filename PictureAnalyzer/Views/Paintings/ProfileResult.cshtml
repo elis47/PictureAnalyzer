@@ -211,6 +211,7 @@
     </div>
 </div>
 
+
 <script>
     var ctx = document.getElementById("profileChart");
     var profileChart = new Chart(ctx, {
@@ -232,10 +233,10 @@
                     @ViewBag.TypeDPercentage
                 ],
                 backgroundColor: [
-                    'rgba(255,99,132, 0.7)',
-                    'rgba(103, 68, 201, 0.7)',
-                    'rgba(0, 188, 140, 0.7)', 
-                    'rgba(255, 206, 86, 0.7)'
+                    'rgba(255,99,132,1)',
+                    'rgba(103, 68, 201,1)',
+                    'rgba(0, 188, 140,1)',
+                    'rgba(255, 206, 86,1)'
                 ],
                 borderColor: [
                     'rgba(255,99,132,1)',
@@ -276,7 +277,7 @@
                         100 - @ViewBag.AllHarmonyIndex
                 ],
                 backgroundColor: [
-                    'rgba(255, 99, 132, 0.7)'
+                    'rgba(255, 99, 132,1)'
                 ],
                 borderColor: [
                     'rgba(255,99,132,1)'
@@ -314,7 +315,7 @@
                         100- @ViewBag.DominantHarmonyIndex
                 ],
                 backgroundColor: [
-                    'rgba(54, 162, 235, 0.7)'
+                    'rgba(54, 162, 235,1)'
                 ],
                 borderColor: [
                     'rgba(255,99,132,1)'
@@ -352,7 +353,7 @@
                         100 - @ViewBag.MinorHarmonyIndex
                 ],
                 backgroundColor: [
-                    'rgba(255, 206, 86, 0.7)'
+                    'rgba(255, 206, 86,1)'
                 ],
                 borderColor: [
                     'rgba(255,99,132,1)'
@@ -373,6 +374,8 @@
             }
         }
     });
+
+
 </script>
 
 

@@ -12,6 +12,7 @@ using System.IO;
 using Newtonsoft.Json;
 using EmguCV;
 using PagedList;
+using System.Threading;
 
 namespace PictureAnalyzer.Controllers
 {
@@ -168,6 +169,8 @@ namespace PictureAnalyzer.Controllers
                         }
                     }
 
+                    //SetViewBagColorDistribution(colorDistribution);
+
                     if (colorDistribution.Count > 2)
                     {
                         var key1 = colorDistribution.Keys.Last();
@@ -267,6 +270,55 @@ namespace PictureAnalyzer.Controllers
             return View("ProfileResult", painting);
         }
 
+        [HttpGet]
+        public ActionResult CreateGalleryPainting()
+        {
+            ViewBag.ApplicationUserId = new SelectList(db.Users, "Id", "Email");
+            ViewBag.GalleryID = new SelectList(db.Galleries, "ID", "Name");
+            ViewBag.InfluenceID = new SelectList(db.Influences, "ID", "Name");
+            ViewBag.PainterID = new SelectList(db.Painters, "ID", "Name");
+            ViewBag.TypeID = new SelectList(db.Types, "ID", "Name");
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult CreateGalleryPainting(Painting painting, HttpPostedFileBase file)
+        {
+            var currentUserId = User.Identity.GetUserId();
+            painting.ApplicationUserId = currentUserId;
+
+            var currentUser = db.Users.FirstOrDefault(u => u.Id == currentUserId);
+            painting.ApplicationUser = currentUser;
+
+            byte[] uploadedFile = new byte[painting.File.InputStream.Length];
+            painting.File.InputStream.Read(uploadedFile, 0, uploadedFile.Length);
+
+            if (file != null)
+            {
+                if (file.ContentLength > 0)
+                {
+                    string pic = Path.GetFileName(file.FileName);
+                    string physicalPath = Path.Combine(Server.MapPath("~/Images/"), pic);
+
+                    file.SaveAs(physicalPath);
+                    painting.Link = "/Images/" + file.FileName;
+                }
+            }
+
+            if (painting.Description == null)
+                painting.Description = "No description available";
+            if (painting.CurrentOwner == null)
+                painting.CurrentOwner = "N/A";
+
+            painting.ApplicationUserId = User.Identity.GetUserId();
+
+            db.Paintings.Add(painting);
+            db.SaveChanges();
+
+            return RedirectToAction("Index", "Galleries");
+        }
+
         // GET: Paintings/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -288,11 +340,9 @@ namespace PictureAnalyzer.Controllers
         }
 
         // POST: Paintings/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Name,Description,CurrentOwner,HarmonyIndex,ConstrastIndex,LuminosityIndex,Link,ApplicationUserId,PainterID,TypeID,InfluenceID,GalleryID")] Painting painting)
+        public ActionResult Edit([Bind(Include = "ID,Name,Description,CurrentOwner,HarmonyIndex,ConstrastIndex,LuminosityIndex,Link,ApplicationUserId,PainterID,TypeID,InfluenceID,GalleryID,TypeAPercentage,TypeBPercentage,TypeCPercentage,TypeDPercentage")] Painting painting)
         {
             if (ModelState.IsValid)
             {
@@ -308,6 +358,45 @@ namespace PictureAnalyzer.Controllers
             return View(painting);
         }
 
+        // GET: Paintings/EditMyPainting/5
+        public ActionResult EditMyPainting(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Painting painting = db.Paintings.Find(id);
+            if (painting == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.ApplicationUserId = new SelectList(db.Users, "Id", "Email", painting.ApplicationUserId);
+            ViewBag.GalleryID = new SelectList(db.Galleries, "ID", "Name", painting.GalleryID);
+            ViewBag.InfluenceID = new SelectList(db.Influences, "ID", "Name", painting.InfluenceID);
+            ViewBag.PainterID = new SelectList(db.Painters, "ID", "Name", painting.PainterID);
+            ViewBag.TypeID = new SelectList(db.Types, "ID", "Name", painting.TypeID);
+            return View(painting);
+        }
+
+        // POST: Paintings/EditMyPainting/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditMyPainting([Bind(Include = "ID,Name,Description,CurrentOwner,HarmonyIndex,ConstrastIndex,LuminosityIndex,Link,ApplicationUserId,PainterID,TypeID,InfluenceID,GalleryID,TypeAPercentage,TypeBPercentage,TypeCPercentage,TypeDPercentage")] Painting painting)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(painting).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            ViewBag.ApplicationUserId = new SelectList(db.Users, "Id", "Email", painting.ApplicationUserId);
+            ViewBag.GalleryID = new SelectList(db.Galleries, "ID", "Name", painting.GalleryID);
+            ViewBag.InfluenceID = new SelectList(db.Influences, "ID", "Name", painting.InfluenceID);
+            ViewBag.PainterID = new SelectList(db.Painters, "ID", "Name", painting.PainterID);
+            ViewBag.TypeID = new SelectList(db.Types, "ID", "Name", painting.TypeID);
+            return RedirectToAction("Index", "Manage");
+        }
+
         // GET: Paintings/Delete/5
         public ActionResult Delete(int? id)
         {
@@ -321,6 +410,32 @@ namespace PictureAnalyzer.Controllers
                 return HttpNotFound();
             }
             return View(painting);
+        }
+
+        // GET: Paintings/DeleteMyPainting/5
+        public ActionResult DeleteMyPainting(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Painting painting = db.Paintings.Find(id);
+            if (painting == null)
+            {
+                return HttpNotFound();
+            }
+            return View(painting);
+        }
+
+        // POST: Paintings/DeleteMyPainting/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteMyPainting(int id)
+        {
+            Painting painting = db.Paintings.Find(id);
+            db.Paintings.Remove(painting);
+            db.SaveChanges();
+            return RedirectToAction("Index", "Manage");
         }
 
         // POST: Paintings/Delete/5
@@ -341,6 +456,80 @@ namespace PictureAnalyzer.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        protected void SetViewBagColorDistribution(Dictionary<Pixel, int> colorDistribution)
+        {
+            var totalPixels = 0;
+            var index = 1;
+            var colors = db.Colors;
+
+            ViewBag.Color1Distribution = 0;
+            ViewBag.Color2Distribution = 0;
+            ViewBag.Color3Distribution = 0;
+            ViewBag.Color4Distribution = 0;
+            ViewBag.Color5Distribution = 0;
+
+            #region Set color distribution for first 5 colors
+
+            foreach (var color in colorDistribution)
+            {
+                var searchedColor = colors.Where( c => c.Name == color.Key.Color).First();
+                var colorName = "";
+
+                if (searchedColor != null)
+                {
+                    colorName = searchedColor.Name;
+                }
+
+                if (index < 6)
+                {
+                    switch (index)
+                    {
+                        case 1:
+                            ViewBag.Color1Name = colorName;
+                            ViewBag.Color1Distribution = color.Value;
+                            totalPixels += color.Value;
+                            break;
+                        case 2:
+                            ViewBag.Color2Name = colorName;
+                            ViewBag.Color2Distribution = color.Value;
+                            totalPixels += color.Value;
+                            break;
+                        case 3:
+                            ViewBag.Color3Name = colorName;
+                            ViewBag.Color3Distribution = color.Value;
+                            totalPixels += color.Value;
+                            break;
+                        case 4:
+                            ViewBag.Color4Name = colorName;
+                            ViewBag.Color4Distribution = color.Value;
+                            totalPixels += color.Value;
+                            break;
+                        case 5:
+                            ViewBag.Color5Name = colorName;
+                            ViewBag.Color5Distribution = color.Value;
+                            totalPixels += color.Value;
+                            break;
+                    }
+                    index++;
+                }
+                else
+                    break;
+            }
+
+            if (ViewBag.Color1Distribution != 0)
+                ViewBag.Color1Distribution /= totalPixels;
+            if (ViewBag.Color2Distribution != 0)
+                ViewBag.Color2Distribution /= totalPixels;
+            if (ViewBag.Color3Distribution != 0)
+                ViewBag.Color3Distribution /= totalPixels;
+            if (ViewBag.Color4Distribution != 0)
+                ViewBag.Color4Distribution /= totalPixels;
+            if (ViewBag.Color5Distribution != 0)
+                ViewBag.Color5Distribution /= totalPixels;
+
+            #endregion Set color distribution for 5 colors
         }
     }
 }

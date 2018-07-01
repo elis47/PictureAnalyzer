@@ -54,13 +54,29 @@
                     <div class="text-center">
                         <h4><i>@Html.DisplayFor(modelItem => item.Name)</i></h4>
                     </div>
-                    <a class="thumbnail" rel="ligthbox" href="~/Content/img/1.jpg" data-toggle="tooltip" data-placement="top" title="@Html.DisplayFor(modelItem => item.Description)">
-                        <img class="img-responsive" alt="" src="~/Content/img/1.jpg" />
-                    </a>
+
+                    @if (item.Paintings.Count > 0)
+                    {
+                        foreach (var painting in item.Paintings)
+                        {
+                            <a class="thumbnail" rel="ligthbox" href=@Html.DisplayFor(p => painting.Link) data-toggle="tooltip" data-placement="top">
+                                <img class="img-responsive" alt="" src=@Html.DisplayFor(p => painting.Link) />
+                            </a>
+                            break;
+                        }
+                    }
+                    @if(item.Paintings.Count == 0)
+                    {
+                        <a class="thumbnail" rel="ligthbox" href="~/Images/no-image.png" data-toggle="tooltip" data-placement="top">
+                            <img class="img-responsive" alt="" src="~/Images/no-image.png" />
+                        </a>
+                    }
+
                     <div class="dropdown text-center">
                         <a href="#" class="dropdown-toggle white" data-toggle="dropdown" role="button" aria-expanded="false">Options <span class="caret"></span></a>
                         <ul class="dropdown-menu text-center" role="menu">
-                            <li>@Html.ActionLink("Add painting", "Create", "Galleries")</li>
+                            <li>@Html.ActionLink("Add painting", "CreateGalleryPainting", "Paintings")</li>
+                            <li>@Html.ActionLink("View paintings", "ViewPaintings", "Galleries", new { id = item.ID }, null)</li>
                             <li>@Html.ActionLink("Edit", "Edit", new { id = item.ID })</li>
                             <li>@Html.ActionLink("Details", "Details", new { id = item.ID })</li>
                             <li>@Html.ActionLink("Delete", "Delete", new { id = item.ID })</li>
@@ -91,46 +107,60 @@ Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.Page
     a {
         color: white;
     }
+
     .row {
         margin-top: 50px;
     }
+
     .filter {
         margin-top: 15px;
     }
+
     .pagination-container {
         text-align: center;
     }
+
     .white, .white:hover {
         color: white;
     }
+
     body {
         background: linear-gradient(black, #009871,black);
     }
+
     .dropdown {
         margin: 8px;
     }
+
     .dropdown-menu {
         float: right;
         padding: 0px;
     }
+
     .img-responsive {
-        margin: 3px; 
+        margin: 3px;
     }
+
         .img-responsive:hover {
             opacity: 1;
         }
+
     .col-md-3-personalized {
-        border:2px solid black;
+        border: 2px solid black;
         margin: 37px;
+        height:350px;
     }
+
         .col-md-3-personalized:hover {
             border: 2px solid #0ce3ac;
             margin: 37px;
             box-shadow: 10px 10px 5px black;
         }
+
     .dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
         background-color: #009871;
     }
+
     .text-muted {
         color: white;
     }
@@ -139,14 +169,17 @@ Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.Page
         color: #009871;
         margin-top: 45px;
     }
+
     .thumbnail {
-        margin-bottom:2px;
+        margin-bottom: 2px;
         border: 0px;
     }
+
     .glyphicon {
         font-size: 0.7em;
         color: #0ce3ac;
     }
+
     #custom-search-input {
         padding: 3px;
         border-radius: 6px;
@@ -188,5 +221,12 @@ Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.Page
         font-size: 23px;
         height: 15px;
         color: white;
+    }
+
+    .thumbnail > img, .thumbnail a > img {
+        height: 160px;
+    }
+    .col-md-3-personalized {
+        height:270px;
     }
 </style>
