@@ -19,52 +19,69 @@
     </dl>
 </div>
 
+<br />
+<br />
 
 <h3 class="turqoise">Manage your added paintings</h3>
-
 <div class="row">
     <div class='list-group gallery'>
-
-
-        @foreach (var item in Model)
+        @if (Model.Count > 0)
+        {
+            foreach (var item in Model)
             {
 
-            <div class='col-md-3 col-md-3-personalized'>
+                <div class='col-md-3 col-md-3-personalized'>
 
-                <div class="text-center">
-                    <h3><b>@Html.DisplayFor(modelItem => item.Name)</b></h3>
-                </div>
+                    <div class="text-center">
+                        <h3><b>@Html.DisplayFor(modelItem => item.Name)</b></h3>
+                    </div>
 
-                <a class="thumbnail" rel="ligthbox" href=@Html.DisplayFor(modelItem => item.Link) data-toggle="tooltip" data-placement="top">
-                    <img class="img-responsive" alt="" src=@Html.DisplayFor(modelItem => item.Link) />
-                </a>
+                    <a class="thumbnail" rel="ligthbox" href=@Html.DisplayFor(modelItem => item.Link) data-toggle="tooltip" data-placement="top">
+                        <img class="img-responsive" alt="" src=@Html.DisplayFor(modelItem => item.Link) />
+                    </a>
 
-                <div class="text-center">
-                    <h4><i>@Html.DisplayFor(modelItem => item.Painter.Name)</i></h4>
-                </div>
+                    <div class="text-center">
+                        <h4><i>@Html.DisplayFor(modelItem => item.Painter.Name)</i></h4>
+                    </div>
 
-                <div class="text-center">
-                    (@String.Format("{0,9:d}", item.Painter.BirthDate) - @String.Format("{0,9:d}", item.Painter.PassDate))
-                </div>
+                    <div class="text-center">
+                        (@String.Format("{0,9:d}", item.Painter.BirthDate) - @String.Format("{0,9:d}", item.Painter.PassDate))
+                    </div>
 
-                <div class="text-center">
+                    <div class="text-center">
+                        <br />
+                        @Html.ActionLink("Details", "Details", "Paintings", new { id = item.ID }, null) |
+                        @Html.ActionLink("Edit", "EditMyPainting", "Paintings", new { id = item.ID }, null) |
+                        @Html.ActionLink("Delete", "DeleteMyPainting", "Paintings", new { id = item.ID }, null)
+                    </div>
+
                     <br />
-                    @Html.ActionLink("Details", "Details", "Paintings", new { id = item.ID }, null) | 
-                    @Html.ActionLink("Edit", "EditMyPainting", "Paintings", new { id = item.ID }, null) | 
-                    @Html.ActionLink("Delete", "DeleteMyPainting", "Paintings", new { id = item.ID }, null)
+
                 </div>
-
-                <br />
-
+            }
+        }
+        else
+        {
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-body font-size">
+                        It seems that you have no added painting, but you click @Html.ActionLink("here", "Create", "Paintings", null, new { @class = "turqoise" }) to add some.
+                    </div>
+                </div>
             </div>
         }
     </div>
 </div>
 
+<br />
+<br />
+<br />
+<br />
 
-Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
 
-@Html.PagedListPager(Model, page => Url.Action("Index",
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+    @Html.PagedListPager(Model, page => Url.Action("Index",
     new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }),
     new PagedListRenderOptions
     {
@@ -77,11 +94,21 @@ Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.Page
         MaximumPageNumbersToDisplay = 5
     })
 
-<style>
-    .img-responsive {
-        max-height: 247px;
-    }
-    .turqoise {
-        color:#00bc8c;
-    }
-</style>
+    <style>
+        .img-responsive {
+            max-height: 247px;
+        }
+
+        .turqoise {
+            color: #00bc8c;
+        }
+
+        .red {
+            font-size: 25px;
+            color: red;
+        }
+
+        .font-size {
+            font-size: 15px;
+        }
+    </style>
