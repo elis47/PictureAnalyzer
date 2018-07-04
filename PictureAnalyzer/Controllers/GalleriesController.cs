@@ -20,6 +20,8 @@ namespace PictureAnalyzer.Controllers
         {
             ViewBag.CurrentSort = sortOrder;
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.DescriptionSortParm = sortOrder == "Description" ? "description_desc" : "Description";
+
             if (searchString != null)
             {
                 page = 1;
@@ -42,6 +44,12 @@ namespace PictureAnalyzer.Controllers
             {
                 case "name_desc":
                     galleries = galleries.OrderByDescending(p => p.Name);
+                    break;
+                case "Description":
+                    galleries = galleries.OrderBy(p => p.Description);
+                    break;
+                case "description_desc":
+                    galleries = galleries.OrderByDescending(p => p.Description);
                     break;
                 default:
                     galleries = galleries.OrderBy(p => p.Name);

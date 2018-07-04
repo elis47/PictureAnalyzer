@@ -1,14 +1,10 @@
 ﻿@model IEnumerable<PictureAnalyzer.Models.Influence>
 
-@{
-    ViewBag.Title = "Index";
-}
+<br />
+<br />
 
-<h2>Index</h2>
+<h1 class="text-center"><i class="glyphicon glyphicon-plus"></i> @Html.ActionLink("Add new influence", "Create")</h1><br /><br />
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table">
     <tr>
         <th>
@@ -26,26 +22,33 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BeginYear)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EndYear)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-        </td>
-    </tr>
-}
-
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BeginYear)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndYear)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+            </td>
+        </tr>
+    }
 </table>
+
+<style>
+    .glyphicon {
+        font-size: 0.7em;
+        color: #0ce3ac;
+    }
+</style>

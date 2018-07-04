@@ -1,15 +1,9 @@
 ﻿@model PagedList.IPagedList<PictureAnalyzer.Models.Painting>
 @using PagedList.Mvc;
 
-@{
-    ViewBag.Title = "Paintings";
-}
+<br />
+<br />
 
-<br /><br />
-
-<div class="col-md-11 col-md-offset-1" style="font-size:larger;">
-
-</div>
 <h1 class="text-center"><i class="glyphicon glyphicon-plus"></i> @Html.ActionLink("Add new painting", "Create")</h1><br /><br />
 
 <div class="container">
@@ -18,8 +12,8 @@
     {
         <div class="row">
 
-            <div class="col-md-3 col-md-offset-1 dropdown text-center">
-                <a href="#" class="dropdown-toggle white" data-toggle="dropdown" role="button" aria-expanded="false">Filter by <span class="caret"></span></a>
+            <div class="col-md-1 col-md-offset-3 dropdown text-center margin-left">
+                <a href="#" class="dropdown-toggle white" data-toggle="dropdown" role="button" aria-expanded="false">Sort by <span class="caret"></span></a>
                 <ul class="dropdown-menu text-center" role="menu">
                     <li>@Html.ActionLink("Name", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })</li>
                     <li>@Html.ActionLink("Description", "Index", new { sortOrder = ViewBag.DescriptionSortParm, currentFilter = ViewBag.CurrentFilter })</li>
@@ -102,6 +96,8 @@ Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.Page
         DisplayEllipsesWhenNotShowingAllPageNumbers = false,
         MaximumPageNumbersToDisplay = 5
     })
+
+
 
 <style>
     a {
@@ -225,5 +221,9 @@ Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.Page
 
     .col-md-3-personalized {
         height: 365px;
+    }
+
+    .margin-left {
+        margin-left: 215px;
     }
 </style>

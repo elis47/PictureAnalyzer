@@ -1,14 +1,9 @@
 ﻿@model PagedList.IPagedList<PictureAnalyzer.Models.Gallery>
 @using PagedList.Mvc;
 
-@{
-    ViewBag.Title = "Index";
-}
+<br />
+<br />
 
-<br /><br />
-<div class="col-md-11 col-md-offset-1" style="font-size:larger;">
-
-</div>
 <h1 class="text-center"><i class="glyphicon glyphicon-plus"></i> @Html.ActionLink("Create new gallery", "Create")</h1><br /><br />
 
 <div class="container">
@@ -17,12 +12,17 @@
     {
         <div class="row">
 
-            <div class="col-md-2 col-md-offset-1 text-center">
-                <p class="filter">@Html.ActionLink("Filter by name", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })</p>
+            <div class="col-md-1 col-md-offset-3 dropdown text-center margin-left">
+                <a href="#" class="dropdown-toggle white" data-toggle="dropdown" role="button" aria-expanded="false">Sort by <span class="caret"></span></a>
+                <ul class="dropdown-menu text-center" role="menu">
+                    <li>@Html.ActionLink("Name", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })</li>
+                    <li>@Html.ActionLink("Description", "Index", new { sortOrder = ViewBag.DescriptionSortParm, currentFilter = ViewBag.CurrentFilter })</li>
+                    <li>@Html.ActionLink("Painter name", "Index", new { sortOrder = ViewBag.PainterSortParm, currentFilter = ViewBag.CurrentFilter })</li>
+                </ul>
             </div>
 
 
-            <div class="col-md-6">
+            <div class="col-md-5">
                 <div id="custom-search-input">
                     <div class="input-group col-md-12">
                         @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new
@@ -65,7 +65,7 @@
                             break;
                         }
                     }
-                    @if(item.Paintings.Count == 0)
+                    @if (item.Paintings.Count == 0)
                     {
                         <a class="thumbnail" rel="ligthbox" href="~/Images/no-image.png" data-toggle="tooltip" data-placement="top">
                             <img class="img-responsive" alt="" src="~/Images/no-image.png" />
@@ -102,6 +102,8 @@ Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.Page
         DisplayEllipsesWhenNotShowingAllPageNumbers = false,
         MaximumPageNumbersToDisplay = 5
     })
+
+
 
 <style>
     a {
@@ -141,21 +143,21 @@ Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.Page
         margin: 3px;
     }
 
-        .img-responsive:hover {
-            opacity: 1;
-        }
+    .img-responsive:hover {
+        opacity: 1;
+    }
 
     .col-md-3-personalized {
         border: 2px solid black;
         margin: 37px;
-        height:350px;
+        height: 350px;
     }
 
-        .col-md-3-personalized:hover {
-            border: 2px solid #0ce3ac;
-            margin: 37px;
-            box-shadow: 10px 10px 5px black;
-        }
+    .col-md-3-personalized:hover {
+        border: 2px solid #0ce3ac;
+        margin: 37px;
+        box-shadow: 10px 10px 5px black;
+    }
 
     .dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
         background-color: #009871;
@@ -186,18 +188,18 @@ Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.Page
         background-color: #fff;
     }
 
-        #custom-search-input input {
-            border: 0;
-            box-shadow: none;
-        }
+   #custom-search-input input {
+       border: 0;
+       box-shadow: none;
+   }
 
-        #custom-search-input > div > input {
-            max-width: 400px;
-            width: 300px;
-            margin-top: 6px;
-            font-size: 18px;
-            border: 3px solid white;
-        }
+   #custom-search-input > div > input {
+       max-width: 400px;
+       width: 300px;
+       margin-top: 6px;
+       font-size: 18px;
+       border: 3px solid white;
+   }
 
     .btn-info {
         color: #ffffff;
@@ -205,11 +207,11 @@ Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.Page
         border-color: #00bc8c;
     }
 
-        .btn-info:hover, .btn-info:active, .btn-info:focus, .btn-info:active:focus {
-            color: #ffffff;
-            background-color: #7C77B9;
-            border-color: #7C77B9;
-        }
+   .btn-info:hover, .btn-info:active, .btn-info:focus, .btn-info:active:focus {
+       color: #ffffff;
+       background-color: #7C77B9;
+       border-color: #7C77B9;
+   }
 
     #custom-search-input button:hover {
         border: 0;
@@ -226,7 +228,12 @@ Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.Page
     .thumbnail > img, .thumbnail a > img {
         height: 160px;
     }
+
     .col-md-3-personalized {
-        height:270px;
+        height: 270px;
+    }
+
+    .margin-left {
+        margin-left: 215px;
     }
 </style>

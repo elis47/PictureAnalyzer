@@ -103,7 +103,7 @@ namespace PictureAnalyzer.Migrations
                 {
                     Name = "Dark gray",
                     Description = "Represents maturity and responsibility, but also conservatism, boredom and depression.",
-                    PersonalityTraits = "They are often neutral about life, to the point of becoming indifferent, tend to be indecisive, self-confident, having a great need to create balance, to be rewarded, recognized and find their place. They are practical and calm, do not like to attract attention and are simply seeking a contented life.",
+                    PersonalityTraits = "They are often neutral about life, to the point of becoming indifferent, tend to be indecisive, having a great need to create balance, to be rewarded, recognized and find their place. They are practical and calm, do not like to attract attention and are simply seeking a contented life.",
                     Keywords = "neutral,indifferent,indecisive,anxiety,depression"
                 },
                 new Models.Color
@@ -117,14 +117,14 @@ namespace PictureAnalyzer.Migrations
                 {
                     Name = "White",
                     Description = "The color white is color at its most complete and pure, the color of perfection. The psychological meaning of white is purity, innocence, wholeness and completion. In color psychology white is the color of new beginnings, of wiping the slate clean, so to speak. It is the blank canvas waiting to be written upon. While white isn't stimulating to the senses, it opens the way for the creation of anything the mind can conceive.",
-                    PersonalityTraits = "They are neat and immaculate in their appearance, almost to the point of being fanatical. They have impeccable standards of cleanliness and hygiene and they expect others to adhere to their high standards. They are far-sighted, with a positive and optimistic nature. They are well-balanced, sensible, discreet and wise. With a personality color white, they are cautious, practical and careful with money. They think carefully before acting, being definitely not prone to impulsive behavior. They tend to have a great deal of self control.",
+                    PersonalityTraits = "They are neat and immaculate in their appearance,having high standards of cleanliness and hygiene. They are far-sighted, with a positive and optimistic nature. They are well-balanced, sensible, discreet and wise. They are cautious, practical and careful with money. They think carefully before acting, being definitely not prone to impulsive behavior. They tend to have a great deal of self control.",
                     Keywords = "immaculate,impeccable,positive,optimistic,balanced,sensible,discreet,wise,cautious,practical,careful,control"
                 },
                 new Models.Color
                 {
                     Name = "Black",
                     Description = "The color black relates to the hidden, the secretive and the unknown, and as a result it creates an air of mystery. It keeps things bottled up inside, hidden from the world. In color psychology this color gives protection from external emotional stress. It creates a barrier between itself and the outside world, providing comfort while protecting its emotions and feelings, and hiding its vulnerabilities, insecurities and lack of self confidence. Black is the absorption of all color and the absence of light. Black hides, while white brings to light. What black covers, white uncovers.",
-                    PersonalityTraits = "Prestige and power are important to them. They are independent, strong-willed and determined and like to be in control of themselves and situations. As a lover of black they may be conservative and conventional - black is restricting and contained. They may be too serious for their own good. They may appear intimidating to even their closest colleagues and friends, with an authoritarian, demanding and dictatorial attitude.",
+                    PersonalityTraits = "Prestige and power are important to them. They are independent, strong-willed and determined and like to be in control of themselves and situations. They may be conservative and conventional and they may be too serious for their own good. They may appear intimidating to even their closest colleagues and friends, with an authoritarian, demanding and dictatorial attitude.",
                     Keywords = "prestige,power,independent,determined,control,conservative,conventional,traditional,serious,intimidating,authoritarian,demanding,dictatorial"
                 }
             );
