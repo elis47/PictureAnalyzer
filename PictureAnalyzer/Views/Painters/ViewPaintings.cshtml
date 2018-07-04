@@ -1,40 +1,49 @@
 ﻿@model PagedList.IPagedList<PictureAnalyzer.Models.Painting>
 @using PagedList.Mvc;
 
-@{
-    ViewBag.Title = "Painters";
-}
-
 <br /><br />
-
-<div class="col-md-11 col-md-offset-1" style="font-size:larger;">
-
-</div>
 
 <div class="container">
     <br />
-    <div class="row">
-        <div class='list-group gallery'>
 
-            @foreach (var item in Model)
-            {
-                <div class='col-md-3 col-md-3-personalized'>
-                    <div class="text-center">
-                        <h4><i>@Html.DisplayFor(modelItem => item.Name)</i></h4>
-                    </div>
+    @if (Model.Count > 0)
+    {
+        <div class="row">
+            <div class='list-group gallery'>
 
-                    <a class="thumbnail" rel="ligthbox" href=@Html.DisplayFor(modelItem => item.Link) data-toggle="tooltip" data-placement="top" title="@Html.DisplayFor(modelItem => item.Description)">
-                        <img class="img-responsive" alt="" src=@Html.DisplayFor(modelItem => item.Link) />
-                    </a>
-                    <br />
-                    <div class="text-center">
-                        @Html.ActionLink("Details", "Details", "Paintings", new { id = item.ID }, null)
+                @foreach (var item in Model)
+                {
+                    <div class='col-md-3 col-md-3-personalized'>
+                        <div class="text-center">
+                            <h4><i>@Html.DisplayFor(modelItem => item.Name)</i></h4>
+                        </div>
+
+                        <a class="thumbnail" rel="ligthbox" href=@Html.DisplayFor(modelItem => item.Link) data-toggle="tooltip" data-placement="top" title="@Html.DisplayFor(modelItem => item.Description)">
+                            <img class="img-responsive" alt="" src=@Html.DisplayFor(modelItem => item.Link) />
+                        </a>
+                        <br />
+                        <div class="text-center">
+                            @Html.ActionLink("Details", "Details", "Paintings", new { id = item.ID }, null)
+                        </div>
+                        <br />
                     </div>
-                    <br />
-                </div>
-            }
+                }
+            </div>
         </div>
-    </div>
+    }
+    else
+    {
+        <div class="col-md-6 col-md-offset-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h2 class="panel-title red">Oups... &#9785;</h2>
+                </div>
+                <div class="panel-body font-size">
+                    Sorry, but it seems that we don't have any painting related to this painter, but you click @Html.ActionLink("here", "Create", "Paintings", null, new { @class = "turqoise" }) to add paintings.
+                </div>
+            </div>
+        </div>
+    }
 </div>
 
 Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
@@ -53,6 +62,19 @@ Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.Page
     })
 
 <style>
+    .turqoise {
+        color: #0ce3ac;
+    }
+
+    .red {
+        font-size: 25px;
+        color: red;
+    }
+
+    .font-size {
+        font-size:15px;
+    }
+
     a {
         color: white;
     }

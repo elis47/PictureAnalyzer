@@ -131,7 +131,9 @@ namespace PictureAnalyzer.Migrations
             context.SaveChanges();
 
             context.Types.AddOrUpdate(
-                new Models.Type { Name = "Portrait", Description = "No current description", PersonalityTraits = "lonelyness" }
+                new Models.Type { Name = "Portrait", Description = "No description", PersonalityTraits = "-" },
+                new Models.Type { Name = "Nature", Description = "No description", PersonalityTraits = "-" },
+                new Models.Type { Name = "Abstract", Description = "No description", PersonalityTraits = "-" }
             );
             context.SaveChanges();
 
@@ -144,11 +146,12 @@ namespace PictureAnalyzer.Migrations
 
             context.Galleries.AddOrUpdate(
                 new Models.Gallery { Name = "All kind", Description = "Paintings belonging to all painters, influences and psychological profiles will be found here!" },
-                new Models.Gallery { Name = "Picasso Lovers ", Description = "This gallery is dedicated to our beloved Pablo Picasso! Add as many paintings as possible to help our Picasso community grow!" },
-                new Models.Gallery { Name = "Leonardo da Vinci Lovers", Description = "This gallery is dedicated to Leonardo da Vinci, so don't forget to contribute with as many as more paintings as possbile!" },
+                new Models.Gallery { Name = "Vincent van Gogh", Description = "This gallery is dedicated to our beloved Vincent van Gogh! Add as many paintings as possible to help our van Gogh community grow!" },
+                new Models.Gallery { Name = "Leonardo da Vinci", Description = "This gallery is dedicated to Leonardo da Vinci, so don't forget to contribute with as many as more paintings as possbile!" },
                 new Models.Gallery { Name = "Nature", Description = "This gallery contains paintings that are most related to nature themes. Enjoy!" },
                 new Models.Gallery { Name = "Portraits", Description = "This gallery contains portraits paintings from all the painters around. Enjoy!" },
-                new Models.Gallery { Name = "Abstract", Description = "This gallery contains abstract paintings, usually from the cubism era, but not only! Enjoy!" }
+                new Models.Gallery { Name = "Abstract", Description = "This gallery contains abstract paintings, usually from the cubism era, but not only! Enjoy!" },
+                new Models.Gallery { Name = "Rembrandt Harmenszoon van Rijn", Description = "This gallery is dedicated to our beloved Rembrandt! Feel free to add as many paintings as possible!" }
             );
             context.SaveChanges();
 

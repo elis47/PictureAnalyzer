@@ -7,7 +7,7 @@
 <p class="text-success">@ViewBag.StatusMessage</p>
 
 <div>
-    <h4>Change your account settings</h4>
+    <h3 class="turqoise">Manage your account settings</h3>
     <hr />
     <dl class="dl-horizontal">
         <dt>Username:</dt>
@@ -20,7 +20,7 @@
 </div>
 
 
-<h3>Your paintings</h3>
+<h3 class="turqoise">Manage your added paintings</h3>
 
 <div class="row">
     <div class='list-group gallery'>
@@ -80,5 +80,8 @@ Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.Page
 <style>
     .img-responsive {
         max-height: 247px;
+    }
+    .turqoise {
+        color:#00bc8c;
     }
 </style>

@@ -57,6 +57,78 @@
                         @Html.DisplayFor(model => model.Gallery.Name)
                     </dd>
 
+                    <dt>
+                        Type A personality
+                    </dt>
+
+                    @if (Convert.ToInt32(@Html.DisplayFor(model => model.TypeAPercentage)) < 20)
+                    {
+                        <dd class="red font-size">@Html.DisplayFor(model => model.TypeAPercentage) % </dd>
+                    }
+                    @if (Convert.ToInt32(@Html.DisplayFor(model => model.TypeAPercentage)) < 30
+                        && Convert.ToInt32(@Html.DisplayFor(model => model.TypeAPercentage)) > 20)
+                    {
+                        <dd class="yellow font-size">@Html.DisplayFor(model => model.TypeAPercentage) % </dd>
+                    }
+                    @if (Convert.ToInt32(@Html.DisplayFor(model => model.TypeAPercentage)) > 30)
+                    {
+                        <dd class="green font-size">@Html.DisplayFor(model => model.TypeAPercentage) % </dd>
+                    }
+
+                    <dt>
+                        Type B personality
+                    </dt>
+
+                    @if (Convert.ToInt32(@Html.DisplayFor(model => model.TypeBPercentage)) < 20)
+                    {
+                        <dd class="red font-size">@Html.DisplayFor(model => model.TypeBPercentage) % </dd>
+                    }
+                    @if (Convert.ToInt32(@Html.DisplayFor(model => model.TypeBPercentage)) < 30
+                        && Convert.ToInt32(@Html.DisplayFor(model => model.TypeBPercentage)) > 20)
+                    {
+                        <dd class="yellow font-size">@Html.DisplayFor(model => model.TypeBPercentage) % </dd>
+                    }
+                    @if (Convert.ToInt32(@Html.DisplayFor(model => model.TypeBPercentage)) > 30)
+                    {
+                        <dd class="green font-size">@Html.DisplayFor(model => model.TypeBPercentage) % </dd>
+                    }
+
+                    <dt>
+                        Type C personality
+                    </dt>
+
+                    @if (Convert.ToInt32(@Html.DisplayFor(model => model.TypeCPercentage)) < 20)
+                    {
+                        <dd class="red font-size">@Html.DisplayFor(model => model.TypeCPercentage) % </dd>
+                    }
+                    @if (Convert.ToInt32(@Html.DisplayFor(model => model.TypeCPercentage)) < 30
+                        && Convert.ToInt32(@Html.DisplayFor(model => model.TypeCPercentage)) > 20)
+                    {
+                        <dd class="yellow font-size">@Html.DisplayFor(model => model.TypeCPercentage) % </dd>
+                    }
+                    @if (Convert.ToInt32(@Html.DisplayFor(model => model.TypeCPercentage)) > 30)
+                    {
+                        <dd class="green font-size">@Html.DisplayFor(model => model.TypeCPercentage) % </dd>
+                    }
+
+                    <dt>
+                        Type D personality
+                    </dt>
+
+                    @if (Convert.ToInt32(@Html.DisplayFor(model => model.TypeDPercentage)) < 20)
+                    {
+                        <dd class="red font-size">@Html.DisplayFor(model => model.TypeDPercentage) % </dd>
+                    }
+                    @if (Convert.ToInt32(@Html.DisplayFor(model => model.TypeDPercentage)) < 30
+                        && Convert.ToInt32(@Html.DisplayFor(model => model.TypeDPercentage)) > 20)
+                    {
+                        <dd class="yellow font-size">@Html.DisplayFor(model => model.TypeDPercentage) % </dd>
+                    }
+                    @if (Convert.ToInt32(@Html.DisplayFor(model => model.TypeDPercentage)) > 30)
+                    {
+                        <dd class="green font-size">@Html.DisplayFor(model => model.TypeDPercentage) % </dd>
+                    }
+
                 </dl>
             </div>
         </div>
@@ -71,6 +143,22 @@
 
 <style>
     .panel-title {
-        font-size:25px;
+        font-size: 25px;
+    }
+
+    .font-size {
+        font-size: 12px;
+    }
+
+    .red {
+        color: darkred;
+    }
+
+    .yellow {
+        color: yellow;
+    }
+
+    .green {
+        color: forestgreen;
     }
 </style>
